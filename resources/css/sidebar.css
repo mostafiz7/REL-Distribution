@@ -1,0 +1,23 @@
+
+#Sidebar {
+  width: 70px;
+}
+
+#SiteWrapper {
+  margin-left: 70px;
+}
+
+#Sidebar.expand {
+  width: 250px;
+}
+
+#SiteWrapper.expand {
+  margin-left: 250px;
+}
+
+.bg-sidebar {
+  background-color: #291800;
+}
+
+
+

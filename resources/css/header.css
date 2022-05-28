@@ -1,0 +1,76 @@
+/* Header-CSS */
+/*
+#SiteHeader.header-area
+.header-navbar
+.navbar.navbar-expand-lg
+#pushMenu.sidebar-push
+.navbar-header
+.navbar-nav
+.nav-item.dropdown
+.nav-link.dropdown-toggle.active
+.dropdown-menu
+.dropdown-item
+.dropdown-link.active
+*/
+
+
+#SiteHeader {
+  height: 50px;
+  /*background-color: #0A2150 !important;*/
+}
+
+.navbar-header .nav-item > .nav-link {
+  line-height: 1;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-right: 5px;
+}
+
+.navbar-header .nav-link,
+.navbar-header .dropdown-item {
+  color: #FFFFFF;
+}
+
+.navbar-header .nav-link:hover,
+.navbar-header .nav-link.active {
+  color: #E91E63;
+}
+
+.navbar-header .nav-link.dropdown-toggle::after {
+  margin-left: 0.120em;
+}
+
+.navbar-header .dropdown-menu {
+  background-color: #000333;
+  /*background-color: #E91E63;*/
+  /*padding: 0;*/
+}
+
+body.homepage .navbar-header .dropdown-menu,
+body.purchase-parts.searchForm .navbar-header .dropdown-menu {
+  border: 1px solid #FFFFFF;
+}
+
+.navbar-header .dropdown-item {
+  font-size: 14px;
+  padding: 10px 20px;
+}
+
+.navbar-header .navbar-nav li:last-child .dropdown-menu.show {
+  left: auto;
+  right: 20px;
+}
+
+.navbar-header .dropdown-item:hover,
+.navbar-header .dropdown-item.active {
+  /*background-color: #000333;*/
+  background-color: #E91E63;
+  /*color: #000333;*/
+  /*color: #E91E63;*/
+  color: #FFFFFF;
+}
+
+
+
+
+

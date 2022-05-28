@@ -1,0 +1,83 @@
+/* Bootstrap Version */
+
+/* Extra Large Devices (Large Desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+
+/* Large Devices (Landscape Phones, to 1407px) */
+@media (max-width: 1406.98px) {
+  .purchase-history-table .table-row .action .btn {
+    margin-bottom: 5px;
+  }
+}
+
+/* Large Devices (Desktops, 992px to .....) */
+@media (min-width: 992px) {
+
+}
+/* Large Devices (Desktops, to 992px) */
+@media (max-width: 991.98px) {
+
+}
+
+/* Large Devices (Desktops, 992px to 1200px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}
+
+/* Medium Devices (Tablets, 768px to .....) */
+@media (min-width: 768px) {
+
+}
+
+/* Medium Devices (Tablets, 768px to 992px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+}
+
+/* Small Devices (Landscape Phones, to 768px) */
+@media (max-width: 767.98px) {
+
+}
+
+/* Small Devices & Medium Devices (Landscape Phones & Tablets, 576px to 992px) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+
+}
+
+/* Small Devices (Landscape Phones, 576px to 768px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+}
+
+@media (min-width: 576px) {
+
+}
+
+/* Extra Small Devices (Portrait Phones, Less than 576px) */
+@media (max-width: 575.98px) {
+  .Vehicle-Parts-Purchase .purchase-items-block {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-left: 0;
+    border-right: 0;
+  }
+  .Vehicle-Parts-Purchase .form-top > .row > div {
+    margin-bottom: 20px !important;
+  }
+  .Vehicle-Parts-Purchase .form-bottom > .row > div {
+    margin-bottom: 20px !important;
+  }
+  #Site-Footer .footer-content {
+    margin: 0 5px;
+  }
+}
+
+@media (min-width: 490px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
