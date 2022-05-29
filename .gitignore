@@ -10,6 +10,7 @@
 /storage/framework/sessions/*
 /storage/framework/views/*
 /vendor
+.env
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json
