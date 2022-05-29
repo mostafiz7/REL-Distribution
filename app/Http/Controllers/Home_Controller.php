@@ -14,10 +14,10 @@ class Home_Controller extends Controller
    * Create a new controller instance.
    * @return void
    */
-  /* public function __construct()
+  public function __construct()
   {
-    $this->middleware('auth');
-  } */
+    // $this->middleware('auth');
+  }
 
 
   /**
@@ -26,12 +26,11 @@ class Home_Controller extends Controller
    */
   public function Homepage()
   {
-    $parts_all   = Parts_Model::orderBy( 'name', 'asc' )->get()->all();
-    $vehicle_all = Vehicle_Model::orderBy( 'vehicle_no', 'asc' )->get()->all();
+    /* $parts_all   = Parts_Model::orderBy( 'name', 'asc' )->get()->all();
+    $vehicle_all = Vehicle_Model::orderBy( 'vehicle_no', 'asc' )->get()->all(); */
 
-    return view('homepage.home')->with([
-      'parts_all'     => $parts_all,
-      'vehicle_all'   => $vehicle_all,
+    return view('pages.homepage')->with([
+      'welcome'     => 'Welcome',
     ]);
   }
 

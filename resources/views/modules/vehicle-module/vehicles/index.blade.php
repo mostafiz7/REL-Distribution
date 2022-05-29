@@ -2,7 +2,7 @@
 
 {{--@section( 'title', 'View All Vehicle' )--}}
 
-@section( 'content' )
+@section('site-content')
 <div class="Page Vehicle Index">
   <div class="container-fluid">
     <div class="page-content pt-10">

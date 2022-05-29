@@ -2,7 +2,7 @@
 
 {{--@section('title', 'Edit Parts-Categories')--}}
 
-@section('content')
+@section('site-content')
 <div class="Page Parts-Categories Edit">
   <div class="container-lg">
     <div class="page-content pt-10">

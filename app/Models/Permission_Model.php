@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Role_Model extends Model
+class Permission_Model extends Model
 {
-  use HasFactory;
+  // use HasFactory;
 
 
   // connect with db table
-  public $table = 'roles';
+  public $table = 'permissions';
 
   protected $primaryKey = 'id';
   public $incrementing = false;
@@ -27,19 +27,12 @@ class Role_Model extends Model
   ];
 
 
-  // Declare any field as json array
-  /* protected $casts = [
-    'cubic_capacity' => 'array',
-  ]; */
-
-
-
-  // relationship with User model
-  public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
+  // make relationship with user model
+  /* public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
   {
-    return $this->hasMany(User::class, 'role_id');
-  }
+    return $this->hasMany(User::class);
+  } */
 
 
-
+  
 }

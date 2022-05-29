@@ -13611,7 +13611,7 @@ textarea.form-control-lg {
 }
 
 /*!
- * jQuery UI CSS Framework 1.13.0
+ * jQuery UI CSS Framework 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13709,7 +13709,7 @@ textarea.form-control-lg {
 }
 
 /*!
- * jQuery UI Accordion 1.13.0
+ * jQuery UI Accordion 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13733,7 +13733,7 @@ textarea.form-control-lg {
 }
 
 /*!
- * jQuery UI Autocomplete 1.13.0
+ * jQuery UI Autocomplete 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13750,7 +13750,7 @@ textarea.form-control-lg {
 }
 
 /*!
- * jQuery UI Button 1.13.0
+ * jQuery UI Button 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13833,7 +13833,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Checkboxradio 1.13.0
+ * jQuery UI Checkboxradio 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13868,7 +13868,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Controlgroup 1.13.0
+ * jQuery UI Controlgroup 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13934,7 +13934,7 @@ button.ui-button::-moz-focus-inner {
 
 
 /*!
- * jQuery UI Datepicker 1.13.0
+ * jQuery UI Datepicker 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14120,7 +14120,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Dialog 1.13.0
+ * jQuery UI Dialog 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14222,7 +14222,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Draggable 1.13.0
+ * jQuery UI Draggable 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14234,7 +14234,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Menu 1.13.0
+ * jQuery UI Menu 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14299,7 +14299,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Progressbar 1.13.0
+ * jQuery UI Progressbar 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14328,7 +14328,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Resizable 1.13.0
+ * jQuery UI Resizable 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14406,7 +14406,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Selectable 1.13.0
+ * jQuery UI Selectable 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14423,7 +14423,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Selectmenu 1.13.0
+ * jQuery UI Selectmenu 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14474,7 +14474,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Sortable 1.13.0
+ * jQuery UI Sortable 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14486,7 +14486,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Slider 1.13.0
+ * jQuery UI Slider 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14561,7 +14561,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Spinner 1.13.0
+ * jQuery UI Spinner 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14614,7 +14614,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Tabs 1.13.0
+ * jQuery UI Tabs 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14666,7 +14666,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 /*!
- * jQuery UI Tooltip 1.13.0
+ * jQuery UI Tooltip 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14686,7 +14686,7 @@ body .ui-tooltip {
 }
 
 /*!
- * jQuery UI CSS Framework 1.13.0
+ * jQuery UI CSS Framework 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14697,7 +14697,7 @@ body .ui-tooltip {
  */
 
 /*!
- * jQuery UI CSS Framework 1.13.0
+ * jQuery UI CSS Framework 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -15143,7 +15143,7 @@ a.ui-button:active,
 }
 
 /*!
- * jQuery UI CSS Framework 1.13.0
+ * jQuery UI CSS Framework 1.13.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -16196,19 +16196,19 @@ body.pos-module.swal2-shown.swal2-height-auto {
 .brd-b-0 { border-bottom-left-radius: 0 !important;border-bottom-right-radius: 0 !important; }
 
 
-#Sidebar {
+#Sidebar.collapse.show {
   width: 70px;
 }
 
-#SiteWrapper {
+#SiteWrapper.collapse.show {
   margin-left: 70px;
 }
 
-#Sidebar.expand {
+#Sidebar.collapse.show.expand {
   width: 250px;
 }
 
-#SiteWrapper.expand {
+#SiteWrapper.collapse.show.expand {
   margin-left: 250px;
 }
 
@@ -16313,6 +16313,8 @@ body.purchase-parts.searchForm .navbar-header .dropdown-menu {
 html, body { margin: 0;overflow: hidden; }
 
 html, body, body div, #MainContent { height: 100%; }
+
+#MainContent div { height: auto; }
 
 body {
   color: #111111;

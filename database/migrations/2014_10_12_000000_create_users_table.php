@@ -22,17 +22,22 @@ class CreateUsersTable extends Migration
       $table->boolean('active')->default(1);
       $table->string('password');
       // $table->tinyText('role');
-      $table->tinyInteger('role_id');
+      $table->unsignedTinyInteger('role_id');
       $table->unsignedBigInteger('employee_id')->unique(); // Employee ID
       $table->timestamp('email_verified_at')->nullable();
       $table->json('permissions');
       $table->json('routes');
+      $table->json('settings')->nullable(); // User Other Settings
+      $table->json('email_settings')->nullable(); // User Email Settings
+      $table->json('sms_settings')->nullable(); // User SMS Settings
+      $table->json('notif_settings')->nullable(); // User Notification Settings
 
       $table->rememberToken();
       $table->timestamps();
       
       $table->foreign('role_id')
         ->references('id')->on('roles')->onUpdate('cascade');
+        
       $table->foreign('employee_id')
         ->references('id')->on('employees')->onUpdate('cascade');
     });

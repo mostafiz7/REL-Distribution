@@ -1,33 +1,34 @@
-@extends('layouts.app')
+@extends( 'layouts.app' )
 
-{{--@section('title', 'Admin Dashboard')--}}
+{{--@section( 'title', '' )--}}
 
 @section('site-content')
-<div class="Page Dashboard">
+<div class="Page Homepage bg-navy-blue text-white">
   <div class="container-lg">
-    <div class="page-content pt-10">
-      <div class="card">
-        {{-- <div class="card-header page-header bg-success text-white">
-          <h5 class="title mb-0">Admin Dashboard</h5>
-        </div> --}}
+    <div class="page-content">
+      <div class="d-table">
+        <div class="d-table-cell">
 
-
-        <div class="card-body page-body">
-          <div class="dashboard-area">
-            
-            <h3>Admin Dashboard</h3>
-            
-          </div> {{-- ./page-content-area --}}
+          <div class="row justify-content-center parts-purchase-search-form-area h-auto">
+            <div class="col-lg-8 col-md-10">
+              <div class="page-header text-center mb-30">
+                <h2 class="title text-capitalize fz-36 mt--20 mb-50">
+                  Rangs electronics limited
+                </h2>
+              </div>
+              
+            </div>
+          </div> {{-- ./page-area --}}
         </div> {{-- ./card-body --}}
       </div> {{-- ./card --}}
     </div> {{-- ./page-content --}}
-  </div> {{-- ./container --}}
+  </div> {{-- ./page-wrapper --}}
 </div> {{-- ./Page View-Name --}}
 @endsection
 
 
 
-@section('custom-script')
+@section( 'custom-script' )
 <script>
 
   // Showing Session Error or Success Message
@@ -52,7 +53,6 @@
       text: sessionSuccess,
     });
   }
-
 
 </script>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('title', 'Template')
 
-@section('content')
+@section('site-content')
 <div class="Page Template">
   <div class="page-wrapper">
     <div class="new-parts-purchase-page">

@@ -15,10 +15,10 @@ class CreateDepartmentsTable extends Migration
   {
     Schema::create('departments', function (Blueprint $table) {
       $table->id();
-      $table->uuid('uid')->unique();
       $table->string('name')->unique();
       $table->string('slug')->unique();
       $table->string('short_name')->unique()->nullable();
+      $table->string('email')->nullable();
 
       $table->timestamps();
     });

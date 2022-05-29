@@ -2,7 +2,7 @@
 
 {{--@section('title', 'Add New Designation')--}}
 
-@section('content')
+@section('site-content')
 <div class="Page Designations New">
   <div class="container-lg">
     <div class="page-content pt-10">

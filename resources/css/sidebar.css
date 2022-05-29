@@ -1,17 +1,17 @@
 
-#Sidebar {
+#Sidebar.collapse.show {
   width: 70px;
 }
 
-#SiteWrapper {
+#SiteWrapper.collapse.show {
   margin-left: 70px;
 }
 
-#Sidebar.expand {
+#Sidebar.collapse.show.expand {
   width: 250px;
 }
 
-#SiteWrapper.expand {
+#SiteWrapper.collapse.show.expand {
   margin-left: 250px;
 }
 

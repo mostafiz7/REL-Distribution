@@ -14,22 +14,24 @@
       </a> --}}
       
       {{-- bg-transparent text-white --}}
-      <button id="PushMenu" class="sidebar-push fz-22 lh-1 mr-15 ml--5 py-3 px-5 border-0">
-        <i class="fa fa-bars lh-1"></i>
-      </button>
+      @if ( auth()->user() )
+        <button id="PushMenu" class="sidebar-push fz-22 lh-1 mr-15 ml--5 py-3 px-5 border-0">
+          <i class="fa fa-bars lh-1"></i>
+        </button>
+      @endif
 
       <div class="navbar-header">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/" class="nav-link {{ str_contains($viewName, 'home') || str_contains($viewName, 'searchForm') ? 'active' : '' }}">Home</a>
+            <a href="/" class="nav-link {{ str_contains($viewName, 'home') ? 'active' : '' }}">Home</a>
           </li>
           
           <li class="nav-item">
-            <a href="/" class="nav-link {{ '' }}">Dashboard</a>
+            <a href="/dashboard" class="nav-link {{ '' }}">Dashboard</a>
           </li>
 
           {{--Purchase-Dropdown--}}
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle {{ ( strpos($viewName, 'purchase-parts') || strpos($viewName, 'searchResult') ) && ! strpos($viewName, 'searchForm') ? 'active' : '' }}"
                href="#" id="Header-Nav-Purchases" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Purchases
@@ -54,10 +56,10 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> --}}
 
           {{--Vehicles-Dropdown--}}
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle {{ strpos($viewName, 'vehicles') ? 'active' : '' }}"
                href="#" id="Header-Nav-Vehicles" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Vehicles
@@ -89,10 +91,10 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> --}}
 
           {{--Parts-Dropdown--}}
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle {{ strpos($viewName, 'parts') && ! strpos($viewName, 'purchase') ? 'active' : '' }}"
                href="#" id="Header-Nav-Parts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Parts
@@ -118,7 +120,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> --}}
 
           {{--Employees-Dropdown--}}
           <li class="nav-item dropdown">
@@ -207,7 +209,7 @@
             <li class="nav-item dropdown">
               <a id="Header-Nav-Account" class="nav-link dropdown-toggle {{ '' }}"
                 href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ Auth::user()->name }}
+                {{ auth()->user()->name }}
               </a>
 
               <ul class="dropdown-menu dropdown-menu-right mt--1 brd-0"

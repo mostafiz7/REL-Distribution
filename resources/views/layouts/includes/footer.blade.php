@@ -10,9 +10,10 @@
         <div class="col-6">
           <div class="copyright">
             <p class="m-0">
-              &copy; <span class="d-none d-sm-inline-block">&nbsp; Developed by</span>
+              &copy;<span class="d-none d-sm-inline-block">&nbsp; Developed by</span>
               <a href="https://www.linkedin.com/in/nurullah-mohammad/" class="text-secondary-4 color-white-hover">Nurullah Mohammad.</a>
             </p>
+            
             {{--<p class="m-0">
               &copy;
               <a href="https://www.linkedin.com/in/nurullah-mohammad/" class="text-white">Nurullah Mohammad.</a>
@@ -22,7 +23,7 @@
 
         <div class="col-6 text-end">
           <div class="version">
-            v1.0.0
+            v1.1
           </div>
         </div>
       </div>

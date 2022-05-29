@@ -2,7 +2,7 @@
 
 {{--@section( 'title', '' )--}}
 
-@section( 'content' )
+@section('site-content')
 <div class="Page Homepage bg-navy-blue text-white">
   <div class="container-lg">
     <div class="page-content">

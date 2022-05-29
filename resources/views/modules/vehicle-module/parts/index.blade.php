@@ -2,7 +2,7 @@
 
 {{--@section( 'title', 'View All Parts' )--}}
 
-@section( 'content' )
+@section('site-content')
 <div class="Page Parts Index">
   <div class="container-fluid">
     <div class="page-content pt-10">

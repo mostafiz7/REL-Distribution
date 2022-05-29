@@ -8,15 +8,13 @@
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
   {{--<title>@yield('title')</title>--}}
-  <title>{{ config('app.name', 'REL-Vehicle Management') }}</title>
+  <title>{{ config('app.name', 'REL-Distribution Management') }}</title>
   
   {{--Styles--}}
   {{--<link href="{{ asset('css/spacer.css') }}" rel="stylesheet" type="text/css" />--}}
   {{--<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />--}}
   {{--<link href="{{ asset('css/responsive.css') }}" rel="stylesheet" type="text/css" />--}}
   <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
-
-  @yield( 'backend-style' )
 
   <script>
     window.User = @json( auth()->user() );
@@ -35,22 +33,25 @@
   <div id="app">
 
     {{--Site-Sidebar--}}
-    @section('sidebar')
-      @include('layouts.includes.sidebar')
-    @show
+    @if ( Auth::check() )
+      @section('sidebar')
+        @include('layouts.includes.sidebar')
+      @show
+    @endif
 
 
     {{--Site-Wrapper--}}
-    <div id="SiteWrapper" class="site-wrapper transition">
+    <div id="SiteWrapper" class="site-wrapper transition {{ auth()->user() ? 'collapse' : '' }}">
+
       {{--Site-Header--}}
       @section('header')
         @include('layouts.includes.header')
       @show
 
 
-      {{--Main-Content--}}
+      {{--Site-Main-Content--}}
       <main id="MainContent" class="main-content">
-        @yield('content')
+        @yield('site-content')
       </main>
 
 

@@ -19,63 +19,48 @@ class Designation_Seeder extends Seeder
     // php artisan db:seed --class=Designation_Seeder
 
     Designation_Model::create([
-      'uid'        => Str::uuid(),
-      'name'       => 'Officer',
-      'slug'       => 'officer',
-      'short_name' => null,
-    ]);
-
-    Designation_Model::create([
-      'uid'        => Str::uuid(),
       'name'       => 'Manager',
       'slug'       => 'manager',
-      'short_name' => null,
+      'short_name' => 'Manager',
     ]);
 
     Designation_Model::create([
-      'uid'        => Str::uuid(),
-      'name'       => 'Electrician',
-      'slug'       => 'electrician',
-      'short_name' => null,
+      'name'       => 'Deputy Manager',
+      'slug'       => 'deputy-manager',
+      'short_name' => 'DM',
     ]);
 
     Designation_Model::create([
-      'uid'        => Str::uuid(),
-      'name'       => 'Technician',
-      'slug'       => 'technician',
-      'short_name' => null,
-    ]);
-
-    Designation_Model::create([
-      'uid'        => Str::uuid(),
-      'name'       => 'Driver',
-      'slug'       => 'driver',
-      'short_name' => null,
-    ]);
-
-    Designation_Model::create([
-      'uid'        => Str::uuid(),
-      'name'       => 'Helper',
-      'slug'       => 'helper',
-      'short_name' => null,
-    ]);
-
-    Designation_Model::create([
-      'uid'        => Str::uuid(),
-      'name'       => 'Porter',
-      'slug'       => 'porter',
-      'short_name' => null,
-    ]);
-
-    Designation_Model::create([
-      'uid'        => Str::uuid(),
-      'name'       => 'Asst. Manager',
-      'slug'       => 'asst-manager',
+      'name'       => 'Assistant Manager',
+      'slug'       => 'assistant-manager',
       'short_name' => 'AM',
     ]);
 
-  }
+    Designation_Model::create([
+      'name'       => 'Senior Executive',
+      'slug'       => 'senior-executive',
+      'short_name' => 'Sr. Executive',
+    ]);
 
+    Designation_Model::create([
+      'name'       => 'Executive',
+      'slug'       => 'executive',
+      'short_name' => 'Executive',
+    ]);
+
+    Designation_Model::create([
+      'name'       => 'Driver',
+      'slug'       => 'driver',
+      'short_name' => 'Driver',
+    ]);
+
+    Designation_Model::create([
+      'name'       => 'Helper',
+      'slug'       => 'helper',
+      'short_name' => 'Helper',
+    ]);
+
+  }
 
 
 }

@@ -2,7 +2,7 @@
 
 {{--@section('title', 'Edit Vehicle-Parts Purchase')--}}
 
-@section('content')
+@section('site-content')
 <div class="Page Vehicle-Parts-Purchase Edit">
   <div class="container-fluid">
     <div class="page-content pt-10">

@@ -31,6 +31,10 @@ class User extends Authenticatable
     'email_verified_at',
     'permissions',
     'routes',
+    'settings',
+    'email_settings',
+    'sms_settings',
+    'notif_settings',
   ];
 
 
@@ -52,6 +56,10 @@ class User extends Authenticatable
     'email_verified_at' => 'datetime',
     'permissions'       => 'array',
     'routes'            => 'array',
+    'settings'          => 'array',
+    'email_settings'    => 'array',
+    'sms_settings'      => 'array',
+    'notif_settings'    => 'array',
   ];
 
 

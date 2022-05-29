@@ -20,7 +20,6 @@ class Designation_Model extends Model
   // protected $guarded = [];
   // protected $guarded = array();
   protected $fillable = [
-    'uid',
     'name',
     'slug',
     'short_name',
@@ -34,7 +33,7 @@ class Designation_Model extends Model
 
 
 
-  public function employee(): \Illuminate\Database\Eloquent\Relations\HasMany
+  public function employees(): \Illuminate\Database\Eloquent\Relations\HasMany
   {
     return $this->hasMany(Employee_Model::class, 'designation_id');
   }

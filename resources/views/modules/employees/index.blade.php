@@ -2,7 +2,7 @@
 
 {{--@section( 'title', 'View All Employee' )--}}
 
-@section( 'content' )
+@section('site-content')
 <div class="Page Employee Index">
   <div class="container-fluid">
     <div class="page-content pt-10">
