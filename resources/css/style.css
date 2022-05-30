@@ -19,7 +19,7 @@ html, body { margin: 0;overflow: hidden; }
 
 html, body, body div, #MainContent { height: 100%; }
 
-#MainContent div { height: auto; }
+/* #MainContent div { height: auto; } */
 
 body {
   color: #111111;
