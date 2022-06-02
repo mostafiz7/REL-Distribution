@@ -27,14 +27,17 @@ class LoginController extends Controller
         if( Auth::user()->active ){
           // $Role_id = Auth::user()->role_id;
           $Role_id = Auth::user()->role_id;
-          if( $Role_id == 1 || $Role_id == 2 ){
+          
+          if( $Role_id == 1 || $Role_id == 2 || $Role_id == 3 || $Role_id == 4 || $Role_id == 5 ){
             return route('admin.dashboard');
+
           } else{
+            // for user $Role_id == 6
             Session::flush();
             Auth::logout();
-            session()->flash('error', 'The user not matched!');
-            return route('login');
+            return dd('Frontend not build for this type users.');
           }
+          
         } else{
           Session::flush();
           Auth::logout();

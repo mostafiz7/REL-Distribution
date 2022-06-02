@@ -32,57 +32,113 @@ class User_Policy
     // $routes        = explode( ',', $user->routes );
     // $current_route = Route::current()->getName();
     // $current_route = Route::currentRouteName();
+    // if( $route_has_access ){ return true; } else{ return false; }
     $current_route = request()->route()->getName();
     return is_array( $user->routes ) && in_array( $current_route, $user->routes );
-    // if( $route_has_access ){ return true; } else{ return false; }
   }
 
 
   public function index( User $user ): bool
   {
     // $permissions    = explode( ',', $user->permissions );
-    return in_array( 'index', $user->permissions );
     // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'index', $user->permissions );
   }
 
 
   public function create( User $user ): bool
   {
     // $permissions    = explode( ',', $user->permissions );
-    return in_array( 'create', $user->permissions );
     // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'create', $user->permissions );
   }
 
 
   public function view( User $user ): bool
   {
     // $permissions    = explode( ',', $user->permissions );
-    return in_array( 'view', $user->permissions );
     // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'view', $user->permissions );
   }
 
 
   public function edit( User $user ): bool
   {
     // $permissions    = explode( ',', $user->permissions );
-    return in_array( 'edit', $user->permissions );
     // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'edit', $user->permissions );
   }
 
   
   public function delete( User $user ): bool
   {
     // $permissions    = explode( ',', $user->permissions );
-    return in_array( 'delete', $user->permissions );
     // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'delete', $user->permissions );
+  }
+
+
+  public function search( User $user ): bool
+  {
+    // $permissions    = explode( ',', $user->permissions );
+    // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'search', $user->permissions );
   }
 
 
   public function print( User $user ): bool
   {
     // $permissions    = explode( ',', $user->permissions );
-    return in_array( 'print', $user->permissions );
     // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'print', $user->permissions );
+  }
+
+
+  public function confirm( User $user ): bool
+  {
+    // $permissions    = explode( ',', $user->permissions );
+    // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'confirm', $user->permissions );
+  }
+
+
+  public function payment( User $user ): bool
+  {
+    // $permissions    = explode( ',', $user->permissions );
+    // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'payment', $user->permissions );
+  }
+
+
+  public function edit_request( User $user ): bool
+  {
+    // $permissions    = explode( ',', $user->permissions );
+    // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'edit_request', $user->permissions );
+  }
+
+
+  public function restore( User $user ): bool
+  {
+    // $permissions    = explode( ',', $user->permissions );
+    // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'restore', $user->permissions );
+  }
+
+
+  public function force_delete( User $user ): bool
+  {
+    // $permissions    = explode( ',', $user->permissions );
+    // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'force_delete', $user->permissions );
+  }
+
+
+  public function approve( User $user ): bool
+  {
+    // $permissions    = explode( ',', $user->permissions );
+    // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'approve', $user->permissions );
   }
 
 

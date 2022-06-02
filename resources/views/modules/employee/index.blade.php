@@ -16,7 +16,7 @@
           <div class="employee-all-area full-height-parent">
             {{--Employee-Search-Block--}}
             <div class="employee-search h-auto fz-14 p-15 pt-10 pb-5">
-              <form method="GET" action="{{ route('employee.all.show') }}"
+              <form method="GET" action="{{ route('employee.all.index') }}"
                     name="employeeSearchForm" id="employeeSearchForm" class="employee-search-form">
 
                 <div class="row">
@@ -110,7 +110,7 @@
 
                       <input type="reset" value="Clear" id="clearEmployeeSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-bold lh-1-4 py-5 px-10 ml-5" />
 
-                      <a href="{{ route('employee.all.show') }}" class="btn btn-dark btn-sm fz-14 fw-bold lh-1-4 py-5 px-10 ml-5">Refresh</a>
+                      <a href="{{ route('employee.all.index') }}" class="btn btn-dark btn-sm fz-14 fw-bold lh-1-4 py-5 px-10 ml-5">Refresh</a>
                     </div>
                   </div>
                 </div>

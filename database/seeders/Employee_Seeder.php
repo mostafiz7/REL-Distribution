@@ -28,8 +28,10 @@ class Employee_Seeder extends Seeder
       'department_id'   => 1,
       'authorize_power' => false,
       'purchase_power'  => false,
+      'user_id'         => 1,
     ]);
 
+    
     Employee_Model::create([
       'uid'             => Str::uuid(),
       'office_id'       => '010578',

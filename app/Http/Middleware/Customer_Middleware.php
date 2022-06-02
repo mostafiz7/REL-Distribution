@@ -8,26 +8,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
-class Admin_Middleware
+class Customer_Middleware
 {
   /**
    * Handle an incoming request.
    * @param  \Illuminate\Http\Request  $request
-   * @param  \Closure  $next
-   * @return mixed
+   * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+   * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
    */
-  public function handle( Request $request, Closure $next )
+  public function handle(Request $request, Closure $next)
   {
     if( Auth::check() ){
       if( Auth::user()->active ){
-        $Role_id = Auth::user()->role_id;
-
-        if( $Role_id == 1 || $Role_id == 2 ){
+        if( Auth::user()->role_id == 6 ){
           return $next( $request );
-          
+
         } else{
-          Session::flush();
-          Auth::logout();
           return redirect()->route('login')->with('error', 'The user not matched with system.');
         }
 
@@ -36,7 +32,7 @@ class Admin_Middleware
         Auth::logout();
         return redirect()->route('login')->with('error', 'The user not active.');
       }
-
+      
     } else{
       return redirect()->route('login')->with('error', 'Please, login first!');
     }

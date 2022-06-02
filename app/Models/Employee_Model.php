@@ -32,13 +32,16 @@ class Employee_Model extends Model
     'gender',
     'marital_status',
     'religion',
-    'primary_contact',
-    'secondary_contact',
+    'phone_personal',
+    'phone_official',
+    // 'primary_contact',
+    // 'secondary_contact',
     'email_personal',
     'email_official',
     'present_address',
     'permanent_address',
     'country',
+    'image',
     'joining_date',
     'confirmation_date',
     'employment_status',
@@ -53,6 +56,8 @@ class Employee_Model extends Model
     'salary',
     'salary_details',
     'previous_salary',
+    'is_overtime_avail',
+    'overtime_rate',
     'authorize_power',
     'purchase_power',
     'user_id',
@@ -61,16 +66,11 @@ class Employee_Model extends Model
 
   // Declare any field as json array
   protected $casts = [
+    'image'           => 'array',
     'salary_details'  => 'array',
     'previous_salary' => 'array',
   ];
 
-
-
-  public function designation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-  {
-    return $this->belongsTo(Designation_Model::class)->withDefault();
-  }
 
 
   public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -79,8 +79,15 @@ class Employee_Model extends Model
   }
 
 
+  public function designation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Designation_Model::class)->withDefault();
+  }
+
+
   public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
   {
+    // return $this->hasOne(User::class, 'employee_id');
     return $this->hasOne(User::class);
   }
 

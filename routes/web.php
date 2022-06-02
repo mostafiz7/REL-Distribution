@@ -3,14 +3,15 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home_Controller;
+use App\Http\Controllers\Admin\Admin_Controller;
+use App\Http\Controllers\User_Controller;
+use App\Http\Controllers\Department_Controller;
+use App\Http\Controllers\Designation_Controller;
+use App\Http\Controllers\Employee_Controller;
 use App\Http\Controllers\Brand_Controller;
 use App\Http\Controllers\Parts_Controller;
 use App\Http\Controllers\Vehicle_Controller;
-use App\Http\Controllers\Employee_Controller;
 use App\Http\Controllers\Purchase_Controller;
-use App\Http\Controllers\Dashboard_Controller;
-use App\Http\Controllers\Department_Controller;
-use App\Http\Controllers\Designation_Controller;
 use App\Http\Controllers\PartsCategory_Controller;
 use App\Http\Controllers\VehicleCategory_Controller;
 
@@ -36,32 +37,43 @@ Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollbac
 Route::get('/db-seed', [Home_Controller::class, 'DatabaseSeed'])->name('database.seed');
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'namespace' => 'admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-back-history'], 'namespace' => 'admin'], function(){
 
   // Admin-Dashboard Routes
-  Route::get('/dashboard', [Dashboard_Controller::class, 'AdminDashboard'])->name('admin.dashboard');
-
+  Route::get('/dashboard', [Admin_Controller::class, 'AdminDashboard'])->name('admin.dashboard');
   
-  // Employees Routes
-  Route::get('/module/employees/employee-index', [Employee_Controller::class, 'EmployeeAll_Index'])->name('employee.all.show');
-  Route::get('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Form'])->name('employee.add.new');
-  Route::post('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Store'])->name('employee.add.new');
-  Route::get('/module/employees/single/{employee_uid}/edit', [Employee_Controller::class, 'EmployeeSingle_Edit'])->name('employee.single.edit');
-  Route::post('/module/employees/single/{employee_uid}/edit', [Employee_Controller::class, 'EmployeeSingle_Update'])->name('employee.single.edit');
+
+  // User Routes
+  Route::get('/user/all', [User_Controller::class, 'UserIndex'])->name('user.all.index');
+  Route::get('/user/new', [User_Controller::class, 'CreateUser'])->name('user.add.new');
+  Route::post('/user/new', [User_Controller::class, 'StoreUser'])->name('user.add.new');
+  Route::get('/user/{uid}/show', [User_Controller::class, 'SingleUser'])->name('user.single.show');
+  Route::get('/user/{uid}/edit', [User_Controller::class, 'EditUser'])->name('user.single.edit');
+  Route::post('/user/{uid}/edit', [User_Controller::class, 'UpdateUser'])->name('user.single.edit');
+  Route::get('/my-account', [User_Controller::class, 'MyAccount'])->name('my.profile.edit');
+  Route::post('/my-account', [User_Controller::class, 'UpdateMyAccount'])->name('my.profile.edit');
 
 
   // Departments Routes
-  Route::get('/module/employees/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.add.new');
-  Route::post('/module/employees/departments', [Department_Controller::class, 'DepartmentNew_Store'])->name('department.add.new');
-  Route::get('/module/employees/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Edit'])->name('department.single.edit');
-  Route::post('/module/employees/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Update'])->name('department.single.edit');
+  Route::get('/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.add.new');
+  Route::post('/departments', [Department_Controller::class, 'DepartmentNew_Store'])->name('department.add.new');
+  Route::get('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Edit'])->name('department.single.edit');
+  Route::post('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Update'])->name('department.single.edit');
 
 
   // Designations Routes
-  Route::get('/module/employees/designations', [Designation_Controller::class, 'DesignationNew_Form'])->name('designation.add.new');
-  Route::post('/module/employees/designations', [Designation_Controller::class, 'DesignationNew_Store'])->name('designation.add.new');
-  Route::get('/module/employees/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Edit'])->name('designation.single.edit');
-  Route::post('/module/employees/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Update'])->name('designation.single.edit');
+  Route::get('/designations', [Designation_Controller::class, 'DesignationNew_Form'])->name('designation.add.new');
+  Route::post('/designations', [Designation_Controller::class, 'DesignationNew_Store'])->name('designation.add.new');
+  Route::get('/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Edit'])->name('designation.single.edit');
+  Route::post('/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Update'])->name('designation.single.edit');
+  
+  
+  // Employees Routes
+  Route::get('/employee/index', [Employee_Controller::class, 'EmployeeIndex'])->name('employee.all.index');
+  Route::get('/employee/new', [Employee_Controller::class, 'CreateEmployee'])->name('employee.add.new');
+  Route::post('/employee/new', [Employee_Controller::class, 'StoreEmployee'])->name('employee.add.new');
+  Route::get('/employee/{uid}/edit', [Employee_Controller::class, 'EditEmployee'])->name('employee.single.edit');
+  Route::post('/employee/{uid}/edit', [Employee_Controller::class, 'UpdateEmployee'])->name('employee.single.edit');
 
 
   // Vehicles Routes

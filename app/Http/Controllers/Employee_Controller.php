@@ -8,18 +8,19 @@ use App\Models\Employee_Model;
 use Illuminate\Validation\Rule;
 use App\Models\Department_Model;
 use App\Models\Designation_Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 
 class Employee_Controller extends Controller
 {
   // Show All-Employee
-  function EmployeeAll_Index( Request $request )
+  function EmployeeIndex( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
-      return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', RouteNotAuthorized());
+    }
 
     $status             = $request->status ?? null;
     $search_by          = $request->search_by ?? null;
@@ -99,7 +100,7 @@ class Employee_Controller extends Controller
 
     $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
 
-    return view('modules.employees.index')->with([
+    return view('modules.employee.index')->with([
       'employee_all'        => $employee_all,
       'status'              => $status,
       'search_by'           => $search_by,
@@ -116,19 +117,19 @@ class Employee_Controller extends Controller
 
 
   // Show New-Employee-Form
-  function EmployeeNew_Form( Request $request )
+  function CreateEmployee( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
-      return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', RouteNotAuthorized());
+    }
 
     $department_all  = Department_Model::orderBy('name', 'asc')->get()->all();
     $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
 
     // $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
 
-    return view('modules.employees.new')->with([
+    return view('modules.employee.new')->with([
       'department_all'      => $department_all,
       'designation_all'     => $designation_all,
       'employment_statuses' => EmploymentStatus(),
@@ -137,12 +138,12 @@ class Employee_Controller extends Controller
 
 
   // Store New-Employee
-  function EmployeeNew_Store( Request $request )
+  function StoreEmployee( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
-      return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', RouteNotAuthorized());
+    }
 
     $employment_statuses = implode(',', EmploymentStatus());
     $employment_status = $request->employment_status == 'permanent';
@@ -188,14 +189,14 @@ class Employee_Controller extends Controller
 
 
   // Employee Edit Form
-  function EmployeeSingle_Edit( $employee_uid, Request $request )
+  function EditEmployee( $uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
-      return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', RouteNotAuthorized());
+    }
 
-    $employee = Employee_Model::where('uid', $employee_uid)->first();
+    $employee = Employee_Model::where('uid', $uid)->first();
 
     if( ! $employee ) return back()->with('error', 'The employee not found in system!');
 
@@ -204,7 +205,7 @@ class Employee_Controller extends Controller
 
     // $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
 
-    return view('modules.employees.edit')->with([
+    return view('modules.employee.edit')->with([
       'employee'            => $employee,
       'department_all'      => $department_all,
       'designation_all'     => $designation_all,
@@ -214,14 +215,14 @@ class Employee_Controller extends Controller
 
 
   // Update Employee
-  function EmployeeSingle_Update( $employee_uid, Request $request )
+  function UpdateEmployee( $uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
-      return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', RouteNotAuthorized());
+    }
 
-    $employee = Employee_Model::where('uid', $employee_uid)->first();
+    $employee = Employee_Model::where('uid', $uid)->first();
 
     if( ! $employee ) return back()->with('error', 'The employee not found in system!');
     
@@ -264,7 +265,7 @@ class Employee_Controller extends Controller
 
     $employeeUpdated = $employee->update( $employeeUpdateData );
 
-    return redirect()->route('employee.all.show')->with('success', "The employee ($employee->name) updated successfully!");
+    return redirect()->route('employee.all.index')->with('success', "The employee ($employee->name) updated successfully!");
   }
 
 

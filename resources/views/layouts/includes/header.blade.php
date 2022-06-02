@@ -27,7 +27,9 @@
           </li>
           
           <li class="nav-item">
-            <a href="/dashboard" class="nav-link {{ '' }}">Dashboard</a>
+            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ '' }}">
+              Dashboard
+            </a>
           </li>
 
           {{--Purchase-Dropdown--}}
@@ -124,33 +126,33 @@
 
           {{--Employees-Dropdown--}}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle {{ strpos($viewName, 'employees') ? 'active' : '' }}"
+            <a class="nav-link dropdown-toggle {{ strpos($viewName, 'employee') ? 'active' : '' }}"
                href="#" id="Header-Nav-Employees" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Employees
             </a>
             <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Employees">
               <li class="">
                 <a href="{{ route('employee.add.new') }}"
-                   class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'new') ? 'active' : '' }}">
+                   class="dropdown-item {{ strpos($viewName, 'employee') && strpos($viewName, 'new') ? 'active' : '' }}">
                   Add Employee
                 </a>
               </li>
               <li class="">
-                <a href="{{ route('employee.all.show') }}"
-                   class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'index') ? 'active' : '' }}">
+                <a href="{{ route('employee.all.index') }}"
+                   class="dropdown-item {{ strpos($viewName, 'employee') && strpos($viewName, 'index') ? 'active' : '' }}">
                   Employee Index
                 </a>
               </li>
               <li class="dropdown-item-divider border-secondary-4 my-3"></li>
               <li class="">
                 <a href="{{ route('department.add.new') }}"
-                   class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'departments') ? 'active' : '' }}">
+                   class="dropdown-item {{ strpos($viewName, 'department') ? 'active' : '' }}">
                   Departments
                 </a>
               </li>
               <li class="">
                 <a href="{{ route('designation.add.new') }}"
-                   class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'designations') ? 'active' : '' }}">
+                   class="dropdown-item {{ strpos($viewName, 'designation') ? 'active' : '' }}">
                   Designations
                 </a>
               </li>

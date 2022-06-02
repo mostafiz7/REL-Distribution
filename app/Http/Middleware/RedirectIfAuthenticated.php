@@ -39,17 +39,20 @@ class RedirectIfAuthenticated
         if( Auth::user()->active ){
           //$Role_id = Auth::user()->role->id;
           $Role_id = Auth::user()->role_id;
+
           if( $Role_id == 1 || $Role_id == 2 ){
             return redirect()->route('admin.dashboard');
 
           } else{
             return redirect()->route('homepage');
           }
+          
         } else{
           Session::flush();
           Auth::logout();
           return redirect()->route('login')->with('error', 'The user not active.');
         }
+
       } else{
         return $next($request);
       }

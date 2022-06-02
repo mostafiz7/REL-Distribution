@@ -17,14 +17,16 @@ class CreateUsersTable extends Migration
       $table->id();
       $table->uuid('uid')->unique();
       $table->string('name');
-      $table->string('email')->unique();
       $table->string('username')->unique();
+      $table->string('email')->unique();
+      $table->timestamp('email_verified_at')->nullable();
       $table->boolean('active')->default(1);
       $table->string('password');
       // $table->tinyText('role');
-      $table->unsignedTinyInteger('role_id');
-      $table->unsignedBigInteger('employee_id')->unique(); // Employee ID
-      $table->timestamp('email_verified_at')->nullable();
+      // $table->unsignedTinyInteger('role_id');
+      // $table->unsignedBigInteger('employee_id')->unique(); // Employee ID
+      $table->string('phone_personal')->unique()->nullable();
+      $table->string('phone_official')->unique()->nullable();
       $table->json('permissions');
       $table->json('routes');
       $table->json('settings')->nullable(); // User Other Settings
@@ -35,11 +37,10 @@ class CreateUsersTable extends Migration
       $table->rememberToken();
       $table->timestamps();
       
-      $table->foreign('role_id')
+      /* $table->foreign('role_id')
         ->references('id')->on('roles')->onUpdate('cascade');
-        
       $table->foreign('employee_id')
-        ->references('id')->on('employees')->onUpdate('cascade');
+        ->references('id')->on('employees')->onUpdate('cascade'); */
     });
   }
 
