@@ -1,8 +1,8 @@
-@extends( 'layouts.admin' )
+@extends( 'layouts.app' )
 
 @section( 'title', 'Create New User' )
 
-@section( 'admin-content' )
+@section( 'site-content' )
 <div class="Page User New">
   <div class="page-wrapper py-15">
     <div class="new-user-page">

@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         Intervention\Image\ImageServiceProvider::class,
+        Flasher\Laravel\FlasherServiceProvider::class,
 
 
         /*
@@ -243,6 +244,7 @@ return [
          * Package Service Providers...
          */
         'Image' => Intervention\Image\Facades\Image::class,
+        'Flasher' => Flasher\Laravel\Facade\Flasher::class,
         
 
     ],

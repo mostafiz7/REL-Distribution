@@ -15,6 +15,7 @@
 
 /* Custom-CSS */
 @import 'sweetalert2.css';
+@import 'flasher.css';
 @import 'spacer.css';
 @import 'sidebar.css';
 @import 'header.css';

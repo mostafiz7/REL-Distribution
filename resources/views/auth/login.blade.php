@@ -4,12 +4,12 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-8 h-auto">
-      <div class="card h-auto mt-100">
+      <div class="card h-auto mt-120">
         <div class="card-header fz-20 fw-500 py-10">
           {{ __('Login') }}
         </div>
 
-        <div class="card-body py-80">
+        <div class="card-body py-50">
           <form method="POST" action="{{ route('login') }}">
             @csrf
 

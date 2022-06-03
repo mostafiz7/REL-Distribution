@@ -1,0 +1,13 @@
+
+.fl-main-container {
+  height: auto;
+}
+
+.fl-flasher.fl-container.fl-success.fl-show {
+  /* height: auto; */
+}
+
+.fl-main-container .fl-container.fl-flasher .fl-message {
+  color: #000;
+  font-size: 16px !important;
+}

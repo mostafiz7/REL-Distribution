@@ -1,8 +1,8 @@
-@extends( 'layouts.admin' )
+@extends( 'layouts.app' )
 
 @section( 'title', 'Show Single User' )
 
-@section( 'admin-content' )
+@section( 'site-content' )
 <div class="Page User Single">
   <div class="page-wrapper py-15">
     <div class="single-user-page">

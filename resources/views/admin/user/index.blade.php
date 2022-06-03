@@ -1,10 +1,10 @@
-@extends( 'layouts.admin' )
+@extends( 'layouts.app' )
 
 @section( 'title', 'User All Index' )
 
-@section( 'admin-content' )
+@section( 'site-content' )
 <div class="Page User All">
-  <div class="page-wrapper py-10">
+  <div class="page-wrapper p-10">
     <div class="all-user-page">
       <div class="page-content">
         <div class="card">
@@ -30,11 +30,11 @@
             </div>
           @endif--}}
 
-          <div class="card-body overflowY-scroll">
+          <div class="card-body overflowY-scroll pt-10">
             <div class="page-body">
               <div class="all-user-area">
-                <div class="user-search-block">
-                  <form method="GET" action="{{ route('user.all.index') }}" name="AllUserForm" id="AllUserForm" class="row mb-20 mr-30 user-form all">
+                <div class="user-search-block h-auto mb-10">
+                  <form method="GET" action="{{ route('user.all.index') }}" name="AllUserForm" id="AllUserForm" class="row mr-30 user-form all">
                     @csrf
 
                     {{--Search-By--}}
@@ -88,8 +88,9 @@
                       <thead class="bg-dark text-white text-center fw-normal">
                         <tr class="user-row align-middle">
                           <th class="serial">##</th>
-                          <th class="user-name">Name</th>
+                          <th class="user-username">Username</th>
                           <th class="user-status">Status</th>
+                          <th class="user-name">Name</th>
                           <th class="user-email">Email</th>
                           <th class="user-role">Role</th>
                           <th class="user-contact">Contact #</th>
@@ -105,14 +106,18 @@
                               {{ $serial++ }}
                             </td>
 
-                            <td class="user-name">
-                              {{ $user->first_name . ' ' . $user->last_name }}
+                            <td class="user-username">
+                              {{ $user->username }}
                             </td>
 
                             <td class="user-status text-center">
-                              <span class="{{ $user->active ? 'bg-success' : 'bg-danger' }} text-white fz-14 fw-500 lh-1-6 px-5 brd-3">
+                              <span class="{{ $user->active ? 'bg-success' : 'bg-danger' }} text-white fz-14 fw-500 lh-1-6 py-2 px-8 brd-3">
                                 {{ $user->active ? 'Active' : 'In-Active' }}
                               </span>
+                            </td>
+
+                            <td class="user-name">
+                              {{ $user->name }}
                             </td>
 
                             <td class="user-email">
@@ -120,41 +125,41 @@
                             </td>
 
                             <td class="user-role">
-                              {{ ucwords( str_replace( '-', ' ', $user->role ) ) }}
+                              {{ $user->role->name }}
                             </td>
 
                             <td class="user-contact">
-                              {{ $user->mobile_number ?? '' }}
-                              @if ( $user->landline_number )
-                                @if ( $user->mobile_number ) <br> @endif
-                                  {{ $user->landline_number }}
+                              {{ $user->phone_personal ?? '' }}
+                              @if ( $user->phone_official )
+                                @if ( $user->phone_personal ) <br> @endif
+                                  {{ $user->phone_official }}
                               @endif
-                              @if ( ! $user->mobile_number && ! $user->landline_number ) --- @endif
+                              @if ( ! $user->phone_personal && ! $user->phone_official ) --- @endif
                             </td>
 
                             <td class="user-image w-120px">
                               <div class="image-box">
                                 <?php
                                   /* @var $user */
-                                  $hasImage = $user->image && file_exists( public_path( $user->image['url'] ) ) ? $user->image['url'] : null;
+                                  $hasImage = $user->employee->image && file_exists( public_path( $user->employee->image['url'] ) ) ? $user->employee->image['url'] : null;
                                 ?>
                                 @if ( $hasImage )
                                   <a href="{{ asset($hasImage) }}" class="image-on-lightbox cur-zoomIn">
                                     <img src="{{ asset($hasImage) }}" alt="User image" class="user-img w-100" />
                                   </a>
                                 @else
-                                  <img src="https://via.placeholder.com/800x680.jpg" alt="User image not found" class="user-img w-100" />
+                                  <img src="https://via.placeholder.com/800x680.jpg" alt="" class="user-img w-100" />
                                 @endif
                               </div>
                             </td>
 
                             <td class="actions text-center">
-                              <a href="{{ route('user.single.show', $user->id) }}"
-                                class="show-single-user btn btn-primary fz-14 fw-500 py-1 px-2 brd-3">View</a>
+                              <a href="{{ route('user.single.show', $user->uid) }}"
+                                class="show-single-user btn btn-primary fz-14 fw-500 py-3 px-10 brd-3">View</a>
 
                               @if ( Auth::user()->can('isSuperAdmin') && Auth::user()->can('entryEdit') )
-                                <a href="{{ route('user.single.edit', $user->id) }}"
-                                  class="edit-user btn btn-success fz-14 fw-500 py-1 px-2 brd-3 ms-1">Edit</a>
+                                <a href="{{ route('user.single.edit', $user->uid) }}"
+                                  class="edit-user btn btn-success fz-14 fw-500 py-3 px-10 brd-3 ms-1">Edit</a>
                               @endif
                             </td>
                           </tr>

@@ -1,8 +1,8 @@
-@extends( 'layouts.admin' )
+@extends( 'layouts.app' )
 
 @section( 'title', 'My Account' )
 
-@section( 'admin-content' )
+@section( 'site-content' )
 <div class="Page MyAccount">
   <div class="page-wrapper py-15">
     <div class="myAccount-page">

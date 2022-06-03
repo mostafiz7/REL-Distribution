@@ -29,9 +29,11 @@ class Home_Controller extends Controller
     /* $parts_all   = Parts_Model::orderBy( 'name', 'asc' )->get()->all();
     $vehicle_all = Vehicle_Model::orderBy( 'vehicle_no', 'asc' )->get()->all(); */
 
-    return view('pages.homepage')->with([
+    /* return view('pages.homepage')->with([
       'welcome'     => 'Welcome',
-    ]);
+    ]); */
+    
+    return redirect()->route('login');
   }
 
 

@@ -19,6 +19,8 @@ html, body { margin: 0;overflow: hidden; }
 
 html, body, body div, #MainContent { height: 100%; }
 
+.pagination-links { height: auto; }
+
 /* #MainContent div { height: auto; } */
 
 body {
@@ -584,6 +586,7 @@ td.actions {
 .Vehicle-Parts-Purchase.Search-Result .search-form .d-flex .form-control:not(.input-date) {
   width: calc(100% - 100px);
 }
+
 
 
 

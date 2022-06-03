@@ -26,12 +26,14 @@ class DatabaseSeeder extends Seeder
     // $this->call(PartsCategory_Seeder::class);
     // $this->call(Parts_Seeder::class);
 
-    // $this->call(Settings_Seeder::class);
+    $this->call(Settings_Seeder::class);
 
     $this->call(Department_Seeder::class);
     $this->call(Designation_Seeder::class);
     $this->call(Employee_Seeder::class);
     
+    $this->call(Permission_Seeder::class);
+    $this->call(Role_Seeder::class);
     $this->call(User_Seeder::class);
 
   }

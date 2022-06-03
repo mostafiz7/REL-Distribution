@@ -138,7 +138,7 @@
                 <tbody class="table-body fz-12 align-middle">
                   @if ( $employee_all && count($employee_all) > 0 )
                     @foreach ( $employee_all as $index => $employee )
-                      @include('modules.employees.index-tableRow', $employee)
+                      @include('modules.employee.index-tableRow', $employee)
                     @endforeach
                   @else
                     <tr class="table-row content no-employee align-middle">

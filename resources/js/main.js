@@ -1,5 +1,7 @@
 /* Custom-JS */
 
+const Log = require("laravel-mix/src/Log");
+
 (function($){
 	"use strict";
 	
@@ -60,12 +62,14 @@
 			if( ! $(this).hasClass("expanded") ){
 				$(this).addClass("expanded");
 				$("#Sidebar").addClass("expand");
+				$(".sidebar-wrapper").removeClass("hidden");
 				$("#SiteWrapper").addClass("expand");
 				$("#Sidebar .logo-only").addClass("d-none");
 				$("#Sidebar .logo-text").removeClass("d-none");
 			} else{
 				$(this).removeClass("expanded");
 				$("#Sidebar").removeClass("expand");
+				$(".sidebar-wrapper").addClass("hidden");
 				$("#SiteWrapper").removeClass("expand");
 				$("#Sidebar .logo-only").removeClass("d-none");
 				$("#Sidebar .logo-text").addClass("d-none");
@@ -74,6 +78,7 @@
 		$("#Sidebar").mouseover(function(){
 			if( ! $("#PushMenu").hasClass("expanded") ){
 				$(this).addClass("expand");
+				$(".sidebar-wrapper").removeClass("hidden");
 				$("#SiteWrapper").addClass("expand");
 				$("#Sidebar .logo-only").addClass("d-none");
 				$("#Sidebar .logo-text").removeClass("d-none");
@@ -82,10 +87,33 @@
 		$("#Sidebar").mouseleave(function(){
 			if( ! $("#PushMenu").hasClass("expanded") ){
 				$(this).removeClass("expand");
+				$(".sidebar-wrapper").addClass("hidden");
 				$("#SiteWrapper").removeClass("expand");
 				$("#Sidebar .logo-only").removeClass("d-none");
 				$("#Sidebar .logo-text").addClass("d-none");
 			}
+		});
+
+
+		// Dropdown menu toggle
+		$(".dropmenu-toggle").each(function(){
+			$(this).on('click', function(){
+				$(this).toggleClass("active");
+				$(this).next().toggleClass("show");
+
+				/* if( ! $(this).hasClass("active") ){
+					$(this).addClass("active");
+					if( ! $(this).next().hasClass("show") ){
+						$(this).next().addClass("show");
+					}
+				} else{
+					$(this).removeClass("active");
+					if( $(this).next().hasClass("show") ){
+						$(this).next().removeClass("show");
+					}
+				} */
+
+			});
 		});
 
 		
@@ -125,6 +153,32 @@
 		});
 
 
+		// Previous element width
+		$(".full-width-prev-auto").each(function(){
+			let prevWidth = $(this).prev().outerWidth();
+			let prevML   	= $(this).prev().css('margin-left');
+			let prevMR   	= $(this).prev().css('margin-right');
+			let prevMLval = Number(prevML.replace(/[^0-9]/g, ''));
+			let prevMRval = Number(prevMR.replace(/[^0-9]/g, ''));
+			let prevWidthVal = (prevWidth + prevMLval + prevMRval);
+			// let parentWidth = $(this).parent().innerWidth();
+			let parentWidth = $(this).parent().width();
+			// let parentPL 		= $(this).parent().css('padding-left'); // padding-left value
+			// let parentPR 		= $(this).parent().css('padding-right'); // padding-right value
+			let this_width  = (parentWidth - prevWidthVal - 5) + 'px';
+			$(this).css('width', this_width);
+		});
+
+
+		// Previous element height
+		$(".full-height-prev-auto").each(function(){
+			let prevHeight   = $(this).prev().outerHeight();
+			let parentHeight = $(this).parent().innerHeight();
+			let this_height  = (parentHeight - prevHeight) + 'px';
+			$(this).css('height', this_height);
+		});
+
+
 		// Set-Element-Height-by-Minus-Figured-Full-Height instead of calc(100% - minusPX);
 		$('.full-height-minus').each(function(){
 			let class_list = $(this).attr('class').split(/\s+/);
@@ -138,15 +192,6 @@
 			parentHeight = $(this).closest('.full-height-parent').innerHeight();
 			// let parentHeight = $(this).closest('.full-height-parent').outerHeight();
 			this_height = (parentHeight - Number(minusClassArr[1])) + 'px';
-			$(this).css('height', this_height);
-		});
-
-
-		// Previous element height
-		$(".full-height-prev-auto").each(function(){
-			let prevHeight   = $(this).prev().outerHeight();
-			let parentHeight = $(this).parent().innerHeight();
-			let this_height  = (parentHeight - prevHeight) + 'px';
 			$(this).css('height', this_height);
 		});
 
@@ -174,6 +219,68 @@
 				if( $("input[type=radio]#active").next().hasClass('bg-success text-white fw-bold py-1 px-10') ){
 					$("input[type=radio]#active").next().removeClass('bg-success text-white fw-bold py-1 px-10');
 				} */
+			}
+		});
+
+
+		// Show Password
+		$(".show-password").on('click', function(){
+			let password = $(this).prev()[0];
+			let icon = $(this).children();
+			if( password.type === 'password' ){
+				password.type = 'text';
+				$(this).removeClass('text-secondary');
+				$(this).addClass('text-danger');
+				icon.removeClass('fa-eye-slash');
+				icon.addClass('fa-eye');
+			} else{
+				password.type = 'password';
+				$(this).removeClass('text-danger');
+				$(this).addClass('text-secondary');
+				icon.removeClass('fa-eye');
+				icon.addClass('fa-eye-slash');
+			}
+		});
+
+
+		// Show Old-Password
+		$(".show-old-password").on('click', function(){
+			let password = $(this).prev()[0];
+			let icon = $(this).children();
+			if( password.type === 'password' ){
+				password.type = 'text';
+				$(this).removeClass('text-secondary');
+				$(this).addClass('text-danger');
+				icon.removeClass('fa-eye-slash');
+				icon.addClass('fa-eye');
+			} else{
+				password.type = 'password';
+				$(this).removeClass('text-danger');
+				$(this).addClass('text-secondary');
+				icon.removeClass('fa-eye');
+				icon.addClass('fa-eye-slash');
+			}
+		});
+
+		
+		// Select-All Permissions
+		$("input[type=checkbox].permission.select-all").on("click", function(){
+			$("input[type=checkbox].permission").prop("checked", $(this).prop("checked"));
+		});
+		$("input[type=checkbox].permission").on("click", function(){
+			if( ! $(this).prop("checked") ){
+				$("input[type=checkbox].permission.select-all").prop("checked", false);
+			}
+		});
+		
+		
+		// Select-All Routes
+		$("input[type=checkbox].route.select-all").on("click", function(){
+			$("input[type=checkbox].route").prop("checked", $(this).prop("checked"));
+		});
+		$("input[type=checkbox].route").on("click", function(){
+			if( ! $(this).prop("checked") ){
+				$("input[type=checkbox].route.select-all").prop("checked", false);
 			}
 		});
 

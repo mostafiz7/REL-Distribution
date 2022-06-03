@@ -11,7 +11,7 @@ class Admin_Controller extends Controller
   public function AdminDashboard()
   {
     return view('admin.dashboard');
-    // return redirect()->route('homepage');
+    // return redirect()->route('login');
   }
 
 

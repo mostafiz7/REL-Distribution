@@ -33,15 +33,15 @@
   <div id="app">
 
     {{--Site-Sidebar--}}
-    @if ( Auth::check() )
+    @auth
       @section('sidebar')
         @include('layouts.includes.sidebar')
       @show
-    @endif
+    @endauth
 
 
     {{--Site-Wrapper--}}
-    <div id="SiteWrapper" class="site-wrapper transition {{ auth()->user() ? 'collapse' : '' }}">
+    <div id="SiteWrapper" class="site-wrapper transition {{ auth()->user() ? 'show expand' : '' }}">
 
       {{--Site-Header--}}
       @section('header')
@@ -67,6 +67,8 @@
   {{--Scripts--}}
   {{--<script src="{{ asset('js/main.js') }}"></script>--}}
   <script src="{{ asset('js/app.js') }}"></script>
+
+  @flasher_render
 
   {{--Custom-Script--}}
   @yield('custom-script')
