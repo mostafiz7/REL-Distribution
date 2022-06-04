@@ -42,7 +42,7 @@ class User_Controller extends Controller
     }
 
     $searchBy = $request->search_by ?? null;
-    $status   = $request->status == 'active' ? 'active' : ($request->status == 'inactive' ? 'inactive' : null);
+    $status   = $request->status ?? null;
 
     $searchColumns = ['name', 'username', 'email', 'phone_personal', 'phone_official'];
     $role_id = [ 1, 2, 3, 4, 5 ];
@@ -68,7 +68,7 @@ class User_Controller extends Controller
       $user_all = $user_all->where('active', '=', 1);
     }
     
-    if( $status == 'inactive' ){
+    if( $status == 'not-active' ){
       $user_all = $user_all->where('active', '=', 0);
     }
     

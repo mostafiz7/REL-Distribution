@@ -7,8 +7,14 @@
   <div class="container-fluid">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-success text-white">
-          <h5 class="title mb-0">Employee Index</h5>
+        <div class="card-header page-header d-flex justify-content-between align-items-center bg-success text-white">
+          <h5 class="card-title title lh-1-5 my-0">Employee Index</h5>
+
+          <div class="">
+            <a href="{{ route('employee.new.create') }}" class="btn btn-light btn-sm fw-bold">
+              Add Employee
+            </a>
+          </div>
         </div>
 
 
