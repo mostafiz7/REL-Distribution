@@ -45,35 +45,35 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
 
   // User Routes
   Route::get('/user/all', [User_Controller::class, 'UserIndex'])->name('user.all.index');
-  Route::get('/user/new', [User_Controller::class, 'CreateUser'])->name('user.add.new');
-  Route::post('/user/new', [User_Controller::class, 'StoreUser'])->name('user.add.new');
+  Route::get('/user/new', [User_Controller::class, 'CreateUser'])->name('user.new.create');
+  Route::post('/user/new', [User_Controller::class, 'StoreUser'])->name('user.new.store');
   Route::get('/user/{uid}/show', [User_Controller::class, 'SingleUser'])->name('user.single.show');
   Route::get('/user/{uid}/edit', [User_Controller::class, 'EditUser'])->name('user.single.edit');
-  Route::post('/user/{uid}/edit', [User_Controller::class, 'UpdateUser'])->name('user.single.edit');
-  Route::get('/my-account', [User_Controller::class, 'MyAccount'])->name('my.profile.edit');
-  Route::post('/my-account', [User_Controller::class, 'UpdateMyAccount'])->name('my.profile.edit');
+  Route::post('/user/{uid}/edit', [User_Controller::class, 'UpdateUser'])->name('user.single.update');
+  Route::get('/my-account', [User_Controller::class, 'MyAccount'])->name('my-profile.edit');
+  Route::post('/my-account', [User_Controller::class, 'UpdateMyAccount'])->name('my-profile.update');
 
 
   // Departments Routes
-  Route::get('/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.add.new');
-  Route::post('/departments', [Department_Controller::class, 'DepartmentNew_Store'])->name('department.add.new');
+  Route::get('/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.new.create');
+  Route::post('/departments', [Department_Controller::class, 'DepartmentNew_Store'])->name('department.new.store');
   Route::get('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Edit'])->name('department.single.edit');
-  Route::post('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Update'])->name('department.single.edit');
+  Route::post('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Update'])->name('department.single.update');
 
 
   // Designations Routes
-  Route::get('/designations', [Designation_Controller::class, 'DesignationNew_Form'])->name('designation.add.new');
-  Route::post('/designations', [Designation_Controller::class, 'DesignationNew_Store'])->name('designation.add.new');
+  Route::get('/designations', [Designation_Controller::class, 'DesignationNew_Form'])->name('designation.new.create');
+  Route::post('/designations', [Designation_Controller::class, 'DesignationNew_Store'])->name('designation.new.store');
   Route::get('/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Edit'])->name('designation.single.edit');
-  Route::post('/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Update'])->name('designation.single.edit');
+  Route::post('/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Update'])->name('designation.single.update');
   
   
   // Employees Routes
   Route::get('/employee/index', [Employee_Controller::class, 'EmployeeIndex'])->name('employee.all.index');
-  Route::get('/employee/new', [Employee_Controller::class, 'CreateEmployee'])->name('employee.add.new');
-  Route::post('/employee/new', [Employee_Controller::class, 'StoreEmployee'])->name('employee.add.new');
+  Route::get('/employee/new', [Employee_Controller::class, 'CreateEmployee'])->name('employee.new.create');
+  Route::post('/employee/new', [Employee_Controller::class, 'StoreEmployee'])->name('employee.new.store');
   Route::get('/employee/{uid}/edit', [Employee_Controller::class, 'EditEmployee'])->name('employee.single.edit');
-  Route::post('/employee/{uid}/edit', [Employee_Controller::class, 'UpdateEmployee'])->name('employee.single.edit');
+  Route::post('/employee/{uid}/edit', [Employee_Controller::class, 'UpdateEmployee'])->name('employee.single.update');
 
 
   // Vehicles Routes

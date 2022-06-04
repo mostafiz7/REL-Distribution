@@ -24,11 +24,12 @@ class Employee_Seeder extends Seeder
       'name'            => 'Nurullah Mohammad',
       'nickname'        => 'Mostafiz',
       'active'          => true,
+      'email_official'  => 'admin@nurullah.biz',
       'designation_id'  => 1,
       'department_id'   => 1,
       'authorize_power' => false,
       'purchase_power'  => false,
-      'user_id'         => 1,
+      // 'user_id'         => 1,
     ]);
 
     
@@ -38,6 +39,7 @@ class Employee_Seeder extends Seeder
       'name'            => 'Md. Shahidullah',
       'nickname'        => 'Shahidullah',
       'active'          => true,
+      'email_official'  => 'shahidullah@nurullah.biz',
       'designation_id'  => 2,
       'department_id'   => 1,
       'authorize_power' => true,

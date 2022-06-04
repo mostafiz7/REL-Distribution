@@ -114,7 +114,7 @@ class User_Policy
   {
     // $permissions    = explode( ',', $user->permissions );
     // if( $has_permission ){ return true; } else{ return false; }
-    return in_array( 'edit_request', $user->permissions );
+    return in_array( 'edit-request', $user->permissions );
   }
 
 
@@ -130,7 +130,7 @@ class User_Policy
   {
     // $permissions    = explode( ',', $user->permissions );
     // if( $has_permission ){ return true; } else{ return false; }
-    return in_array( 'force_delete', $user->permissions );
+    return in_array( 'force-delete', $user->permissions );
   }
 
 

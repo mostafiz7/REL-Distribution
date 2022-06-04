@@ -4,7 +4,7 @@
 
 @section( 'site-content' )
 <div class="Page User New">
-  <div class="page-wrapper py-15">
+  <div class="page-wrapper p-10">
     <div class="new-user-page">
       <div class="page-content">
         <div class="card">
@@ -30,38 +30,108 @@
             </div>
           @endif--}}
 
-          <div class="card-body">
+          <div class="card-body overlay-scrollbar">
             <div class="page-body">
               <div class="new-user-area mt-20">
-                <form method="POST" action="{{ route('user.add.new') }}" enctype="multipart/form-data" name="NewUserForm" id="NewUserForm" class="user-form new row mx-0">
+                <form method="POST" action="{{ route('user.new.store') }}" enctype="multipart/form-data" name="NewUserForm" id="NewUserForm" class="user-form new row mx-0">
                   @csrf
 
-                  {{--First-Name--}}
-                  <div class="col-lg-6 mb-20 first-name">
+                  {{-- Employee-Name --}}
+                  <div class="col-lg-6 mb-30 employee-name">
                     <div class="row">
-                      <label for="" class="required col-4"><span>First Name</span></label>
-                      <div class="col-7">
-                        <input type="text" name="first_name" id="first_name" class="required form-control border-secondary brd-3 @error('first_name') is-invalid @enderror" placeholder="First name" value="{{ old('first_name') }}" />
+                      <label for="employee-name" class="required col-4">
+                        <span>Employee Name</span>
+                      </label>
 
-                        @if ( $errors->has('first_name') )
+                      <div class="col-7">
+                        <select name="employee_id" id="employee-name" class="required form-select border-secondary brd-3 @error('employee_id') is-invalid @enderror">
+                          <option value="">Select Employee Name</option>
+
+                          @if ( $employee_all && count($employee_all) > 0 )
+                            @foreach ( $employee_all as $employee )
+                              <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->name }}</option>
+                            @endforeach
+                          @endif
+                        </select>
+
+                        @if ( $errors->has('employee_id') )
                           <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('first_name') }}
+                            {{ $errors->first('employee_id') }}
                           </div>
                         @endif
                       </div>
                     </div>
                   </div>
 
-                  {{--Last-Name--}}
-                  <div class="col-lg-6 mb-20 last-name">
-                    <div class="row justify-content-end">
-                      <label for="" class="required col-4"><span>Last Name</span></label>
-                      <div class="col-7">
-                        <input type="text" name="last_name" id="last_name" class="required form-control border-secondary brd-3 @error('last_name') is-invalid @enderror" placeholder="Last name" value="{{ old('last_name') }}" />
+                  {{--Password--}}
+                  <div class="col-lg-6 mb-30 password">
+                    <div class="row">
+                      <label for="" class="required col-4">
+                        <span>Password</span>
+                      </label>
 
-                        @if ( $errors->has('last_name') )
+                      <div class="col-7">
+                        <div class="p-relative">
+                          <input type="password" name="password" id="password" class="required form-control border-secondary brd-3 z-index-9 @error('password') is-invalid @enderror" placeholder="Password" />
+
+                          <label for="" class="show-password text-secondary p-absolute w-30px h-100 text-center fz-20 lh-1-3 pos-top-right mt-2 mr-2 cur-pointer z-index-11">
+                            <i class="fa fa-eye-slash"></i>
+                            {{--<i class="fa fa-eye"></i>--}}
+                          </label>
+                        </div>
+
+                        <div class="text-secondary fz-14 lh-1 pt-5 info">Min 8 character</div>
+    
+                        @if ( $errors->has('password') )
                           <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('last_name') }}
+                            {{ $errors->first('password') }}
+                          </div>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  {{-- <div class="col-lg-6 mb-30 blank-space"></div> --}}
+
+                  {{-- Username --}}
+                  <div class="col-lg-6 mb-30 username">
+                    <div class="row">
+                      <label for="username" class="required col-4">
+                        <span>Username</span>
+                      </label>
+
+                      <div class="col-7">
+                        <input type="text" name="username" id="username" class="required form-control border-secondary brd-3 @error('username') is-invalid @enderror" placeholder="username" value="{{ old('username') }}" />
+
+                        @if ( $errors->has('username') )
+                          <div class="text-danger fw-bold" role="alert">
+                            {{ $errors->first('username') }}
+                          </div>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  {{--Confirm-Password--}}
+                  <div class="col-lg-6 mb-30 password-confirmation">
+                    <div class="row">
+                      <label for="password_confirmation" class="required col-4">
+                        <span>Confirm Password</span>
+                      </label>
+
+                      <div class="col-7">
+                        <div class="p-relative">
+                          <input type="password" name="password_confirmation" id="password_confirmation" class="required form-control border-secondary brd-3 @error('password') is-invalid @enderror" placeholder="Retype password" />
+
+                          <label for="" class="show-password text-secondary p-absolute w-30px h-100 text-center fz-20 lh-1-3 pos-top-right mt-2 mr-2 cur-pointer z-index-11">
+                            <i class="fa fa-eye-slash"></i>
+                            {{--<i class="fa fa-eye"></i>--}}
+                          </label>
+                        </div>
+    
+                        @if ( $errors->has('password') )
+                          <div class="text-danger fw-bold" role="alert">
+                            {{ $errors->first('password') }}
                           </div>
                         @endif
                       </div>
@@ -69,9 +139,12 @@
                   </div>
 
                   {{--Email--}}
-                  <div class="col-lg-6 mb-20 email">
+                  <div class="col-lg-6 mb-30 email">
                     <div class="row">
-                      <label for="" class="required col-4"><span>E-mail</span></label>
+                      <label for="" class="required col-4">
+                        <span>E-mail</span>
+                      </label>
+
                       <div class="col-7">
                         <input type="email" name="email" id="email" class="required form-control border-secondary brd-3 @error('email') is-invalid @enderror" placeholder="email@domain.com" value="{{ old('email') }}" />
 
@@ -83,329 +156,135 @@
                       </div>
                     </div>
                   </div>
-
-                  {{--Status--}}
-                  {{--<div class="col-lg-6 mb-20 status">
-                    <div class="row justify-content-end">
-                      <label for="" class="required col-4"><span>Status</span></label>
-                      <div class="col-7">
-                        <div class="d-flex">
-                          <span class="form-check w-50">
-                            <input type="radio" name="active" id="active" class="form-check-input @error('active') is-invalid @enderror" value="{{ 'yes' }}" />
-                            <label for="active" class="form-check-label fw-bold">Active</label>
-                          </span>
-                          <span class="form-check w-50">
-                            <input type="radio" name="active" id="inactive" class="form-check-input @error('active') is-invalid @enderror" value="{{ 'no' }}" />
-                            <label for="inactive" class="form-check-label fw-bold">In-Active</label>
-                          </span>
-                        </div>
-
-                        @if ( $errors->has('active') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('active') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>--}}
-
-                  <div class="col-lg-6 mb-20 blank-space"></div>
-
-                  {{--Password--}}
-                  <div class="col-lg-6 mb-20 password">
+  
+                  {{-- Mobile-Personal --}}
+                  {{-- <div class="col-lg-6 mb-30 mobile-personal">
                     <div class="row">
-                      <label for="" class="required col-4"><span>Password</span></label>
+                      <label for="" class="col-4">
+                        <span>Mobile Personal</span>
+                      </label>
+                      
                       <div class="col-7">
-                        <div class="input-group p-relative">
-                          <input type="password" name="password" id="password" class="required form-control border-secondary brd-3 z-index-9 @error('password') is-invalid @enderror" placeholder="Password" />
+                        <input type="text" name="phone_personal" id="phone_personal" class="form-control border-secondary brd-3 @error('phone_personal') is-invalid @enderror" placeholder="01799885522" value="{{ old('phone_personal') }}" />
 
-                          <label for="" id="showPassword" onclick="ShowPassword(this);" class="show-password text-secondary">
-                            <i class="fa fa-eye"></i>
-                            {{--<i class="fa fa-eye-slash"></i>--}}
-                          </label>
-                        </div>
-                        <div class="text-secondary fz-14 lh-1 pt-5 info">Min 8 character</div>
-
-                        @if ( $errors->has('password') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('password') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--Confirm-Password--}}
-                  <div class="col-lg-6 mb-20 password-confirmation">
-                    <div class="row justify-content-end">
-                      <label for="" class="col-4"><span>Confirm Password</span></label>
-                      <div class="col-7">
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control border-secondary brd-3" placeholder="Retype password" />
-
-                        @if ( $errors->has('password') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('password') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-12 mb-30 bb-1 border-secondary-3 section-divider"></div>
-
-                  {{--Date of Birth--}}
-                  <div class="col-lg-6 mb-20 birth-date">
-                    <div class="row">
-                      <label for="" class="col-4"><span>Date of Birth</span></label>
-                      <div class="col-7">
-                        <div class="input-group p-relative input-daterange" id="datepicker" data-provide="datepicker">
-                          <input type="text" name="birth_date" id="birth_date" class="input-date form-control text-start border-secondary brd-3 z-index-9 @error('birth_date') is-invalid @enderror" placeholder="dd-mm-yyyy" value="{{ old('birth_date') }}" />
-                          <label for="birth_date" class="input-label-icon p-absolute pos-top-right color-base-1 fz-19 lh-1-2 cur-pointer z-index-11"><i class="far fa-calendar-alt"></i></label>
-                        </div>
-
-                        @if ( $errors->has('birth_date') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('birth_date') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--Postcode--}}
-                  <div class="col-lg-6 mb-20 postcode">
-                    <div class="row justify-content-end">
-                      <label for="" class="col-4"><span>Postcode</span></label>
-                      <div class="col-7">
-                        <input type="text" name="postcode" id="postcode" class="form-control border-secondary brd-3 @error('postcode') is-invalid @enderror" placeholder="ZIPCODE" value="{{ old('postcode') }}" />
-
-                        {{--<button id="addressAutofill" class="btn btn-primary btn-sm text-capitalize ms-1 brd-0">Autofill Address</button>--}}
-
-                        {{-- <a href="#" id="addressAutofill" class="btn btn-primary btn-sm text-capitalize ms-1 brd-3">Autofill Address</a> --}}
-
-                        @if ( $errors->has('postcode') )
-                          <div class="float-start w-100 text-danger fw-bold" role="alert">
-                            {{ $errors->first('postcode') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--Mobile-Number--}}
-                  <div class="col-lg-6 mb-20 mobile-number">
-                    <div class="row">
-                      <label for="" class="col-4"><span>Mobile Number</span></label>
-                      <div class="col-7">
-                        <input type="text" name="mobile_number" id="mobile_number" class="form-control border-secondary brd-3 @error('mobile_number') is-invalid @enderror" placeholder="212-625-78999" value="{{ old('mobile_number') }}" />
                         <div class="text-secondary fz-14 lh-1 mt-5 info">No spaces please</div>
-
-                        @if ( $errors->has('mobile_number') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('mobile_number') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--Landline-Number--}}
-                  <div class="col-lg-6 mb-20 landline-number">
-                    <div class="row justify-content-end">
-                      <label for="" class="col-4"><span>Landline Number</span></label>
-                      <div class="col-7">
-                        <input type="text" name="landline_number" id="landline_number" class="form-control border-secondary brd-3 @error('landline_number') is-invalid @enderror" placeholder="512-625-7899" value="{{ old('landline_number') }}" />
-                        <div class="text-secondary fz-14 lh-1 mt-5 info">No spaces please</div>
-
-                        @if ( $errors->has('landline_number') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('landline_number') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--Address-Line-1--}}
-                  <div class="col-lg-6 mb-20 address-1">
-                    <div class="row">
-                      <label for="" class="col-4"><span>Address</span></label>
-                      <div class="col-7">
-                        <input type="text" name="address_1" id="address_1" class="form-control border-secondary brd-3 @error('address_1') is-invalid @enderror" value="{{ old('address_1') }}" />
-
-                        @if ( $errors->has('address_1') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('address_1') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--Address-Line-2--}}
-                  <div class="col-lg-6 mb-20 address-2">
-                    <div class="row justify-content-end">
-                      <label for="" class="col-4"><span>Address Line 2</span></label>
-                      <div class="col-7">
-                        <input type="text" name="address_2" id="address_2" class="form-control border-secondary brd-3 @error('address_2') is-invalid @enderror" value="{{ old('address_2') }}" />
-
-                        @if ( $errors->has('address_2') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('address_2') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--City-Town--}}
-                  <div class="col-lg-6 mb-20 city">
-                    <div class="row">
-                      <label for="" class="col-4"><span>City/Town</span></label>
-                      <div class="col-7">
-                        <input type="text" name="city" id="city" class="form-control border-secondary brd-3 @error('city') is-invalid @enderror" placeholder="City/Town" value="{{ old('city') }}" />
-
-                        @if ( $errors->has('city') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('city') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--State/County--}}
-                  <div class="col-lg-6 mb-20 state-county">
-                    <div class="row justify-content-end">
-                      <label for="state" class="col-4"><span>State/County</span></label>
-                      <div class="col-7">
-                        <input type="text" name="state" id="state" class="form-control border-secondary brd-3 @error('state') is-invalid @enderror" placeholder="London" value="{{ old('state') }}" />
-
-                        @if ( $errors->has('state') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('state') }}
-                          </div>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  {{--Country--}}
-                  <div class="col-lg-6 mb-20 country-name">
-                    <div class="row">
-                      <label for="" class="col-4"><span>Country Name</span></label>
-                      <div class="col-7">
-                        <input type="text" name="country" id="country" class="form-control border-secondary brd-3 @error('country') is-invalid @enderror" placeholder="Country" />
     
-                        @if ( $errors->has('country') )
+                        @if ( $errors->has('phone_personal') )
                           <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('country') }}
+                            {{ $errors->first('phone_personal') }}
                           </div>
                         @endif
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
 
-                  <div class="col-lg-6 mb-20 blank-space"></div>
+                  {{-- Mobile-Official --}}
+                  {{-- <div class="col-lg-6 mb-30 mobile-official">
+                    <div class="row justify-content-end">
+                      <label for="phone_official" class="col-4">
+                        <span>Mobile Official</span>
+                      </label>
 
-                  <div class="section-divider my-30 bb-1 border-secondary-3"></div>
-                  
-                  {{--Role-Permissions--}}
-                  <div class="col-lg-6 mb-20">
-                    {{--Role--}}
-                    <div class="row mb-30 user-role">
-                      <label for="" class="col-4 required"><span>Role</span></label>
                       <div class="col-7">
-                        <select name="user_role" id="user_role" class="required form-select border-secondary brd-3 @error('city') is-invalid @enderror">
+                        <input type="text" name="phone_official" id="phone_official" class="form-control border-secondary brd-3 @error('phone_official') is-invalid @enderror" placeholder="01844995577" value="{{ old('phone_official') }}" />
+
+                        <div class="text-secondary fz-14 lh-1 mt-5 info">No spaces please</div>
+    
+                        @if ( $errors->has('phone_official') )
+                          <div class="text-danger fw-bold" role="alert">
+                            {{ $errors->first('phone_official') }}
+                          </div>
+                        @endif
+                      </div>
+                    </div>
+                  </div> --}}
+                  
+
+                  {{-- <div class="section-divider mb-30 bb-1 border-secondary-3"></div> --}}
+                  
+                  {{-- User-Role --}}
+                  <div class="col-lg-6 mb-30 user-role">
+                    <div class="row">
+                      <label for="role_id" class="col-4 required">
+                        <span>Application Role</span>
+                      </label>
+
+                      <div class="col-7">
+                        <select name="role_id" id="role_id" class="required form-select border-secondary brd-3 @error('role_id') is-invalid @enderror">
                           <option value="">Select User Role</option>
                           @if ( $roles )
                             @foreach ( $roles as $role )
-                              <option value="{{ $role->id }}" {{ old('user_role') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                              <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
                             @endforeach
                           @endif
                         </select>
 
-                        @if ( $errors->has('user_role') )
+                        @if ( $errors->has('role_id') )
                           <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('user_role') }}
+                            {{ $errors->first('role_id') }}
                           </div>
                         @endif
                       </div>
                     </div>
+                  </div>
 
-                    {{--Permissions--}}
-                    <div class="row permissions">
-                      <label for="" class="col-4 required"><span>Permissions</span></label>
-                      <div class="col-7">
-                        @if ( $permissions )
-                          <div class="" id="permissions">
-                          <span class="form-check d-inline-block settings-input mr-20 mb-5">
-                            <input name="" type="checkbox" id="selectAll-permission" class="form-check-input permission select-all cur-pointer" />
-                            <label for="selectAll-permission" class="form-check-label cur-pointer">Select All</label>
-                          </span>
+                  <div class="section-divider mb-30 bb-1 border-secondary-3"></div>
+
+                  {{--Permissions--}}                  
+                  <div class="col-12 mb-30 permissions">
+                    <div class="row">
+                      <label for="" class="col-2 required">
+                        <span>Permissions</span>
+                      </label>
+
+                      <div class="col-10">
+                        @if ( $permissions && count($permissions) > 0 )
+                          @if ( $errors->has('permissions') )
+                            <div class="text-danger fw-bold mb-5" role="alert">
+                              {{ $errors->first('permissions') }}
+                            </div>
+                          @endif
+
+                          <div class="row" id="permissions">
+                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 form-check settings-input pl-35 pr-20 mb-10">
+                              <input name="" type="checkbox" id="selectAll-permission" class="form-check-input permission select-all cur-pointer" />
+  
+                              <label for="selectAll-permission" class="form-check-label cur-pointer">Select All</label>
+                            </div>
 
                             @foreach ( $permissions as $permission )
-                              <span class="form-check d-inline-block settings-input mr-20 mb-5">
-                            <input name="permissions[]" type="checkbox" id="permission-{{ $permission->slug }}" class="form-check-input permission cur-pointer" value="{{ $permission->slug }}" {{ old('permissions.*') == $permission->slug ? 'checked' : '' }} />
-                            <label for="permission-{{ $permission->slug }}" class="form-check-label cur-pointer">{{ $permission->name }}</label>
-                          </span>
+                              <div class="col-lg-2 col-md-3 col-sm-4 col-6 form-check settings-input pl-35 pr-20 mb-10">
+                                <input name="permissions[]" type="checkbox"
+                                        id="permission-{{ $permission->slug }}" class="form-check-input permission cur-pointer"
+                                        value="{{ $permission->slug }}" {{ old('permissions.*') == $permission->slug ? 'checked' : '' }} />
+                                        
+                                <label for="permission-{{ $permission->slug }}" class="form-check-label cur-pointer">{{ $permission->name }}</label>
+                              </div>
                             @endforeach
                           </div>
                         @endif
-
-                        @if ( $errors->has('permissions') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('permissions') }}
-                          </div>
-                        @endif
                       </div>
                     </div>
                   </div>
 
-                  {{--Image--}}
-                  <div class="col-lg-6 mb-20">
-                    <div class="row justify-content-end h-100 user-image">
-                      <div class="col-4">
-                        <label for="" class="w-100 mb-5"><span>Image</span></label>
-                        <div class="image-rules fz-14 ml-10">
-                          <label class="me-1">Rules:</label>
-                          <ul class="text-secondary list-style-disc">
-                            <li class="mb-5">Format allowed: jpg, jpeg, png or bmp.</li>
-                            <li class="mb-5">Max file size 1 MB.</li>
-                            <li class="mb-5">Dimensions allowed upto 1200 X 1200 pixel.</li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="col-7">
-                        <input type="file" name="image" id="image" onchange="PreviewUploadedImage(this, 'previewImage');" class="form-control border-secondary brd-3 @error('image') is-invalid @enderror" />
-
-                        @if ( $errors->has('image') )
-                          <div class="text-danger fw-bold" role="alert">
-                            {{ $errors->first('image') }}
-                          </div>
-                        @endif
-
-                        <div class="user-image-block mt-10">
-                          <div class="image-box">
-                            <a id="previewImage-lightbox" class="image-on-lightbox d-none cur-zoomIn" href="#">
-                              <img id="previewImage" src="" alt="Uploaded image" class="user-img h-120px" />
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <div class="section-divider mb-30 bb-1 border-secondary-3"></div>
 
                   {{--Routes--}}
-                  <div class="col-lg-12 mb-20 routes">
+                  <div class="col-lg-12 mb-30 routes">
                     <div class="row">
-                      <label for="" class="col-2 required"><span>Route Access</span></label>
+                      <label for="" class="col-2 required">
+                        <span>Route Access</span>
+                      </label>
+
                       <div class="col-10">
-                        @if ( $routes )
-                          <div class="form-check settings-input mb-10">
+                        @if ( $routes && count($routes) > 0 )
+                          <div class="form-check settings-input mb-20">
                             <span class="mr-10">
+                              <label for="selectAll-route" class="form-check-label fw-bold cur-pointer">
+                                Select All
+                              </label>
+                              
                               <input name="" type="checkbox" id="selectAll-route" class="form-check-input route select-all cur-pointer" />
-                              <label for="selectAll-route" class="form-check-label cur-pointer">Select All</label>
                             </span>
 
                             @if ( $errors->has('routes') )
@@ -416,12 +295,19 @@
                           </div>
 
                           <div class="row" id="routes">
-                            @foreach ( $routes as $route )
-                              <div class="col-3 form-check settings-input pl-35 pr-20 mb-10">
-                                <input name="routes[]" type="checkbox" id="route-{{ $route }}"
-                                  class="form-check-input route cur-pointer" value="{{ $route }}"
-                                  {{ $route == 'login' || $route == 'logout' || $route == 'register' || $route == 'password.change' || $route == 'my.profile.admin' || $route == 'admin.dashboard' ? 'checked' : '' }} />
-                                <label for="route-{{ $route }}" class="form-check-label cur-pointer">{{ ucwords(str_replace(".", " ", $route)) }}</label>
+                            @foreach ( $routes as $key => $route_group )
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-check settings-input pl-35 pr-20 mb-20">
+                                <div class="fw-bold mb-5 ml--25">
+                                  {{ ucwords( $key ) . ' - Routes' }}
+                                </div>
+
+                                @foreach ( $route_group as $route )
+                                  <div class="single-route mb-5">
+                                    <input name="routes[]" type="checkbox" id="route-{{ $route }}" class="form-check-input route cur-pointer" value="{{ $route }}" {{ $route == 'login' || $route == 'logout' || $route == 'register' || $route == 'password.change' || $route == 'my-profile.edit' || $route == 'my-profile.update' || $route == 'admin.dashboard' ? 'checked' : '' }} />
+
+                                    <label for="route-{{ $route }}" class="form-check-label cur-pointer">{{ ucwords(str_replace(".", " ", $route)) }}</label>
+                                  </div>
+                                @endforeach
                               </div>
                             @endforeach
                           </div>
@@ -430,9 +316,12 @@
                     </div>
                   </div>
 
+
                   {{--Submit--}}
-                  <div class="col-12 mt-50 mb-100 text-center">
-                    <button type="submit" class="btn btn-primary px-20">Save User</button>
+                  <div class="col-12 my-50 text-center">
+                    <button type="submit" class="btn btn-primary px-20">
+                      Save User
+                    </button>
                   </div>
 
                 </form>

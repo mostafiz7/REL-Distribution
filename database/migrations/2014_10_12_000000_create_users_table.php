@@ -27,8 +27,8 @@ class CreateUsersTable extends Migration
       // $table->unsignedBigInteger('employee_id')->unique(); // Employee ID
       $table->string('phone_personal')->unique()->nullable();
       $table->string('phone_official')->unique()->nullable();
-      $table->json('permissions');
-      $table->json('routes');
+      $table->json('permissions')->nullable();
+      $table->json('routes')->nullable();
       $table->json('settings')->nullable(); // User Other Settings
       $table->json('email_settings')->nullable(); // User Email Settings
       $table->json('sms_settings')->nullable(); // User SMS Settings

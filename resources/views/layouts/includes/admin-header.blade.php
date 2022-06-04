@@ -191,7 +191,7 @@
               </div>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Dropdown-Logout">
                 <div class="user-actions">
-                  <a href="{{ route('my.profile.admin') }}" class="dropdown-link">My Account</a>
+                  <a href="{{ route('my-profile.edit') }}" class="dropdown-link">My Account</a>
                   <a href="{{ route('logout') }}" class="dropdown-link">Logout</a>
                   {{--<a href="#" class="dropdown-link"
                      onclick="event.preventDefault(); document.getElementById('LogoutForm').submit();"

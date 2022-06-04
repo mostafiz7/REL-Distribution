@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Role_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Employee_Model;
 use App\Models\Settings_Model;
 use Illuminate\Validation\Rule;
 use App\Models\Permission_Model;
@@ -102,36 +103,52 @@ class User_Controller extends Controller
 
     // Get all named-route to uses for user permissions
     $routes_arr = [];
+    $routes_generated = [];
     foreach( Route::getRoutes()->getRoutes() as $route ){
       $action = $route->getAction();
       if( array_key_exists('as', $action) ){
         $routes_arr[] = $action['as'];
+
+        if( str_contains($action['as'], 'generated') || str_contains($action['as'], 'ignition') ){
+          $routes_generated[] = $action['as'];
+        }
       }
     }
 
     $route_exclude = [
-      'ignition.healthCheck', 'ignition.executeSolution',
-      'ignition.shareReport', 'ignition.scripts', 'ignition.styles',
-      'login', 'logout', 'register', 'homepage', 'menu', 'menu.ordering',
-      'order.place', 'coupon.apply', 'reservation.table', 'contact-us',
-      'members.home', 'members.loyalty', 'members.orders', 'members.profile',
-      'members.address', 'members.numbers', 'members.password.change',
+      'login', 'logout', 'register', 'homepage', 'contact-us',
     ];
 
+    $route_exclude_all = array_merge($routes_generated, $route_exclude);
+
     // exclude unnecessary route from array value with key & re-index the key
-    $routes_all = array_values( array_diff( $routes_arr, $route_exclude ) );
+    $routes_all = array_values( array_diff( $routes_arr, $route_exclude_all ) );
 
     // Remove duplicate array value & sorting by ascending order
     $routes = array_unique( $routes_all );
     sort($routes);
 
-    $roles       = Role_Model::get()->all();
-    $permissions = Permission_Model::get()->all();
+
+    $routes_with_group = [];
+    foreach( $routes as $route ){
+      $group_name = explode('.', $route)[0];
+      if( str_contains($route, $group_name) ){
+        $routes_with_group[$group_name][] = $route;
+      }
+    }
+
+
+    $employee_all = Employee_Model::whereNull('user_id')
+                      ->orderBy('name', 'asc')->get();
+    $roles        = Role_Model::get()->all();
+    $permissions  = Permission_Model::get()->all();
+
 
     return view('admin.user.new')->with([
-      'roles'       => $roles,
-      'routes'      => $routes,
-      'permissions' => $permissions,
+      'roles'         => $roles,
+      'routes'        => $routes_with_group,
+      'permissions'   => $permissions,
+      'employee_all'  => $employee_all,
     ]);
   }
 
@@ -146,129 +163,78 @@ class User_Controller extends Controller
     }
 
     $validator = Validator::make( $request->all(), [
-      //'title'           => [ 'nullable', 'string', 'max:8' ],
-      'first_name'      => [ 'required', 'string', 'max:191' ],
-      'last_name'       => [ 'required', 'string', 'max:191' ],
-      'email'           => [ 'required', 'string', 'email:rfc,dns', 'max:191', 'unique:users,email' ],
-      'password'        => [ 'required', 'string', 'min:8', 'max:12', 'confirmed' ],
-      'user_role'       => [ 'required', 'integer', 'between:1,5' ],
-
-      'image'           => [ 'nullable', 'image', 'mimes:jpg,jpeg,png,bmp', 'max:1024', 'dimensions:max_width=1200,max_height=1200' ],
-      'birth_date'      => [ 'nullable', 'date_format:d-m-Y' ],
-      'mobile_number'   => [ 'nullable', 'numeric', 'digits_between:11,13' ],
-      'landline_number' => [ 'nullable', 'numeric', 'digits_between:7,9' ],
-      'address_1'       => [ 'nullable', 'string', 'max:191' ],
-      'address_2'       => [ 'nullable', 'string', 'max:191' ],
-      'city'            => [ 'nullable', 'string', 'max:191' ],
-      'state'           => [ 'nullable', 'string', 'max:191' ],
-      'postcode'        => [ 'nullable', 'string', 'max:191' ],
-      'country'         => [ 'nullable', 'string', 'max:191' ],
+      // 'name'        => ['required', 'string', 'max:191'],
+      'employee_id' => ['required', 'numeric', 'exists:employees,id', 'unique:users,employee_id'],
+      'username'    => ['required', 'string', 'max:50', 'unique:users,username'],
+      'email'       => ['required', 'string', 'email:rfc,dns', 'max:191', 'exists:employees,email_official', 'unique:users,email'],
+      'password'    => ['required', 'string', 'min:8', 'max:12', 'confirmed'],
+      'role_id'     => ['required', 'numeric', 'between:1,5', 'exists:roles,id'],
+      /* 'phone_personal'  => [ 'nullable', 'numeric', 'digits_between:11,13' ],
+      'phone_official'  => [ 'nullable', 'numeric', 'digits_between:11,13' ], */
     ], [
-      'image.image'      => 'The uploaded file must be an image.',
-      'image.mimes'      => 'The image type must be: jpg, jpeg, png or bmp.',
-      'image.max'        => 'The image size must not be greater than 1 MB.',
-      'image.dimensions' => 'The image dimension must be less then 1200 X 1200 pixel.',
+      'employee_id.required'  => 'The employee name is required field.',
+      'employee_id.numeric'   => 'The employee name not matched.',
+      'employee_id.exists'    => 'The employee not exists in system.',
+      'employee_id.unique'    => 'The employee has already user profile.',
+      'email.exists'          => 'The selected email not exists in system.',
+      'role_id.required'      => 'The user-role field is required.',
+      'role_id.numeric'       => 'The user-role not matched.',
+      'role_id.between'       => 'The user-role not matched.',
+      'role_id.exists'        => 'The user-role not exists in system.',
     ]);
-    if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
+    if($validator->fails()) return back()->withErrors($validator)->withInput();
+    
 
-    $birth_date  = $request->birth_date ? DateTime::createFromFormat('d-m-Y', $request->birth_date)->format('Y-m-d') : null;
-    $company_address = Settings_Model::count() == 1 ? Settings_Model::get()->first()->value('company_address') : null;
-
-    $address = [
-      'id'          => 1,
-      'isDefault'   => true,
-      'description' => null,
-      'address_1'   => $request->address_1 ?? ($company_address ? $company_address['address_1'] : null),
-      'address_2'   => $request->address_2 ?? ($company_address ? $company_address['address_2'] : null),
-      'city'        => $request->city ?? ($company_address ? $company_address['city'] : null),
-      'state'       => $request->state ?? ($company_address ? $company_address['state'] : null),
-      'postcode'    => $request->postcode ?? ($company_address ? $company_address['postcode'] : null),
-      'country'     => $request->country ?? ($company_address ? $company_address['country'] : null),
-    ];
-
-    $get_role    = Role_Model::find( $request->user_role );
-    $role_id     = $get_role ? $get_role->id : 6;
-    $role        = $get_role ? $get_role->slug : 'member';
     $permissions = $request->permissions ?? null;
     $routes      = $request->routes ?? null;
 
-    if( ! $permissions ){
-      $validator->errors()->add('permissions', 'The permissions field is required!');
-      Flasher::addError("The permissions field is required!");
-      return back()->withErrors( $validator )->withInput();
-    }
-    if( ! $routes ){
-      $validator->errors()->add('routes', 'The routes field is required!');
-      Flasher::addError("The routes field is required!");
-      return back()->withErrors( $validator )->withInput();
-    }
-
-    $avatar = $request->file('image');
-    $image  = null;
-
-    // Upload-User-Image
-    if( $avatar ){
-      if( $avatar->isValid() ){
-        $full_name = $request->first_name . ' ' . $request->last_name;
-        $full_name_slug = Str::slug($full_name);
-
-        $table_status = DB::select("show table status like 'users'");
-        $current_id = $table_status[0]->Auto_increment;
-
-        $extension = $avatar->getClientOriginalExtension();
-        $fileName = "user_id__{$current_id}" . "__{$full_name_slug}" . ".{$extension}";
-        $location = 'assets/img/admins/';
-        $path = public_path() . "/{$location}" . $fileName;
-
-        $Image = Image::make( $avatar );
-        $Image->resize( 800, 800, function( $constraint ){
-          $constraint->aspectRatio();
-          $constraint->upsize();
-        });
-        // image save with quality compression to 50%
-        $Image->save( $path, 50 );
-        $Image->destroy();
-
-        $image = [
-          'name'     => $fileName,
-          'location' => $location,
-          'url'      => $location . $fileName,
-        ];
-      } else{
-        Flasher::addError("The image not valid.");
-        return back();
+    if( ! $permissions || ! $routes ){
+      if( ! $permissions ){
+        $validator->errors()->add('permissions', 'The permissions field is required!');
+        Flasher::addError("The permissions field is required!");
       }
+      if( ! $routes ){
+        $validator->errors()->add('routes', 'The routes field is required!');
+        Flasher::addError("The routes field is required!");
+      }
+      
+      return back()->withErrors( $validator )->withInput();
+    }
+    
+
+    $employee = Employee_Model::find( $request->employee_id );
+
+    if( ! empty($employee->user_id) ){
+      Flasher::addError("The employee has already user profile.");
+      return back();
     }
 
     $request_all = [
-      //'id'                  => mb_strtoupper( Str::orderedUid() ),
-      //'title'               => ucwords( $request->title ),
-      'first_name'          => ucwords( strtolower( $request->first_name ) ),
-      'last_name'           => ucwords( strtolower( $request->last_name ) ),
+      'uid'                 => Str::uuid(),
+      'name'                => $employee->name,
+      'username'            => strtolower( $request->username ),
       'email'               => strtolower( $request->email ),
-      'email_verified_at'   => null,
+      //'active'              => true,
       'password'            => $request->password,
       //'password'            => Hash::make($request->password),
-      'active'              => true,
-      'role_id'             => $role_id,
-      'role'                => $role,
+      'role_id'             => $request->role_id,
+      'employee_id'         => $request->employee_id,
+      'phone_personal'      => $employee->phone_personal,
+      'phone_official'      => $employee->phone_official,
       'permissions'         => $permissions,
       'routes'              => $routes,
-      'birth_date'          => $birth_date,
-      'mobile_number'       => $request->mobile_number,
-      'landline_number'     => $request->landline_number,
-      'addresses'           => array( $address ),
-      'image'               => $image,
-      'terms'               => true,
-      'promo_email'         => false,
-      'promo_sms'           => false,
-      'sms_service'         => null,
-      'email_service'       => null,
+      'settings'            => null,
+      'email_settings'      => null,
+      'sms_settings'        => null,
+      'notif_settings'      => null,
     ];
 
     $user_created = User::create( $request_all );
 
+
     if( $user_created ){
+      $employee->update([ 'user_id' => $user_created->id ]);
+
       Flasher::addSuccess("New User created successfully!");
       return back();
 
@@ -288,6 +254,7 @@ class User_Controller extends Controller
       return back();
     }
 
+    
     $user = User::where( 'uid', $uid )->get()->first();
 
     if( ! $user ){
@@ -323,28 +290,40 @@ class User_Controller extends Controller
 
     // Get all named-route to uses for user permissions
     $routes_arr = [];
+    $routes_generated = [];
     foreach( Route::getRoutes()->getRoutes() as $route ){
       $action = $route->getAction();
       if( array_key_exists('as', $action) ){
         $routes_arr[] = $action['as'];
+
+        if( str_contains($action['as'], 'generated') || str_contains($action['as'], 'ignition') ){
+          $routes_generated[] = $action['as'];
+        }
       }
     }
 
     $route_exclude = [
-      'ignition.healthCheck', 'ignition.executeSolution',
-      'ignition.shareReport', 'ignition.scripts', 'ignition.styles',
-      'login', 'logout', 'register', 'homepage', 'menu', 'menu.ordering',
-      'order.place', 'coupon.apply', 'reservation.table', 'contact-us',
-      'members.home', 'members.loyalty', 'members.orders', 'members.profile',
-      'members.address', 'members.numbers', 'members.password.change',
+      'login', 'logout', 'register', 'homepage', 'contact-us',
     ];
 
+    $route_exclude_all = array_merge($routes_generated, $route_exclude);
+
     // exclude unnecessary route from array value with key & re-index the key
-    $routes_all = array_values( array_diff( $routes_arr, $route_exclude ) );
+    $routes_all = array_values( array_diff( $routes_arr, $route_exclude_all ) );
 
     // Remove duplicate array value & sorting by ascending order
     $routes = array_unique( $routes_all );
     sort($routes);
+
+
+    $routes_with_group = [];
+    foreach( $routes as $route ){
+      $group_name = explode('.', $route)[0];
+      if( str_contains($route, $group_name) ){
+        $routes_with_group[$group_name][] = $route;
+      }
+    }
+
 
     $roles       = Role_Model::get()->all();
     $permissions = Permission_Model::get()->all();
@@ -354,7 +333,7 @@ class User_Controller extends Controller
     return view('admin.user.edit')->with([
       'user'        => $user,
       'roles'       => $roles,
-      'routes'      => $routes,
+      'routes'      => $routes_with_group,
       'permissions' => $permissions,
     ]);
   }
@@ -390,18 +369,28 @@ class User_Controller extends Controller
     }
     $previousUrlQuery = [ 'search_by' => $search_by, 'status' => $status, ];
 
+
     $validator = Validator::make( $request->all(), [
-      'active'          => [ 'required', 'string' ],
-      'name'            => [ 'prohibited' ],
-      'username'        => [ 'prohibited' ],
-      'email'           => [ 'prohibited' ],
-      //'email'           => [ 'required', 'string', 'email:rfc,dns', 'max:191', "unique:users,email, $id" ],
-      'password'        => [ 'nullable', 'string', 'min:8', 'max:12', 'confirmed' ],
-      'user_role'       => [ 'required', 'integer', 'between:1,5', 'exists:roles,id' ],
+      'active'    => [ 'required', 'string' ],
+      'name'      => [ 'prohibited' ],
+      'username'  => [ 'prohibited' ],
+      'email'     => [ 'prohibited' ],
+      // 'username'  => ['required', 'string', 'max:50', "unique:users,username, $id"],
+      // 'email'     => ['required', 'string', 'email:rfc,dns', 'max:191', "exists:employees,email_official", "unique:users,email, $user_id"],
+      'password'  => [ 'nullable', 'string', 'min:8', 'max:12', 'confirmed' ],
+      'role_id'   => [ 'required', 'numeric', 'between:1,5', 'exists:roles,id' ],
+      // 'employee_id' => ['required', 'numeric', 'exists:employees,id', 'unique:users,employee_id'],
     ], [
       'name.prohibited'  => 'User\'s name can\'t change in here.',
+      'role_id.required' => 'The user-role field is required.',
+      'role_id.numeric'  => 'The user-role not matched.',
+      'role_id.between'  => 'The user-role not matched.',
+      'role_id.exists'   => 'The user-role not exists in system.',
     ]);
     if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
+
+
+    $active = $request->active === 'active';
 
 
     if( $request->has('name') ){
@@ -418,21 +407,26 @@ class User_Controller extends Controller
     }
     
     
-    // $get_role     = Role_Model::find( $request->user_role );
-    // $role_id      = $get_role ? $get_role->id : 6;
-    // $role         = $get_role ? $get_role->slug : 'customer';
     $permissions  = $request->permissions ?? null;
     $routes       = $request->routes ?? null;
 
-    if( ! $permissions ){
-      $validator->errors()->add('permissions', 'The permissions field is required!');
-      Flasher::addError("The permissions field is required!");
-      return back()->withErrors( $validator )->withInput();
-    }
-    if( ! $routes ){
-      $validator->errors()->add('routes', 'The routes field is required!');
-      Flasher::addError("The routes field is required!");
-      return back()->withErrors( $validator )->withInput();
+    if( $active ){
+      if( ! $permissions || ! $routes ){
+        if( ! $permissions ){
+          $validator->errors()->add('permissions', 'The permissions field is required!');
+          Flasher::addError("The permissions field is required!");
+        }
+        if( ! $routes ){
+          $validator->errors()->add('routes', 'The routes field is required!');
+          Flasher::addError("The routes field is required!");
+        }
+
+        return back()->withErrors( $validator )->withInput();
+      }
+
+    } else{
+      $permissions  = null;
+      $routes       = null;
     }
 
     
@@ -441,8 +435,8 @@ class User_Controller extends Controller
       // 'username'          => strtolower( $request->username ),
       // 'email'             => strtolower( $request->email ),
       // 'email_verified_at' => null,
-      'active'            => $request->active === 'active',
-      'role_id'           => $request->user_role,
+      'active'            => $active,
+      'role_id'           => $request->role_id,
       'permissions'       => $permissions,
       'routes'            => $routes,
       //'sms_service'       => null,

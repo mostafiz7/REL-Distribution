@@ -283,6 +283,19 @@ const Log = require("laravel-mix/src/Log");
 				$("input[type=checkbox].route.select-all").prop("checked", false);
 			}
 		});
+		
+		
+		// Select-All Route-Group
+		/* $("input[type=checkbox].route-group.select-all").on("click", function(){
+			$(this).parent().next().children(":first").prop("checked", $(this).prop("checked"));
+			// $("input[type=checkbox].route").prop("checked", $(this).prop("checked"));
+		});
+		$("input[type=checkbox].route").on("click", function(){
+			if( ! $(this).prop("checked") ){
+				$(this).parent().prev().children(":first").prop("checked", false);
+				// $("input[type=checkbox].route.select-all").prop("checked", false);
+			}
+		}); */
 
 
 

@@ -14,7 +14,7 @@
 
         <div class="card-body page-body p-0">
           <div class="employee-new-area overlay-scrollbar">
-            <form method="post" action="{{ route('employee.add.new') }}"
+            <form method="post" action="{{ route('employee.new.store') }}"
                   name="addEmployeeForm" id="addEmployeeForm" class="employee-form new p-20 pb-0">
               @csrf
 

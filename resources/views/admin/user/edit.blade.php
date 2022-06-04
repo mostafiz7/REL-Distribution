@@ -12,7 +12,7 @@
               <h5 class="card-title title lh-1-5 my-0">User Edit Mode</h5>
 
               <div class="">
-                <a href="{{ route('user.add.new') }}" class="btn btn-light btn-sm fw-bold">
+                <a href="{{ route('user.new.create') }}" class="btn btn-light btn-sm fw-bold">
                   Add User
                 </a>
   
@@ -34,14 +34,14 @@
               </div>
             @endif--}}
 
-            <div class="card-body overflowY-scroll">
+            <div class="card-body overlay-scrollbar">
               <div class="page-body">
                 <div class="edit-user-area mt-10">
-                  <form method="POST" action="{{ route('user.single.edit', $user->uid) }}" enctype="multipart/form-data" name="EditUserForm" id="EditUserForm" class="user-form edit row mx-0">
+                  <form method="POST" action="{{ route('user.single.update', $user->uid) }}" enctype="multipart/form-data" name="EditUserForm" id="EditUserForm" class="user-form edit row mx-0">
                     @csrf
 
                     {{--Name--}}
-                    <div class="col-lg-6 mb-20 name">
+                    <div class="col-lg-6 mb-30 name">
                       <div class="row">
                         <label for="name" class="col-4"><span>Name</span></label>
 
@@ -62,7 +62,7 @@
                     </div>
 
                     {{--Status--}}
-                    <div class="col-lg-6 mb-20 user-status">
+                    <div class="col-lg-6 mb-30 user-status">
                       <div class="row justify-content-end">
                         <label for="" class="col-4 fw-bold"><span>Status</span></label>
 
@@ -91,7 +91,7 @@
                     </div>
 
                     {{--Username--}}
-                    <div class="col-lg-6 mb-20 username">
+                    <div class="col-lg-6 mb-30 username">
                       <div class="row">
                         <label for="username" class="col-4">
                           <span>Username</span>
@@ -112,7 +112,7 @@
                     </div>
 
                     {{--Email--}}
-                    <div class="col-lg-6 mb-20 email">
+                    <div class="col-lg-6 mb-30 email">
                       <div class="row justify-content-end">
                         <label for="" class="col-4"><span>Email</span></label>
 
@@ -131,7 +131,7 @@
                     </div>
 
                     {{--Password--}}
-                    <div class="col-lg-6 mb-20 password">
+                    <div class="col-lg-6 mb-30 password">
                       <div class="row">
                         <label for="" class="col-4"><span>Password</span></label>
 
@@ -157,7 +157,7 @@
                     </div>
 
                     {{--Confirm-Password--}}
-                    <div class="col-lg-6 mb-20 password-confirmation">
+                    <div class="col-lg-6 mb-30 password-confirmation">
                       <div class="row justify-content-end">
                         <label for="" class="col-4"><span>Confirm Password</span></label>
 
@@ -181,7 +181,7 @@
                     </div>
   
                     {{-- Mobile-Number-Personal --}}
-                    {{-- <div class="col-lg-6 mb-20 mobile-number-personal">
+                    {{-- <div class="col-lg-6 mb-30 mobile-number-personal">
                       <div class="row">
                         <label for="" class="col-4">
                           <span>Mobile Personal</span>
@@ -202,7 +202,7 @@
                     </div> --}}
 
                     {{-- Mobile-Number-Official --}}
-                    {{-- <div class="col-lg-6 mb-20 mobile-number-official">
+                    {{-- <div class="col-lg-6 mb-30 mobile-number-official">
                       <div class="row justify-content-end">
                         <label for="phone_official" class="col-4">
                           <span>Mobile Official</span>
@@ -222,17 +222,17 @@
                       </div>
                     </div> --}}
   
-                    <div class="col-12 mb-20 bb-1 border-secondary-3 section-divider"></div>
+                    <div class="section-divider col-12 mb-30 bb-1 border-secondary-3"></div>
 
                     {{-- Role --}}
                     <div class="col-lg-6 mb-30 user-role">
                       <div class="row">
-                        <label for="user_role" class="col-4 required">
+                        <label for="role_id" class="col-4 required">
                           <span>Role</span>
                         </label>
 
                         <div class="col-7">
-                          <select name="user_role" id="user_role" class="required form-select border-secondary brd-3 @error('user_role') is-invalid @enderror">
+                          <select name="role_id" id="role_id" class="required form-select border-secondary brd-3 @error('role_id') is-invalid @enderror">
                             <option value="">Select User Role</option>
                             @if ( $roles && count($roles) > 0 )
                               @foreach ( $roles as $role )
@@ -241,9 +241,9 @@
                             @endif
                           </select>
                           
-                          @if ( $errors->has('user_role') )
+                          @if ( $errors->has('role_id') )
                             <div class="text-danger fw-bold" role="alert">
-                              {{ $errors->first('user_role') }}
+                              {{ $errors->first('role_id') }}
                             </div>
                           @endif
                         </div>
@@ -253,7 +253,7 @@
                     </div>
 
                     {{-- Permissions --}}
-                    <div class="col-lg-12 mb-30 permissions">
+                    <div class="col-12 mb-30 permissions">
                       <div class="row">
                         <label for="" class="col-2 required">
                           <span>Permissions</span>
@@ -261,71 +261,77 @@
 
                         <div class="col-10">
                           @if ( $permissions && count($permissions) > 0 )
-                            <div class="form-check settings-input mb-10">
-                              <span class="mr-10">
+                            @if ( $errors->has('permissions') )
+                              <div class="text-danger fw-bold mb-5" role="alert">
+                                {{ $errors->first('permissions') }}
+                              </div>
+                            @endif
+                            
+                            <div class="row" id="permissions">
+                              <div class="col-lg-2 col-md-3 col-sm-4 col-6 form-check settings-input pl-35 pr-20 mb-10">
                                 <input name="" type="checkbox" id="selectAll-permission" class="form-check-input permission select-all cur-pointer" />
 
                                 <label for="selectAll-permission" class="form-check-label cur-pointer">Select All</label>
-                              </span>
+                              </div>
 
-                              @if ( $errors->has('routes') )
-                                <span class="text-danger fw-bold ml-50" role="alert">
-                                  {{ $errors->first('routes') }}
-                                </span>
-                              @endif
-                            </div>
-
-                            <div class="row" id="permissions">
                               @foreach ( $permissions as $permission )
                                 <div class="col-lg-2 col-md-3 col-sm-4 col-6 form-check settings-input pl-35 pr-20 mb-10">
                                   <input name="permissions[]" type="checkbox"
-                                          id="permission-{{ $permission->slug }}" class="form-check-input permission cur-pointer"
-                                          value="{{ $permission->slug }}" {{ is_array($user->permissions) && in_array($permission->slug, $user->permissions) ? 'checked' : '' }} />
+                                    id="permission-{{ $permission->slug }}" class="form-check-input permission cur-pointer"
+                                    value="{{ $permission->slug }}" {{ is_array($user->permissions) && in_array($permission->slug, $user->permissions) ? 'checked' : '' }} />
                                           
                                   <label for="permission-{{ $permission->slug }}" class="form-check-label cur-pointer">{{ $permission->name }}</label>
                                 </div>
                               @endforeach
                             </div>
                           @endif
-
-                          @if ( $errors->has('permissions') )
-                            <div class="text-danger fw-bold" role="alert">
-                              {{ $errors->first('permissions') }}
-                            </div>
-                          @endif
                         </div>
                       </div>
                     </div>
+  
+                    <div class="section-divider col-12 mb-30 bb-1 border-secondary-3"></div>
 
                     {{-- Routes --}}
-                    <div class="col-lg-12 mb-20 routes">
+                    <div class="col-lg-12 mb-30 routes">
                       <div class="row">
                         <label for="" class="col-2 required"><span>Route Access</span></label>
 
                         <div class="col-10">
                           @if ( $routes )
-                            <div class="form-check settings-input mb-10">
+                            <div class="form-check settings-input mb-20">
                               <span class="mr-10">
                                 <input name="" type="checkbox" id="selectAll-route" class="form-check-input route select-all cur-pointer" />
 
-                                <label for="selectAll-route" class="form-check-label cur-pointer">Select All</label>
+                                <label for="selectAll-route" class="form-check-label fw-bold cur-pointer">
+                                  Select All
+                                </label>
                               </span>
-
+                            
                               @if ( $errors->has('routes') )
                                 <span class="text-danger fw-bold ml-50" role="alert">
                                   {{ $errors->first('routes') }}
                                 </span>
                               @endif
                             </div>
-
+                            
                             <div class="row" id="routes">
-                              @foreach ( $routes as $route )
-                                <div class="col-3 form-check settings-input pl-35 pr-20 mb-10">
-                                  <input name="routes[]" type="checkbox" id="route-{{ $route }}"
-                                    class="form-check-input route cur-pointer" value="{{ $route }}"
-                                    {{ is_array($user->routes) && in_array($route, $user->routes) ? 'checked' : '' }} />
+                              @foreach ( $routes as $key => $route_group )
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-check settings-input pl-35 pr-20 mb-10">
+                                  <div class="fw-bold mb-5 ml--25">
+                                    {{ ucwords( $key ) . ' - Routes' }}
+                                  </div>
 
-                                  <label for="route-{{ $route }}" class="form-check-label cur-pointer">{{ ucwords(str_replace(".", " ", $route)) }}</label>
+                                  @foreach ( $route_group as $route )
+                                    <div class="single-route mb-5">
+                                      <input name="routes[]" type="checkbox" id="route-{{ $route }}"
+                                        class="form-check-input route cur-pointer" value="{{ $route }}"
+                                        {{ is_array($user->routes) && in_array($route, $user->routes) ? 'checked' : '' }} />
+
+                                      <label for="route-{{ $route }}" class="form-check-label cur-pointer">
+                                        {{ ucwords(str_replace(".", " ", $route)) }}
+                                      </label>
+                                    </div>
+                                  @endforeach
                                 </div>
                               @endforeach
                             </div>
@@ -334,10 +340,13 @@
                       </div>
                     </div>
 
+
                     {{--Submit--}}
                     @if ( Auth::user()->can('isSuperAdmin') && Auth::user()->can('entryEdit') )
-                      <div class="col-12 mt-50 mb-100 text-center">
-                        <button type="submit" class="btn btn-success px-20">Update User</button>
+                      <div class="col-12 my-50 text-center">
+                        <button type="submit" class="btn btn-success px-20">
+                          Update User
+                        </button>
                       </div>
                     @endif
                     

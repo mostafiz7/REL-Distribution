@@ -131,7 +131,7 @@
               </a>
               <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Employees">
                 <li class="">
-                  <a href="{{ route('employee.add.new') }}"
+                  <a href="{{ route('employee.new.create') }}"
                     class="dropdown-item {{ strpos($viewName, 'employee') && strpos($viewName, 'new') ? 'active' : '' }}">
                     Add Employee
                   </a>
@@ -144,13 +144,13 @@
                 </li>
                 <li class="dropdown-item-divider border-secondary-4 my-3"></li>
                 <li class="">
-                  <a href="{{ route('department.add.new') }}"
+                  <a href="{{ route('department.new.create') }}"
                     class="dropdown-item {{ strpos($viewName, 'department') ? 'active' : '' }}">
                     Departments
                   </a>
                 </li>
                 <li class="">
-                  <a href="{{ route('designation.add.new') }}"
+                  <a href="{{ route('designation.new.create') }}"
                     class="dropdown-item {{ strpos($viewName, 'designation') ? 'active' : '' }}">
                     Designations
                   </a>
@@ -217,13 +217,13 @@
               <ul class="dropdown-menu dropdown-menu-right mt--1 brd-0"
                 aria-labelledby="Header-Nav-Account">
                 <li class="">
-                  <a href="{{ route('homepage') }}" class="dropdown-item {{ '' }}">
+                  <a href="{{ route('my-profile.edit') }}" class="dropdown-item {{ '' }}">
                     Account Settings
                   </a>
                 </li>
 
                 <li class="">
-                  <a href="{{ route('homepage') }}" class="dropdown-item {{ '' }}">
+                  <a href="{{ route('my-profile.edit') }}" class="dropdown-item {{ '' }}">
                     Password Change
                   </a>
                 </li>

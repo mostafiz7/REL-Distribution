@@ -27,9 +27,9 @@ class Permission_Seeder extends Seeder
     Permission_Model::create([ 'id' => 7, 'name' => 'Print', 'slug' => 'print' ]);
     Permission_Model::create([ 'id' => 8, 'name' => 'Confirm', 'slug' => 'confirm' ]);
     Permission_Model::create([ 'id' => 9, 'name' => 'Payment', 'slug' => 'payment' ]);
-    Permission_Model::create([ 'id' => 10, 'name' => 'Edit Request', 'slug' => 'edit_request' ]);
+    Permission_Model::create([ 'id' => 10, 'name' => 'Edit Request', 'slug' => 'edit-request' ]);
     Permission_Model::create([ 'id' => 11, 'name' => 'Restore', 'slug' => 'restore' ]);
-    Permission_Model::create([ 'id' => 12, 'name' => 'Force Delete', 'slug' => 'force_delete' ]);
+    Permission_Model::create([ 'id' => 12, 'name' => 'Force Delete', 'slug' => 'force-delete' ]);
     Permission_Model::create([ 'id' => 13, 'name' => 'Approve', 'slug' => 'approve' ]);
   }
 }

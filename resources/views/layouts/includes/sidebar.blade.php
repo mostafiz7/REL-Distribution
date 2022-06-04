@@ -47,7 +47,7 @@
               </div>
 
               <div class="drop-item">
-                <a href="{{ route('employee.add.new') }}"
+                <a href="{{ route('employee.new.create') }}"
                    class="drop-link {{ strpos($viewName, 'employee') && strpos($viewName, 'new') ? 'active' : '' }}">
                   <i class="menu-icon fa fa-home"></i>
                   <span>Add Employee</span>
@@ -78,7 +78,7 @@
               </div>
 
               <div class="drop-item">
-                <a href="{{ route('user.add.new') }}"
+                <a href="{{ route('user.new.create') }}"
                    class="drop-link {{ strpos($viewName, 'user') && strpos($viewName, 'new') ? 'active' : '' }}">
                   <i class="menu-icon fa fa-home"></i>
                   <span>Add User</span>

@@ -24,10 +24,10 @@
             </div>
           @endif--}}
 
-          <div class="card-body">
+          <div class="card-body overlay-scrollbar">
             <div class="page-body">
               <div class="myAccount-area mt-20">
-                <form method="POST" action="{{ route('my.profile.admin') }}" name="MyAccountForm" id="MyAccountForm" class="myAccount-form">
+                <form method="POST" action="{{ route('my-profile.update') }}" name="MyAccountForm" id="MyAccountForm" class="myAccount-form">
                   @csrf
                   @method('PUT')
 
@@ -325,9 +325,11 @@
 
 
                   {{--Submit--}}
-                  <div class="row mt-50 mb-100 mx-30">
+                  <div class="row my-50 mx-30">
                     <div class="col-12 text-center">
-                      <button type="submit" class="btn btn-success px-30">Update Profile</button>
+                      <button type="submit" class="btn btn-success px-30">
+                        Update Profile
+                      </button>
                     </div>
                   </div>
 

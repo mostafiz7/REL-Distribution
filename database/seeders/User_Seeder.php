@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Models\Employee_Model;
 use Illuminate\Database\Seeder;
 use App\Models\Permission_Model;
 
@@ -18,20 +19,22 @@ class User_Seeder extends Seeder
     // Seeder run command
     // php artisan db:seed --class=User_Seeder
     
-    $permissions = Permission_Model::pluck('slug')->all();
+    $permissions  = Permission_Model::pluck('slug')->all();
+    $employee     = Employee_Model::find(1);
 
     User::create([
       'uid'               => Str::uuid(),
-      'name'              => 'Nurullah Mohammad',
+      'name'              => $employee->name,
       'username'          => 'nurullah',
-      'email'             => 'admin@nurullah.biz',
+      'email'             => $employee->email_official,
+      //'email'             => 'admin@nurullah.biz',
+      'password'          => '00',
       'email_verified_at' => now(),
       'active'            => 1,
-      'password'          => '00',
       'role_id'           => 1,
-      'employee_id'       => 1,
-      'phone_personal'    => null,
-      'phone_official'    => null,
+      'employee_id'       => $employee->id,
+      'phone_personal'    => $employee->phone_personal,
+      'phone_official'    => $employee->phone_official,
       'permissions'       => $permissions,
       'routes'            => [
         'database.migration.update',
@@ -40,19 +43,26 @@ class User_Seeder extends Seeder
         'database.migration.rollback',
         'database.seed',
         'employee.all.index',
-        'employee.add.new',
+        'employee.new.create',
+        'employee.new.store',
         'employee.single.edit',
+        'employee.single.update',
         'user.all.index',
-        'user.add.new',
+        'user.new.create',
+        'user.new.store',
         'user.single.show',
         'user.single.edit',
-        'my.profile.edit',
+        'user.single.update',
+        'my-profile.edit',
+        'my-profile.update',
       ],
       'settings'          => null,
       'email_settings'    => null,
       'sms_settings'      => null,
       'notif_settings'    => null,
     ]);
+
+    $employee->update([ 'user_id' => 1 ]);
     
   }
 

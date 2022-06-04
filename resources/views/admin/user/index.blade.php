@@ -12,7 +12,7 @@
             <h5 class="card-title title lh-1-5 my-0">User All</h5>
 
             <div class="">
-              <a href="{{ route('user.add.new') }}" class="btn btn-light btn-sm fw-bold">
+              <a href="{{ route('user.new.create') }}" class="btn btn-light btn-sm fw-bold">
                 Add User
               </a>
             </div>
@@ -30,7 +30,7 @@
             </div>
           @endif--}}
 
-          <div class="card-body overflowY-scroll pt-10">
+          <div class="card-body overlay-scrollbar pt-10">
             <div class="page-body">
               <div class="all-user-area">
                 <div class="user-search-block h-auto mb-10">
@@ -112,7 +112,7 @@
 
                             <td class="user-status text-center">
                               <span class="{{ $user->active ? 'bg-success' : 'bg-danger' }} text-white fz-14 fw-500 lh-1-6 py-2 px-8 brd-3">
-                                {{ $user->active ? 'Active' : 'In-Active' }}
+                                {{ $user->active ? 'Active' : 'Not-Active' }}
                               </span>
                             </td>
 

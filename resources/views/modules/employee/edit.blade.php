@@ -17,7 +17,7 @@
 
         <div class="card-body page-body p-0">
           <div class="employee-edit-area overlay-scrollbar">
-            <form method="post" action="{{ route('employee.single.edit', $employee->uid) }}"
+            <form method="post" action="{{ route('employee.single.update', $employee->uid) }}"
                   name="employeeEditForm" id="employeeEditForm" class="employee-form edit p-20 pb-0">
               @csrf
 

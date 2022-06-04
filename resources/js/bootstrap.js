@@ -14,6 +14,7 @@ try{
 	require('bootstrap');
 } catch(e){ console.log(e); console.log(e.response); }
 
+
 /**
  * To load css & js resource from laravel asset
  */
@@ -39,6 +40,7 @@ window.Toast = Swal.mixin({
 	  toast.addEventListener('mouseleave', Swal.resumeTimer)
 	}*/
 });
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
