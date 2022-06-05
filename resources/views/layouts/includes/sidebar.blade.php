@@ -22,6 +22,37 @@
             {{-- <span class="full-width-prev-auto"></span> --}}
           </a>
         </li>
+        
+        {{--Entity-Dropdown--}}
+        <li class="menu-item dropdown text-white">
+          <div class="menu-link dropmenu-toggle {{ strpos($viewName, 'entity') ? 'active' : '' }}" id="Sidebar-Nav-Entity">
+            <i class="menu-icon fa fa-home"></i>
+            <span>Entity Information</span>
+            {{-- <span class="full-width-prev-auto">
+              <span class="caret">
+                <i class="fa fa-angle-down"></i>
+              </span>
+            </span> --}}
+          </div>
+
+          <div class="drop-menu {{ strpos($viewName, 'entity') ? 'show' : '' }}" aria-labelledby="Sidebar-Nav-Entity">
+            <div class="drop-item">
+              <a href="{{ route('entity.all.index') }}"
+                 class="drop-link {{ strpos($viewName, 'entity') && strpos($viewName, 'index') ? 'active' : '' }}">
+                <i class="menu-icon fa fa-home"></i>
+                <span>Entity All</span>
+              </a>
+            </div>
+
+            <div class="drop-item">
+              <a href="{{ route('employee.new.create') }}"
+                 class="drop-link {{ strpos($viewName, 'entity') && strpos($viewName, 'new') ? 'active' : '' }}">
+                <i class="menu-icon fa fa-home"></i>
+                <span>Add Entity</span>
+              </a>
+            </div>
+          </div>
+        </li>
 
         {{--User-&-Settings-Dropdown--}}
         @can ('isSuperAdmin', Auth::user())

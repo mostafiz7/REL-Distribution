@@ -8,6 +8,7 @@ use App\Http\Controllers\User_Controller;
 use App\Http\Controllers\Department_Controller;
 use App\Http\Controllers\Designation_Controller;
 use App\Http\Controllers\Employee_Controller;
+use App\Http\Controllers\Entity_Controller;
 use App\Http\Controllers\Brand_Controller;
 use App\Http\Controllers\Parts_Controller;
 use App\Http\Controllers\Vehicle_Controller;
@@ -88,6 +89,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
   Route::post('/employee/new', [Employee_Controller::class, 'StoreEmployee'])->name('employee.new.store');
   Route::get('/employee/{uid}/edit', [Employee_Controller::class, 'EditEmployee'])->name('employee.single.edit');
   Route::post('/employee/{uid}/edit', [Employee_Controller::class, 'UpdateEmployee'])->name('employee.single.update');
+
+  
+  // Entity Routes
+  Route::get('/entity/index', [Entity_Controller::class, 'EntityIndex'])->name('entity.all.index');
 
 
   // Vehicles Routes

@@ -44,8 +44,11 @@ class DatabaseSeeder extends Seeder
     // Execute Artisan Commands in Programmatically
     Artisan::call('cache:clear');
     Artisan::call('config:cache');
-    Artisan::call('route:cache');
-    Artisan::call('view:cache');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    // Artisan::call('config:clear');
+    // Artisan::call('route:cache');
+    // Artisan::call('view:cache');
 
   }
 

@@ -119,6 +119,34 @@ class Entity_Seeder extends Seeder
 
     Entity_Model::create([
       'uid'           => Str::uuid(),
+      'name'          => 'Barishal CTP',
+      'slug'          => 'barishal-ctp',
+      'email'         => 'barishal-ctp@example.com',
+      'district'      => 'Barishal',
+      'type'          => 'showroom',
+      'ownership'     => 'own',
+      'category'      => 'outlet',
+      'parent_id'     => 7,
+      'territory_id'  => 2,
+      'incharge_id'   => null,
+    ]);
+
+    Entity_Model::create([
+      'uid'           => Str::uuid(),
+      'name'          => 'Vola CTP',
+      'slug'          => 'vola-ctp',
+      'email'         => 'vola-ctp@example.com',
+      'district'      => 'Vola',
+      'type'          => 'showroom',
+      'ownership'     => 'own',
+      'category'      => 'outlet',
+      'parent_id'     => 7,
+      'territory_id'  => 2,
+      'incharge_id'   => null,
+    ]);
+
+    Entity_Model::create([
+      'uid'           => Str::uuid(),
       'name'          => 'Cumilla Zone',
       'slug'          => 'cumilla-zone',
       'email'         => 'cumilla-zone@example.com',
@@ -140,7 +168,7 @@ class Entity_Seeder extends Seeder
       'type'          => 'showroom',
       'ownership'     => 'franchise',
       'category'      => 'outlet',
-      'parent_id'     => 8,
+      'parent_id'     => 10,
       'territory_id'  => 9,
       'incharge_id'   => null,
     ]);
@@ -154,7 +182,7 @@ class Entity_Seeder extends Seeder
       'type'          => 'showroom',
       'ownership'     => 'own',
       'category'      => 'outlet',
-      'parent_id'     => 8,
+      'parent_id'     => 10,
       'territory_id'  => 9,
       'incharge_id'   => null,
     ]);
