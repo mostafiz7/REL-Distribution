@@ -6,6 +6,7 @@ use App\Models\Parts_Model;
 use Illuminate\Http\Request;
 use App\Models\Vehicle_Model;
 use Illuminate\Support\Facades\Artisan;
+use Flasher\Laravel\Facade\Flasher;
 
 
 class Home_Controller extends Controller
@@ -33,6 +34,19 @@ class Home_Controller extends Controller
       'welcome'     => 'Welcome',
     ]); */
     
+    return redirect()->route('login');
+  }
+
+
+  public function ClearCacheAll()
+  {
+    // Execute Artisan Commands in Programmatically
+    Artisan::call('cache:clear', []);
+    Artisan::call('config:cache', []);
+    Artisan::call('route:cache', []);
+    Artisan::call('view:cache', []);
+
+    Flasher::addSuccess("Cache, Route, Config & View cleared and cached sucessfully!");
     return redirect()->route('login');
   }
 

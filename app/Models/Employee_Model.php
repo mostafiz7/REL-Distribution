@@ -45,6 +45,8 @@ class Employee_Model extends Model
     'joining_date',
     'confirmation_date',
     'employment_status',
+    'entity_id',
+    'entity_position',
     'designation_id',
     'department_id',
     'dept_position',
@@ -71,6 +73,12 @@ class Employee_Model extends Model
     'previous_salary' => 'array',
   ];
 
+
+
+  public function entity(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Entity_Model::class)->withDefault();
+  }
 
 
   public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo

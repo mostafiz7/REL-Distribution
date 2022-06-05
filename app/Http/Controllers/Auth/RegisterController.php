@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Flasher\Laravel\Facade\Flasher;
 
 class RegisterController extends Controller
 {
@@ -41,9 +42,9 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+
     /**
      * Get a validator for an incoming registration request.
-     *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -56,9 +57,9 @@ class RegisterController extends Controller
         ]);
     }
 
+
     /**
      * Create a new user instance after a valid registration.
-     *
      * @param  array  $data
      * @return \App\Models\User
      */
@@ -69,5 +70,9 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        /* Flasher::addError("New user registeration from outside of admin panel is strictly prohibited!");
+        return redirect()->route('login'); */
+
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Brand_Model;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +28,9 @@ class DatabaseSeeder extends Seeder
     // $this->call(Parts_Seeder::class);
 
     $this->call(Settings_Seeder::class);
+    
+    $this->call(Territory_Seeder::class);
+    $this->call(Entity_Seeder::class);
 
     $this->call(Department_Seeder::class);
     $this->call(Designation_Seeder::class);
@@ -35,6 +39,13 @@ class DatabaseSeeder extends Seeder
     $this->call(Permission_Seeder::class);
     $this->call(Role_Seeder::class);
     $this->call(User_Seeder::class);
+
+
+    // Execute Artisan Commands in Programmatically
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:cache');
 
   }
 

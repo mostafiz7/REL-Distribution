@@ -46,6 +46,8 @@ class CreateEmployeesTable extends Migration
       $table->set('employment_status', ['casual', 'daily-basis', 'permanent', 'probation', 'contractual'])->nullable();
       // $table->string('employment_status')->nullable(); // Casual / Daily-Basis / Permanent / Probation / Contractual
 
+      $table->unsignedBigInteger('entity_id')->nullable();
+      $table->set('entity_position', ['incharge', 'co-incharge', 'support', 'other'])->nullable();
       $table->unsignedBigInteger('department_id')->nullable();
       $table->unsignedBigInteger('designation_id')->nullable();
       $table->string('dept_position')->nullable();
@@ -66,6 +68,8 @@ class CreateEmployeesTable extends Migration
 
       $table->timestamps();
 
+      $table->foreign('entity_id')
+        ->references('id')->on('entities')->onUpdate('cascade');
       $table->foreign('department_id')
         ->references('id')->on('departments')->onUpdate('cascade');
       $table->foreign('designation_id')

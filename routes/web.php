@@ -14,6 +14,7 @@ use App\Http\Controllers\Vehicle_Controller;
 use App\Http\Controllers\Purchase_Controller;
 use App\Http\Controllers\PartsCategory_Controller;
 use App\Http\Controllers\VehicleCategory_Controller;
+use Flasher\Laravel\Facade\Flasher;
 
 
 
@@ -23,6 +24,19 @@ Auth::routes();
 
 
 Route::get('/', [Home_Controller::class, 'Homepage'])->name('homepage');
+
+Route::get('/cache-all', [Home_Controller::class, 'ClearCacheAll']);
+
+
+/* Route::get('/register', function(){
+  Flasher::addError("New user registeration from outside of admin panel is strictly prohibited!");
+  return redirect()->route('login');
+});
+
+Route::post('/register', function(){
+  Flasher::addError("New user registeration from outside of admin panel is strictly prohibited!");
+  return redirect()->route('login');
+}); */
 
 
 // Symbolic-Link & Laravel-Storage-Link
