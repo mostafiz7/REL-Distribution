@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home_Controller;
 use App\Http\Controllers\Admin\Admin_Controller;
 use App\Http\Controllers\User_Controller;
+use App\Http\Controllers\Entity_Controller;
 use App\Http\Controllers\Department_Controller;
 use App\Http\Controllers\Designation_Controller;
 use App\Http\Controllers\Employee_Controller;
-use App\Http\Controllers\Entity_Controller;
 use App\Http\Controllers\Brand_Controller;
 use App\Http\Controllers\Parts_Controller;
 use App\Http\Controllers\Vehicle_Controller;
@@ -68,6 +68,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
   Route::get('/my-account', [User_Controller::class, 'MyAccount'])->name('my-profile.edit');
   Route::post('/my-account', [User_Controller::class, 'UpdateMyAccount'])->name('my-profile.update');
 
+  
+  // Entity Routes
+  Route::get('/entity/index', [Entity_Controller::class, 'EntityIndex'])->name('entity.all.index');
+  Route::get('/entity/new', [Entity_Controller::class, 'CreateEntity'])->name('entity.new.create');
+  Route::post('/entity/new', [Entity_Controller::class, 'StoreEntity'])->name('entity.new.store');
+  Route::get('/entity/{uid}/show', [Entity_Controller::class, 'ShowEntity'])->name('entity.single.show');
+  Route::get('/entity/{uid}/edit', [Entity_Controller::class, 'EditEntity'])->name('entity.single.edit');
+  Route::post('/entity/{uid}/edit', [Entity_Controller::class, 'UpdateEntity'])->name('entity.single.update');
+
 
   // Departments Routes
   Route::get('/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.new.create');
@@ -87,12 +96,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
   Route::get('/employee/index', [Employee_Controller::class, 'EmployeeIndex'])->name('employee.all.index');
   Route::get('/employee/new', [Employee_Controller::class, 'CreateEmployee'])->name('employee.new.create');
   Route::post('/employee/new', [Employee_Controller::class, 'StoreEmployee'])->name('employee.new.store');
+  Route::get('/employee/{uid}/show', [Employee_Controller::class, 'ShowEmployee'])->name('employee.single.show');
   Route::get('/employee/{uid}/edit', [Employee_Controller::class, 'EditEmployee'])->name('employee.single.edit');
   Route::post('/employee/{uid}/edit', [Employee_Controller::class, 'UpdateEmployee'])->name('employee.single.update');
-
-  
-  // Entity Routes
-  Route::get('/entity/index', [Entity_Controller::class, 'EntityIndex'])->name('entity.all.index');
 
 
   // Vehicles Routes

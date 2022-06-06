@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class Employee_Controller extends Controller
 {
-  // Show All-Employee
+  // Employee All Index
   function EmployeeIndex( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
@@ -116,7 +116,7 @@ class Employee_Controller extends Controller
   }
 
 
-  // Show New-Employee-Form
+  // Employee-New-Form
   function CreateEmployee( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
@@ -185,6 +185,25 @@ class Employee_Controller extends Controller
     $newEmployeeAdded = Employee_Model::create( $newEmployeeData );
 
     return back()->with('success', 'New Employee added successfully!');
+  }
+
+
+  // Single Employee Show
+  function ShowEmployee( $uid, Request $request )
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isAdmins') || Gate::denies('entryView') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', RouteNotAuthorized());
+    }
+
+
+    $employee = Employee_Model::where('uid', $uid)->get()->first();
+
+    if( ! $employee ) return back()->with('error', 'The employee not found in system!');
+
+
+    dd( $employee );
+
   }
 
 

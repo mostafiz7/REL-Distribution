@@ -25,6 +25,9 @@ class CreateUsersTable extends Migration
       // $table->tinyText('role');
       // $table->unsignedTinyInteger('role_id');
       // $table->unsignedBigInteger('employee_id')->unique(); // Employee ID
+      // $table->unsignedBigInteger('entity_id')->nullable(); // Entity ID
+      $table->string('entity_name')->nullable(); // Entity name in slug
+      $table->string('entity_position')->nullable(); // Entity position
       $table->string('phone_personal')->unique()->nullable();
       $table->string('phone_official')->unique()->nullable();
       $table->json('permissions')->nullable();
@@ -40,7 +43,9 @@ class CreateUsersTable extends Migration
       /* $table->foreign('role_id')
         ->references('id')->on('roles')->onUpdate('cascade');
       $table->foreign('employee_id')
-        ->references('id')->on('employees')->onUpdate('cascade'); */
+        ->references('id')->on('employees')->onUpdate('cascade');
+      $table->foreign('entity_id')
+        ->references('id')->on('entities')->onUpdate('cascade'); */
     });
   }
 

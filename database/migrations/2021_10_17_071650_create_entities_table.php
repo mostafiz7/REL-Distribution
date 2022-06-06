@@ -19,6 +19,7 @@ return new class extends Migration // for Laravel 9
       $table->uuid('uid')->unique();
       $table->string('name')->unique();
       $table->string('slug')->unique();
+      $table->boolean('active')->default(1);
       $table->string('email')->unique()->nullable();
       $table->string('phone_primary')->unique()->nullable();
       $table->string('phone_secondary')->unique()->nullable();
@@ -26,10 +27,13 @@ return new class extends Migration // for Laravel 9
       $table->string('address')->nullable();
       $table->string('city')->nullable();
       $table->string('ps')->nullable(); // police-station
+      $table->string('postcode')->nullable();
       $table->string('district')->nullable();
-      $table->set('type', ['office', 'showroom', 'sales-center', 'dealer', 'zone', 'store', 'insource', 'customer']);
+      $table->set('type', ['office', 'pos', 'zone', 'store', 'service', 'insource', 'customer']);
+
+      $table->set('category', ['office', 'sub-office', 'showroom', 'sales-center', 'corporate', 'dealer', 'service-center', 'store', 'sub-store', 'other'])->nullable();
+
       $table->set('ownership', ['own', 'franchise', 'exclusive', 'other'])->nullable();
-      $table->set('category', ['office', 'sub-office', 'outlet', 'store', 'sub-store', 'other'])->nullable();
 
       $table->string('owner_name')->nullable();
       $table->string('owner_contact')->nullable();

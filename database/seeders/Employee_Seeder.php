@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee_Model;
 use Illuminate\Support\Str;
+use App\Models\Entity_Model;
+use App\Models\Employee_Model;
 use Illuminate\Database\Seeder;
 
 
@@ -27,6 +28,9 @@ class Employee_Seeder extends Seeder
       'email_official'  => 'admin@nurullah.biz',
       'designation_id'  => 1,
       'department_id'   => 1,
+      'entity_id'       => 1,
+      'entity_name'     => 'CI&DD',
+      'entity_position' => 'incharge',
       'authorize_power' => false,
       'purchase_power'  => false,
       // 'user_id'         => 1,
@@ -42,6 +46,9 @@ class Employee_Seeder extends Seeder
       'email_official'  => 'shahidullah@nurullah.biz',
       'designation_id'  => 2,
       'department_id'   => 1,
+      'entity_id'       => 7,
+      'entity_name'     => 'Barishal Zone',
+      'entity_position' => 'incharge',
       'authorize_power' => true,
       'purchase_power'  => false,
     ]);

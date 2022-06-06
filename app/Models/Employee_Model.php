@@ -46,6 +46,7 @@ class Employee_Model extends Model
     'confirmation_date',
     'employment_status',
     'entity_id',
+    'entity_name',
     'entity_position',
     'designation_id',
     'department_id',

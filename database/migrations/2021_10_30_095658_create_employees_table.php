@@ -45,12 +45,12 @@ class CreateEmployeesTable extends Migration
       $table->date('confirmation_date')->nullable();
       $table->set('employment_status', ['casual', 'daily-basis', 'permanent', 'probation', 'contractual'])->nullable();
       // $table->string('employment_status')->nullable(); // Casual / Daily-Basis / Permanent / Probation / Contractual
-
-      $table->unsignedBigInteger('entity_id')->nullable();
-      $table->set('entity_position', ['incharge', 'co-incharge', 'support', 'other'])->nullable();
       $table->unsignedBigInteger('department_id')->nullable();
       $table->unsignedBigInteger('designation_id')->nullable();
       $table->string('dept_position')->nullable();
+      $table->unsignedBigInteger('entity_id')->nullable();
+      $table->string('entity_name')->nullable();
+      $table->set('entity_position', ['incharge', 'co-incharge', 'support', 'other'])->nullable();
       $table->string('company')->nullable();
       $table->string('signatory_role')->nullable();
       $table->string('work_location')->nullable();

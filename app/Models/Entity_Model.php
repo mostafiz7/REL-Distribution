@@ -24,7 +24,26 @@ class Entity_Model extends Model
     'uid',
     'name',
     'slug',
+    'active',
+    'email',
+    'phone_primary',
+    'phone_secondary',
+    'location',
+    'address',
+    'city',
+    'ps', // police-station
+    'postcode',
     'district',
+    'type',
+    'category',
+    'ownership',
+    'owner_name',
+    'owner_contact',
+    'owner_email',
+    'owner_address',
+    'parent_id',
+    'territory_id',
+    'incharge_id',
   ];
 
 
@@ -56,16 +75,20 @@ class Entity_Model extends Model
 
   public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Entity_Model::class, 'parent_id')->whereNull('parent_id')->with('parent');
+    // return $this->belongsTo(Entity_Model::class, 'parent_id')->whereNull('parent_id')->with('parent');
+    
+    // return $this->belongsTo(Entity_Model::class, 'parent_id')->with('parent');
+    return $this->belongsTo(Entity_Model::class, 'parent_id');
   }
 
 
   public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
   {
-    return $this->hasMany(Entity_Model::class, 'parent_id')->with('children');
+    // return $this->hasMany(Entity_Model::class, 'parent_id')->with('children');
+    return $this->hasMany(Entity_Model::class, 'parent_id');
   }
 
-  // $data = Entity_Model::with('children')->whereNull('parent_id');
+  // $data = Entity_Model::whereNull('parent_id')->with('children');
 
 
 

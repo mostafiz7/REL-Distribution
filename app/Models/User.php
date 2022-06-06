@@ -32,6 +32,9 @@ class User extends Authenticatable
     'password',
     'role_id',
     'employee_id',
+    'entity_id',
+    'entity_name',
+    'entity_position',
     'phone_personal',
     'phone_official',
     'permissions',
@@ -90,6 +93,12 @@ class User extends Authenticatable
   public function employee(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
     return $this->belongsTo(Employee_Model::class)->withDefault();
+  }
+
+
+  public function entity(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Entity_Model::class)->withDefault();
   }
 
 

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +34,13 @@ class AppServiceProvider extends ServiceProvider
       $viewName = str_replace('.', ' ', $view->getName());
       View::share('viewName', $viewName);
     });
+
+
+    // for Model / Collection clone
+    Collection::macro('clone', function() {
+      return clone $this;
+    });
+
   }
 
 
