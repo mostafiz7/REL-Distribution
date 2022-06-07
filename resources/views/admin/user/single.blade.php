@@ -34,11 +34,11 @@
             </div>
           @endif--}}
 
-          <div class="card-body overlay-scrollbar">
+          <div class="card-body full-height-prev-auto">
             <div class="page-body">
-              <div class="single-user-area p-relative pt-20">
+              <div class="single-user-area p-relative overlay-scrollbar pt-20">
                 @if ( $user )
-                  <div class="user-image-block bg-white p-absolute pos-top-right w-300px h-260px mt-35 mr-5 z-index-11">
+                  <div class="user-image-block p-absolute pos-top-right w-300px h-260px bg-white mt-35 mr-5 z-index-11">
                     <div class="pl-30 pr-10">
                       <div class="image-box">
                         <?php

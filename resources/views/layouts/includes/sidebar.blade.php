@@ -45,7 +45,7 @@
             </div>
 
             <div class="drop-item">
-              <a href="{{ route('employee.new.create') }}"
+              <a href="{{ route('entity.new.create') }}"
                  class="drop-link {{ strpos($viewName, 'entity') && strpos($viewName, 'new') ? 'active' : '' }}">
                 <i class="menu-icon fa fa-home"></i>
                 <span>Add Entity</span>

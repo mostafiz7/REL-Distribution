@@ -101,6 +101,7 @@ class User_Controller extends Controller
       return back();
     }
 
+    
     // Get all named-route to uses for user permissions
     $routes_arr = [];
     $routes_generated = [];

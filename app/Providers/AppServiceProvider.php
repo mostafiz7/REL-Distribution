@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Collection;
+//use Illuminate\Database\Eloquent\Collection;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -36,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
     });
 
 
-    // for Model / Collection clone
+    // for clone or copy Model / Collection
     Collection::macro('clone', function() {
       return clone $this;
     });

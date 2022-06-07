@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Territory_Model;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
 class Entity_Model extends Model
@@ -25,6 +26,7 @@ class Entity_Model extends Model
     'name',
     'slug',
     'active',
+    'priority',
     'email',
     'phone_primary',
     'phone_secondary',
@@ -34,8 +36,8 @@ class Entity_Model extends Model
     'ps', // police-station
     'postcode',
     'district',
-    'type',
     'category',
+    'type',
     'ownership',
     'owner_name',
     'owner_contact',

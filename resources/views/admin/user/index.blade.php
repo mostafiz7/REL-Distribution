@@ -29,7 +29,7 @@
           </div>
         @endif--}}
 
-        <div class="card-body overlay-scrollbar pt-10">
+        <div class="card-body full-height-prev-auto pt-10">
           <div class="page-body">
             <div class="all-user-area">
               <div class="user-search-block h-auto mb-10">
@@ -97,7 +97,7 @@
                 </form>
               </div>
 
-              <div class="all-user-display-block">
+              <div class="all-user-display-block full-height-prev-auto overlay-scrollbar bt-1">
                 
                 @if ( $user_all && count($user_all) > 0 )
                   @php
@@ -107,11 +107,11 @@
                   @endphp
                   
                   {{-- paginate-links --}}
-                  {{-- <div class="pagination-links {{ $user_all->total() > $paginate ? 'mb-5' : '' }}">
+                  {{-- <div class="pagination-links h-auto {{ $user_all->total() > $paginate ? 'mb-5' : '' }}">
                     {{ $user_all->withQueryString()->links() }}
                   </div> --}}
 
-                  <table class="table table-bordered border-1 bt-0 border-secondary-4 user-all-table">
+                  <table class="table table-bordered border-1 bt-0 border-secondary-4 user-all-table {{ $user_all->total() < $paginate ? 'mb-50' : '' }}">
                     <thead class="bg-dark text-white text-center fw-normal">
                       <tr class="user-row align-middle">
                         <th class="serial">##</th>
@@ -195,12 +195,12 @@
                   </table>
                   
                   {{-- paginate-links --}}
-                  <div class="pagination-links {{ $user_all->total() > $paginate ? 'mt-5' : '' }}">
+                  <div class="pagination-links h-auto {{ $user_all->total() > $paginate ? 'mt-5' : '' }}">
                     {{ $user_all->withQueryString()->links() }}
                   </div>
 
                 @else
-                  <div class="text-danger fz-30 fw-bold text-center py-100">
+                  <div class="h-auto text-danger fz-30 fw-bold text-center pt-100">
                     <div class="">Oops! Sorry.</div>
                     There are no registered user found.
                   </div>

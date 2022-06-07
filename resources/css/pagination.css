@@ -1,0 +1,61 @@
+/* Paginate-Navigation */
+
+.pagination-links {
+  padding-bottom: 30px;
+}
+
+.pagination-links .flex {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+}
+.pagination-links .justify-between {
+  justify-content: space-between;
+}
+.pagination-links .items-center {
+  align-items: center;
+}
+.pagination-links .inline-flex {
+  display: inline-flex;
+}
+.pagination-links .py-2 {
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+.pagination-links .px-4 {
+  padding-left: 7px !important;
+  padding-right: 7px !important;
+}
+.pagination-links .text-gray-500 {
+  color: #888888;
+}
+
+.pagination-links .hidden {
+  padding-right: 20px;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.pagination-links .hidden div:last-child {
+  text-align: right;
+}
+.pagination-links a[rel="prev"],
+.pagination-links a[rel="next"],
+.pagination-links span[aria-disabled="true"] span {
+  width: 20px;
+  height: 100%;
+  padding: 5px 0 !important;
+}
+.pagination-links span[aria-current="page"] span {
+  height: 100%;
+}
+.pagination-links a[rel="prev"] svg.w-5,
+.pagination-links a[rel="next"] svg.w-5,
+.pagination-links span[aria-disabled="true"] span svg.w-5 {
+  width: auto !important;
+}
+.pagination-links a[rel="prev"] svg.h-5,
+.pagination-links a[rel="next"] svg.h-5,
+.pagination-links span[aria-disabled="true"] span svg.h-5 {
+  height: auto !important;
+}
+

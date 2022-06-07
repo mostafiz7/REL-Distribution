@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Employee_Model;
 use Illuminate\Database\Seeder;
 use App\Models\Permission_Model;
+use Illuminate\Support\Facades\Route;
 
 class User_Seeder extends Seeder
 {
@@ -21,6 +22,30 @@ class User_Seeder extends Seeder
     
     $permissions  = Permission_Model::pluck('slug')->all();
     $employee     = Employee_Model::find(1);
+    
+    // Get all named-route to uses for user permissions
+    $routes_arr = [];
+    $routes_generated = [];
+    foreach( Route::getRoutes()->getRoutes() as $route ){
+      $action = $route->getAction();
+      if( array_key_exists('as', $action) ){
+        $routes_arr[] = $action['as'];
+
+        if( str_contains($action['as'], 'generated') || str_contains($action['as'], 'ignition') ){
+          $routes_generated[] = $action['as'];
+        }
+      }
+    }
+
+    $route_exclude = [ 'login', 'logout', 'register', 'homepage', 'contact-us', ];
+    // merge all excluded routes
+    $route_exclude_all = array_merge( $routes_generated, $route_exclude );
+    // exclude unnecessary route from array value with key & re-index the key
+    $routes_all = array_values( array_diff( $routes_arr, $route_exclude_all ) );
+    // Remove duplicate array value & sorting by ascending order
+    $routes = array_unique( $routes_all );
+    sort( $routes );
+
 
     User::create([
       'uid'               => Str::uuid(),
@@ -39,7 +64,8 @@ class User_Seeder extends Seeder
       'phone_personal'    => $employee->phone_personal,
       'phone_official'    => $employee->phone_official,
       'permissions'       => $permissions,
-      'routes'            => [
+      'routes'            => $routes,
+      /* 'routes'            => [
         'admin.dashboard',
         'database.migration.update',
         'database.migration.fresh',
@@ -59,7 +85,7 @@ class User_Seeder extends Seeder
         'user.single.update',
         'my-profile.edit',
         'my-profile.update',
-      ],
+      ], */
       'settings'          => null,
       'email_settings'    => null,
       'sms_settings'      => null,

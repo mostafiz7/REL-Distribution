@@ -179,6 +179,15 @@ const Log = require("laravel-mix/src/Log");
 		});
 
 
+		$(".full-height-minus-prev-next").each(function(){
+			let prevHeight   = $(this).prev().outerHeight();
+			let nextHeight   = $(this).next().outerHeight();
+			let parentHeight = $(this).parent().innerHeight();
+			let this_height  = (parentHeight - prevHeight - nextHeight) + 'px';
+			$(this).css('height', this_height);
+		});
+
+
 		// Set-Element-Height-by-Minus-Figured-Full-Height instead of calc(100% - minusPX);
 		$('.full-height-minus').each(function(){
 			let class_list = $(this).attr('class').split(/\s+/);

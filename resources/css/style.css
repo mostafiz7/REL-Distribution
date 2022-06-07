@@ -547,7 +547,7 @@ td.actions {
   height: auto !important;
 }
 .page-content .page-body {
-  height: calc(100% - 42px) !important;
+  /* height: calc(100% - 42px) !important; */
 }
 
 

@@ -29,9 +29,9 @@
           </div>
         @endif--}}
 
-        <div class="card-body overlay-scrollbar">
+        <div class="card-body full-height-prev-auto">
           <div class="page-body">
-            <div class="new-user-area mt-20">
+            <div class="new-user-area overlay-scrollbar pt-20">
               <form method="POST" action="{{ route('user.new.store') }}" enctype="multipart/form-data" name="NewUserForm" id="NewUserForm" class="user-form new row mx-0">
                 @csrf
 

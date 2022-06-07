@@ -33,9 +33,9 @@
             </div>
           @endif--}}
 
-          <div class="card-body overlay-scrollbar">
+          <div class="card-body full-height-prev-auto">
             <div class="page-body">
-              <div class="edit-user-area mt-10">
+              <div class="edit-user-area overlay-scrollbar pt-20">
                 <form method="POST" action="{{ route('user.single.update', $user->uid) }}" enctype="multipart/form-data" name="EditUserForm" id="EditUserForm" class="user-form edit row mx-0">
                   @csrf
 
