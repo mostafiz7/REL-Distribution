@@ -12,12 +12,37 @@ use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
 
 class Entity_Controller extends Controller
 {
   // Entity All Index
   public function EntityIndex( Request $request )
   {
+    //$entity_column = Schema::getColumnListing( 'entities' );
+    // $entity_column = DB::listTableColumns('entities');
+    // $column = Schema::getConnection()->getDoctrineColumn('entities', 'type');
+
+    $results = DB::select('
+      select column_default 
+      from information_schema.columns 
+      where 
+          table_schema = ? 
+          and table_name = ?
+      ', ['rangs_distribution', 'entities']);
+
+    // Flatten the results to get an array of the default values
+    $defaults = collect($results)->pluck('name');
+
+    $entity_types = ['office', 'pos', 'zone', 'store', 'service', 'insource', 'customer'];
+    $category_all = ['office', 'sub-office', 'showroom', 'sales-center', 'corporate', 'dealer', 'service-center', 'store', 'sub-store', 'other'];
+    $ownership_all = ['own', 'franchise', 'exclusive', 'other'];
+
+    dd( $defaults );
+
+
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
       Flasher::addError( RouteNotAuthorized() );
