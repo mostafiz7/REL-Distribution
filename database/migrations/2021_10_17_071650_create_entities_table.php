@@ -20,7 +20,7 @@ return new class extends Migration // for Laravel 9
       $table->string('name')->unique();
       $table->string('slug')->unique();
       $table->boolean('active')->default(1);
-      $table->integer('priority')->unique();
+      $table->integer('priority')->unique()->nullable();
       $table->string('email')->unique()->nullable();
       $table->string('phone_primary')->unique()->nullable();
       $table->string('phone_secondary')->unique()->nullable();
@@ -40,6 +40,12 @@ return new class extends Migration // for Laravel 9
       $table->string('owner_contact')->nullable();
       $table->string('owner_email')->nullable();
       $table->string('owner_address')->nullable();
+
+      $table->date('open_date')->nullable();
+      $table->date('close_date')->nullable();
+      $table->boolean('sale_power')->default(0);
+      $table->boolean('sales_report')->default(0);
+      $table->boolean('stock_report')->default(1);
 
       $table->unsignedBigInteger('parent_id')->nullable();
       $table->unsignedBigInteger('territory_id')->nullable();

@@ -38,6 +38,18 @@
                 @endif
               </div>
 
+
+              {{-- Entity-Open-Date --}}
+
+              {{-- Entity-Close-Date --}}
+
+              {{-- Entity-Sale-Power --}}
+              
+              {{-- Entity-Sales-Report --}}
+
+              {{-- Entity-Stock-Report --}}
+
+
               {{-- Entity-Priority-for-Data-Serialize --}}
               <div class="col-md-6 col-12 mb-30 priority">
                 <label for="priority" class="required w-100 mr-15">

@@ -51,7 +51,8 @@ class Entity_Controller extends Controller
   protected function Parents(){
     return Entity_Model::whereIn('category', ['office', 'pos', 'zone', 'store', 'service', 'insource'])
       ->whereIn('type', ['sub-office', 'corporate', 'dealer', 'store', 'sub-store'])
-      ->where('ownership', 'own')->orderBy('priority', 'asc')->get();
+      ->where('ownership', 'own')->where('active', 1)
+      ->orderBy('priority', 'asc')->get();
   }
 
 
