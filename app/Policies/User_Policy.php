@@ -142,5 +142,13 @@ class User_Policy
   }
 
 
+  public function artisan_command( User $user ): bool
+  {
+    // $permissions    = explode( ',', $user->permissions );
+    // if( $has_permission ){ return true; } else{ return false; }
+    return in_array( 'artisan-command', $user->permissions );
+  }
+
+
 
 }

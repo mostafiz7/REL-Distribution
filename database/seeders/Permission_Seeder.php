@@ -31,5 +31,7 @@ class Permission_Seeder extends Seeder
     Permission_Model::create([ 'id' => 11, 'name' => 'Restore', 'slug' => 'restore' ]);
     Permission_Model::create([ 'id' => 12, 'name' => 'Force Delete', 'slug' => 'force-delete' ]);
     Permission_Model::create([ 'id' => 13, 'name' => 'Approve', 'slug' => 'approve' ]);
+    Permission_Model::create([ 'id' => 14, 'name' => 'Artisan Command', 'slug' => 'artisan-command' ]);
+    
   }
 }

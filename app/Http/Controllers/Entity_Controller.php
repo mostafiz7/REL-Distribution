@@ -147,7 +147,7 @@ class Entity_Controller extends Controller
 
     // $entity_all = $entity_all->without('children');
 
-    $entity_all = $entity_all->orderBy('priority', 'asc')->with('children');
+    $entity_all = $entity_all->with('children')->orderBy('priority', 'asc');
     $entity_all = $entity_all->paginate($paginate);
     
     //$entity_all = Entity_Model::where('category', 'zone')->with('children')->get();
@@ -214,6 +214,52 @@ class Entity_Controller extends Controller
   // Store New-Entity
   function StoreEntity( Request $request )
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      Flasher::addError( RouteNotAuthorized() );
+      return back();
+    }
+
+    $validator = Validator::make( $request->all(), [
+      'name'            => [ 'required', 'string', 'max:191', 'unique:entities,name' ],
+      'priority'        => [ 'nullable', 'integer', 'unique:entities,priority' ],
+      'email'           => [ 'nullable', 'string', 'email:rfc,dns', 'max:191', 'unique:entities,email' ],
+      'phone_primary'   => [ 'nullable', 'integer', 'digits_between:11,13' ],
+      'phone_secondary' => [ 'nullable', 'integer', 'digits_between:11,13' ],
+      'open_date'       => [ 'nullable', 'date_format:d-m-Y' ],
+      'close_date'      => [ 'prohibited' ],
+      'territory_id'    => [ 'nullable', 'integer', 'exists:territories,id' ],
+      'parent_id'       => [ 'nullable', 'integer', 'exists:entities,id' ],
+      'incharge_id'     => [ 'prohibited' ],
+      // 'incharge_id'     => [ 'nullable', 'integer', 'exists:employees,id', 'unique:entities,incharge_id' ],
+      'category'        => [ 'required', Rule::in($this->category_all) ],
+      'type'            => [ 'required', Rule::in($this->entity_types) ],
+      'ownership'       => [ 'required', Rule::in($this->ownership_all) ],
+      // 'category'        => [ 'required', "in:$category" ],
+      // 'type'            => [ 'required', "in:$type" ],
+      // 'ownership'       => [ 'required', "in:$ownership" ],
+      'location'        => [ 'nullable', 'string', 'max:191' ],
+      'lat'             => [ 'nullable', 'numeric', 'max:191' ],
+      'long'            => [ 'nullable', 'numeric', 'max:191' ],
+      'address'         => [ 'nullable', 'string', 'max:191' ],
+      'city'            => [ 'nullable', 'string', 'max:191' ],
+      'police_station'  => [ 'nullable', 'string', 'max:191' ],
+      'postcode'        => [ 'nullable', 'string', 'max:191' ],
+      'district'        => [ 'nullable', 'string', 'max:191' ],
+      'owner_name'      => [ 'nullable', 'string', 'max:191' ],
+      'owner_contact'   => [ 'nullable', 'integer', 'digits_between:11,13' ],
+      'owner_email'     => [ 'nullable', 'string', 'email:rfc,dns', 'max:191' ],
+      'owner_address'   => [ 'nullable', 'string', 'max:191' ],
+    ], [
+      'category.required'   => 'The selected entity-category is required.',
+      'category.in'         => 'The selected entity-category is invalid.',
+      'type.required'       => 'The selected entity-type is required.',
+      'type.in'             => 'The selected entity-type is invalid.',
+      'ownership.required'  => 'The selected entity-ownership is required.',
+      'ownership.in'        => 'The selected entity-ownership is invalid.',
+    ]);
+    if($validator->fails()) return back()->withErrors($validator)->withInput();
+
 
   }
 

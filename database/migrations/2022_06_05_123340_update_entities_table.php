@@ -14,7 +14,7 @@ return new class extends Migration
   public function up()
   {
     Schema::table('entities', function (Blueprint $table) {
-      $table->unsignedBigInteger('incharge_id')->unique()->nullable()->after('territory_id'); // Employee ID
+      $table->unsignedBigInteger('incharge_id')->unique()->nullable()->after('parent_id'); // Employee ID
       
       $table->foreign('incharge_id')
         ->references('id')->on('employees')->onUpdate('cascade');

@@ -45,6 +45,7 @@ class AuthServiceProvider extends ServiceProvider
     Gate::define('entryRestore', [User_Policy::class, 'restore']);
     Gate::define('entryForceDelete', [User_Policy::class, 'force_delete']);
     Gate::define('entryApprove', [User_Policy::class, 'approve']);
+    Gate::define('entryArtisanCommand', [User_Policy::class, 'artisan_command']);
 
 
     /* GATES DEFINE FOR USER ROLE */

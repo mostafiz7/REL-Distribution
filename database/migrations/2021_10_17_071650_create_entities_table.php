@@ -24,39 +24,44 @@ return new class extends Migration // for Laravel 9
       $table->string('email')->unique()->nullable();
       $table->string('phone_primary')->unique()->nullable();
       $table->string('phone_secondary')->unique()->nullable();
+      $table->date('open_date')->nullable();
+      $table->date('close_date')->nullable();
+
+      $table->unsignedBigInteger('territory_id')->nullable();
+      $table->unsignedBigInteger('parent_id')->nullable();
+      // $table->unsignedBigInteger('incharge_id')->nullable();
+
+      $table->set('category', ['office', 'pos', 'zone', 'store', 'service', 'insource', 'customer']);
+      $table->set('type', ['office', 'sub-office', 'showroom', 'sales-center', 'corporate', 'dealer', 'sub-dealer', 'service-center', 'store', 'sub-store', 'other'])->nullable();
+      $table->set('ownership', ['own', 'franchise', 'exclusive', 'other'])->nullable();
+
+      $table->boolean('selling_power')->default(0); // entity-has-sales-power
+      $table->boolean('show_sls_report')->default(0); // entity-show-in-sales-report
+      $table->boolean('show_stock_report')->default(1); // entity-show-in-stock-report
+
       $table->string('location')->nullable();
+      //$table->decimal('lat', $precision = 12, $scale = 10); // Latitude
+      //$table->decimal('long', $precision = 12, $scale = 10); // Longitude
+      $table->decimal('lat')->nullable(); // Latitude
+      $table->decimal('long')->nullable(); // Longitude
+
       $table->string('address')->nullable();
       $table->string('city')->nullable();
-      $table->string('ps')->nullable(); // police-station
+      $table->string('police_station')->nullable(); // police-station
       $table->string('postcode')->nullable();
       $table->string('district')->nullable();
-      $table->set('category', ['office', 'pos', 'zone', 'store', 'service', 'insource', 'customer']);
-      
-      $table->set('type', ['office', 'sub-office', 'showroom', 'sales-center', 'corporate', 'dealer', 'sub-dealer', 'service-center', 'store', 'sub-store', 'other'])->nullable();
-
-      $table->set('ownership', ['own', 'franchise', 'exclusive', 'other'])->nullable();
 
       $table->string('owner_name')->nullable();
       $table->string('owner_contact')->nullable();
       $table->string('owner_email')->nullable();
       $table->string('owner_address')->nullable();
 
-      $table->date('open_date')->nullable();
-      $table->date('close_date')->nullable();
-      $table->boolean('sale_power')->default(0);
-      $table->boolean('sales_report')->default(0);
-      $table->boolean('stock_report')->default(1);
-
-      $table->unsignedBigInteger('parent_id')->nullable();
-      $table->unsignedBigInteger('territory_id')->nullable();
-      // $table->unsignedBigInteger('incharge_id')->nullable();
-
       $table->timestamps();
 
-      $table->foreign('parent_id')
-        ->references('id')->on('entities')->onUpdate('cascade');
       $table->foreign('territory_id')
         ->references('id')->on('territories')->onUpdate('cascade');
+      $table->foreign('parent_id')
+        ->references('id')->on('entities')->onUpdate('cascade');
       // $table->foreign('incharge_id')->references('id')->on('employees')->onUpdate('cascade');
     });
   }

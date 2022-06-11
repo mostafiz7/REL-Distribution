@@ -208,8 +208,8 @@ const Log = require("laravel-mix/src/Log");
 		// Status Toggle Radio Button
 		$("input[type=radio].status").on("click", function(){
 			if( this.id === 'active' ){
-				$(this).next().addClass('bg-success text-white fw-bold py-1 px-10');
 				$("input[type=radio]#not-active").next().removeClass('bg-danger text-white fw-bold py-1 px-10');
+				$(this).next().addClass('bg-success text-white fw-bold py-1 px-10');
 
 				/* if( ! $(this).next().hasClass('bg-success text-white fw-bold py-1 px-10') ){
 					$(this).next().addClass('bg-success text-white fw-bold py-1 px-10');
@@ -219,8 +219,8 @@ const Log = require("laravel-mix/src/Log");
 				} */
 			}
 			else if( this.id === 'not-active' ){
-				$(this).next().addClass('bg-danger text-white fw-bold py-1 px-10');
 				$("input[type=radio]#active").next().removeClass('bg-success text-white fw-bold py-1 px-10');
+				$(this).next().addClass('bg-danger text-white fw-bold py-1 px-10');
 
 				/* if( ! $(this).next().hasClass('bg-danger text-white fw-bold py-1 px-10') ){
 					$(this).next().addClass('bg-danger text-white fw-bold py-1 px-10');
