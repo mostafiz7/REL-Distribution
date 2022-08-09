@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Parts_Model;
 use Illuminate\Http\Request;
 use App\Models\Vehicle_Model;
-use Illuminate\Support\Facades\Artisan;
 use Flasher\Laravel\Facade\Flasher;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 
 
 class Home_Controller extends Controller
@@ -38,38 +40,113 @@ class Home_Controller extends Controller
   }
 
 
-  public function ClearCacheAll()
-  {
-    // Execute Artisan Commands in Programmatically
-    Artisan::call('cache:clear', []);
-    Artisan::call('config:cache', []);
-    Artisan::call('route:cache', []);
-    Artisan::call('view:cache', []);
-
-    Flasher::addSuccess("Cache, Route, Config & View cleared and cached sucessfully!");
-    return redirect()->route('login');
-  }
-
-
   // Create-Symbolic-Link
   public function CreateSymbolicLink()
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryArtisanCommand') ){
+      Flasher::addError( routeNotAuthorized() );
+      return back();
+    }
+
+
     $target_folder = '/home/rangsapp/public_html/public/assets';
     $link_folder   = '/home/rangsapp/public_html/assets';
 
     symlink( $target_folder, $link_folder );
 
-    return redirect()->route('homepage')->with('success', 'Symbolic-Link created successfully!');
+    Flasher::addSuccess("Symbolic-Link created successfully!");
+    return back();
   }
   
   
   // Create-Laravel-Storage-Link
   public function CreateStorageLink()
   {
-    // Call Artisan Command in Controller
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryArtisanCommand') ){
+      Flasher::addError( routeNotAuthorized() );
+      return back();
+    }
+    
+    
     Artisan::call('storage:link', []);
 
-    return redirect()->route('homepage')->with('success', 'Symbolic-Link created successfully!');
+    Flasher::addSuccess("Storage-Link created successfully!");
+    return back();
+  }
+
+
+  // route, view & config clear only
+  public function RouteViewClearOnly()
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryArtisanCommand') ){
+      Flasher::addError( routeNotAuthorized() );
+      return back();
+    }
+    
+    Artisan::call('cache:clear', []);
+    Artisan::call('config:clear', []);
+    Artisan::call('route:clear', []);
+    Artisan::call('view:clear', []);
+
+    Flasher::addSuccess("Cache, Route, Config & View cleared sucessfully!");
+    return back();
+  }
+
+
+  // route, view, config - cache & clear
+  public function RouteViewClearCache()
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryArtisanCommand') ){
+      Flasher::addError( routeNotAuthorized() );
+      return back();
+    }
+
+    Artisan::call('cache:clear', []);
+    Artisan::call('config:cache', []);
+    Artisan::call('route:cache', []);
+    Artisan::call('view:cache', []);
+
+    Flasher::addSuccess("Cache, Route, Config & View cleared and cached sucessfully!");
+    return back();
+  }
+
+
+  // config cache
+  public function ConfigCache()
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryArtisanCommand') ){
+      Flasher::addError( routeNotAuthorized() );
+      return back();
+    }
+
+    Artisan::call('config:cache', []);
+
+    Flasher::addSuccess("Config cached sucessfully!");
+    return back();
+  }
+
+
+  // session files remove
+  public function SessionClear()
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryArtisanCommand') ){
+      Flasher::addError( routeNotAuthorized() );
+      return back();
+    }
+
+    $files = File::allFiles( storage_path( 'framework/sessions/' ) );
+    foreach( $files as $file ){
+      File::delete( storage_path( 'framework/sessions/' . $file->getFilename() ) );
+    }
+
+    Flasher::addSuccess("Session cleared sucessfully!");
+    return back();
   }
 
 

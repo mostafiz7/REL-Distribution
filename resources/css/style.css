@@ -512,6 +512,7 @@ body.modal-open:not(.swal2-shown) {
   padding-right: 0 !important;
 }
 
+
 /* Bootstrap Modal */
 .modal-dialog-scrollable {
   height: calc(100% - 1rem) !important;
@@ -524,14 +525,27 @@ body.modal-open:not(.swal2-shown) {
 }
 
 
-#ui-datepicker-div {
-  height: auto !important;
-}
-
-
 td.action,
 td.actions {
   min-width: 130px;
+}
+
+
+/* Laravel-Debugbar */
+body .phpdebugbar,
+body .phpdebugbar-widgets-sqlqueries {
+  height: auto;
+}
+body .phpdebugbar-openhandler {
+  height: 70%;
+}
+body .phpdebugbar-resize-handle {
+  height: 5px;
+}
+
+
+#ui-datepicker-div {
+  height: auto !important;
 }
 
 
@@ -559,7 +573,6 @@ td.actions {
 
 
 /* Vehicle & Parts */
-
 .Employee.Index label,
 .Vehicle.Index label,
 .Parts.Index label {

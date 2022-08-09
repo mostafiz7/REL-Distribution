@@ -6,9 +6,10 @@ use App\Http\Controllers\Home_Controller;
 use App\Http\Controllers\Admin\Admin_Controller;
 use App\Http\Controllers\User_Controller;
 use App\Http\Controllers\Entity_Controller;
-use App\Http\Controllers\Department_Controller;
 use App\Http\Controllers\Designation_Controller;
+use App\Http\Controllers\Department_Controller;
 use App\Http\Controllers\Employee_Controller;
+use App\Http\Controllers\ProductRequirement_Controller;
 use App\Http\Controllers\Brand_Controller;
 use App\Http\Controllers\Parts_Controller;
 use App\Http\Controllers\Vehicle_Controller;
@@ -26,8 +27,6 @@ Auth::routes();
 
 Route::get('/', [Home_Controller::class, 'Homepage'])->name('homepage');
 
-Route::get('/cache-all', [Home_Controller::class, 'ClearCacheAll']);
-
 
 /* Route::get('/register', function(){
   Flasher::addError("New user registeration from outside of admin panel is strictly prohibited!");
@@ -40,16 +39,25 @@ Route::post('/register', function(){
 }); */
 
 
+// Programmatically Artisan Command
 // Symbolic-Link & Laravel-Storage-Link
-Route::get('/symlink', [Home_Controller::class, 'CreateSymbolicLink']);
-Route::get('/storage-link', [Home_Controller::class, 'CreateStorageLink']);
+Route::get('/create-symlink', [Home_Controller::class, 'CreateSymbolicLink']);
+Route::get('/create-storage-link', [Home_Controller::class, 'CreateStorageLink']);
 
-// Database/Migration Table programmatically by using Artisan::call()
+
+Route::get('/route-view-clear-only', [Home_Controller::class, 'RouteViewClearOnly']);
+Route::get('/route-view-clear-and-cache', [Home_Controller::class, 'RouteViewClearCache']);
+Route::get('/config-cache', [Home_Controller::class, 'ConfigCache']);
+Route::get('/session-clear', [Home_Controller::class, 'SessionClear']);
+
+
+// Database/Migration Table
 Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate'])->name('database.migration.update');
 Route::get('/migration-fresh', [Home_Controller::class, 'DatabaseTableFresh'])->name('database.migration.fresh');
 Route::get('/migration-fresh-seed', [Home_Controller::class, 'DatabaseTableFreshSeed'])->name('database.migration.fresh.seed');
 Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback'])->name('database.migration.rollback');
 Route::get('/db-seed', [Home_Controller::class, 'DatabaseSeed'])->name('database.seed');
+
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-back-history'], 'namespace' => 'admin'], function(){
@@ -78,18 +86,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
   Route::post('/entity/{uid}/edit', [Entity_Controller::class, 'UpdateEntity'])->name('entity.single.update');
 
 
-  // Departments Routes
-  Route::get('/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.new.create');
-  Route::post('/departments', [Department_Controller::class, 'DepartmentNew_Store'])->name('department.new.store');
-  Route::get('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Edit'])->name('department.single.edit');
-  Route::post('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Update'])->name('department.single.update');
-
-
   // Designations Routes
   Route::get('/designations', [Designation_Controller::class, 'DesignationNew_Form'])->name('designation.new.create');
   Route::post('/designations', [Designation_Controller::class, 'DesignationNew_Store'])->name('designation.new.store');
   Route::get('/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Edit'])->name('designation.single.edit');
   Route::post('/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Update'])->name('designation.single.update');
+
+
+  // Departments Routes
+  Route::get('/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.new.create');
+  Route::post('/departments', [Department_Controller::class, 'DepartmentNew_Store'])->name('department.new.store');
+  Route::get('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Edit'])->name('department.single.edit');
+  Route::post('/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Update'])->name('department.single.update');
   
   
   // Employees Routes
@@ -100,6 +108,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
   Route::get('/employee/{uid}/edit', [Employee_Controller::class, 'EditEmployee'])->name('employee.single.edit');
   Route::post('/employee/{uid}/edit', [Employee_Controller::class, 'UpdateEmployee'])->name('employee.single.update');
 
+
+  // Delivery-Order Routes
+  Route::get('/distribution/product-requirement/index', [ProductRequirement_Controller::class, 'index'])->name('product-requirement.all.show');
+  
 
   // Vehicles Routes
   /* Route::get('/module/vehicles/vehicle-index', [Vehicle_Controller::class, 'Vehicle_Index'])->name('vehicle.all.show');

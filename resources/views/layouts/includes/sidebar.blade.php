@@ -23,7 +23,39 @@
           </a>
         </li>
         
-        {{--Entity-Dropdown--}}
+        
+        {{-- Product-Requirement --}}
+        <li class="menu-item dropdown text-white">
+          <div class="menu-link dropmenu-toggle {{ strpos($viewName, 'requirement') ? 'active' : '' }}" id="Sidebar-Nav-Requirement">
+            <i class="menu-icon fa fa-home"></i>
+            <span>Product Requirement</span>
+            {{-- <span class="full-width-prev-auto">
+              <span class="caret">
+                <i class="fa fa-angle-down"></i>
+              </span>
+            </span> --}}
+          </div>
+
+          <div class="drop-menu {{ strpos($viewName, 'requirement') ? 'show' : '' }}" aria-labelledby="Sidebar-Nav-Requirement">
+            <div class="drop-item">
+              <a href="{{ route('product-requirement.all.show') }}"
+                 class="drop-link {{ strpos($viewName, 'requirement') && strpos($viewName, 'index') ? 'active' : '' }}">
+                <i class="menu-icon fa fa-home"></i>
+                <span>Requirements All</span>
+              </a>
+            </div>
+
+            {{-- <div class="drop-item">
+              <a href="{{ route('product-requirement.new.create') }}"
+                 class="drop-link {{ strpos($viewName, 'requirement') && strpos($viewName, 'new') ? 'active' : '' }}">
+                <i class="menu-icon fa fa-home"></i>
+                <span>New Requirement</span>
+              </a>
+            </div> --}}
+          </div>
+        </li>
+
+        {{-- Entity-Dropdown --}}
         <li class="menu-item dropdown text-white">
           <div class="menu-link dropmenu-toggle {{ strpos($viewName, 'entity') ? 'active' : '' }}" id="Sidebar-Nav-Entity">
             <i class="menu-icon fa fa-home"></i>
@@ -54,9 +86,9 @@
           </div>
         </li>
 
-        {{--User-&-Settings-Dropdown--}}
+        {{-- Employee-&-User-Dropdown --}}
         @can ('isSuperAdmin', Auth::user())
-          {{--Employee-Dropdown--}}
+          {{-- Employee-Dropdown --}}
           <li class="menu-item dropdown text-white">
             <div class="menu-link dropmenu-toggle {{ strpos($viewName, 'employee') ? 'active' : '' }}" id="Sidebar-Nav-Employee">
               <i class="menu-icon fa fa-home"></i>
@@ -87,7 +119,7 @@
             </div>
           </li>
           
-          {{--User-Dropdown--}}
+          {{-- User-Dropdown --}}
           <li class="menu-item dropdown text-white">
             <div class="menu-link dropmenu-toggle {{ strpos($viewName, 'user') && ! strpos($viewName, 'myAccount') ? 'active' : '' }}" id="Sidebar-Nav-User">
               <i class="menu-icon fa fa-home"></i>
@@ -117,6 +149,101 @@
               </div>
             </div>
           </li>
+          
+          {{-- Symbolic-Link-Cache-and-Config --}}
+          @can ('entryArtisanCommand', Auth::user())
+            {{-- Symlink-and-Storage-Link --}}
+            <li class="menu-item dropdown text-white ctrl d-none">
+              <div class="menu-link dropmenu-toggle" id="Sidebar-Nav-Symlink">
+                <i class="menu-icon fa fa-home"></i>
+                <span>
+                  Symlink / Storage-Link
+                  {{-- <i class="fa fa-angle-down"></i> --}}
+                </span>
+                {{-- <span class="full-width-prev-auto">
+                  <span class="caret">
+                    <i class="fa fa-angle-down"></i>
+                  </span>
+                </span> --}}
+              </div>
+
+              <div class="drop-menu" aria-labelledby="Sidebar-Nav-Symlink">
+                {{-- Create-Symlink --}}
+                <div class="drop-item">
+                  <a href="{{ url('/create-symlink') }}"
+                     class="drop-link">
+                    <i class="menu-icon fa fa-home"></i>
+                    <span>Create Symlink</span>
+                  </a>
+                </div>
+
+                {{-- Create-Storage-Link --}}
+                <div class="drop-item">
+                  <a href="{{ url('/create-storage-link') }}"
+                     class="drop-link">
+                    <i class="menu-icon fa fa-home"></i>
+                    <span>Create Storage-Link</span>
+                  </a>
+                </div>
+                
+              </div>
+            </li>
+
+            {{-- Cache-and-Config --}}
+            <li class="menu-item dropdown text-white ctrl d-none">
+              <div class="menu-link dropmenu-toggle" id="Sidebar-Nav-CacheConfig">
+                <i class="menu-icon fa fa-home"></i>
+                <span>
+                  Cache & Config
+                  {{-- <i class="fa fa-angle-down"></i> --}}
+                </span>
+                {{-- <span class="full-width-prev-auto">
+                  <span class="caret">
+                    <i class="fa fa-angle-down"></i>
+                  </span>
+                </span> --}}
+              </div>
+
+              <div class="drop-menu" aria-labelledby="Sidebar-Nav-CacheConfig">
+                {{-- Route-View-clear-only --}}
+                <div class="drop-item">
+                  <a href="{{ url('/route-view-clear-only') }}"
+                     class="drop-link">
+                    <i class="menu-icon fa fa-home"></i>
+                    <span>Route-View Clear</span>
+                  </a>
+                </div>
+
+                {{-- Route-View-clear-and-cache --}}
+                <div class="drop-item">
+                  <a href="{{ url('/route-view-clear-and-cache') }}"
+                     class="drop-link">
+                    <i class="menu-icon fa fa-home"></i>
+                    <span>Route-View clear and cache</span>
+                  </a>
+                </div>
+
+                {{-- Config-cache --}}
+                <div class="drop-item">
+                  <a href="{{ url('/config-cache') }}"
+                     class="drop-link">
+                    <i class="menu-icon fa fa-home"></i>
+                    <span>Config cache</span>
+                  </a>
+                </div>
+
+                {{-- Session-clear --}}
+                <div class="drop-item">
+                  <a href="{{ url('/session-clear') }}"
+                     class="drop-link">
+                    <i class="menu-icon fa fa-home"></i>
+                    <span>Session Clear</span>
+                  </a>
+                </div>
+                
+              </div>
+            </li>
+          @endcan
         @endcan
 
       </ul>

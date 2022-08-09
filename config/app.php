@@ -245,6 +245,7 @@ return [
          */
         'Image' => Intervention\Image\Facades\Image::class,
         'Flasher' => Flasher\Laravel\Facade\Flasher::class,
+        'FastExcel' => Rap2hpoutre\FastExcel\Facades\FastExcel::class,
         
 
     ],

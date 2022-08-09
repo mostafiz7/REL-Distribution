@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 
-// class CreateTerritoriesTable extends Migration // for Laravel up to 8
+// class CreateEntitiesTable extends Migration // for Laravel up to 8
 return new class extends Migration // for Laravel 9
 {
   /**
@@ -35,7 +35,7 @@ return new class extends Migration // for Laravel 9
       $table->set('type', ['office', 'sub-office', 'showroom', 'sales-center', 'corporate', 'dealer', 'sub-dealer', 'service-center', 'store', 'sub-store', 'other'])->nullable();
       $table->set('ownership', ['own', 'franchise', 'exclusive', 'other'])->nullable();
 
-      $table->boolean('selling_power')->default(0); // entity-has-sales-power
+      $table->boolean('has_sale_power')->default(0); // entity-has-sales-power
       $table->boolean('show_sls_report')->default(0); // entity-show-in-sales-report
       $table->boolean('show_stock_report')->default(1); // entity-show-in-stock-report
 
@@ -47,7 +47,7 @@ return new class extends Migration // for Laravel 9
 
       $table->string('address')->nullable();
       $table->string('city')->nullable();
-      $table->string('police_station')->nullable(); // police-station
+      $table->string('ps')->nullable(); // police-station
       $table->string('postcode')->nullable();
       $table->string('district')->nullable();
 
