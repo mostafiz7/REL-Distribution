@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e63ffe1e848f46acf039fcf5882f1bf",
+    "content-hash": "27a88179a9c9a0d38148de0d946d97e0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3453,6 +3453,49 @@
             "time": "2022-07-21T14:21:25+00:00"
         },
         {
+            "name": "rct567/dom-query",
+            "version": "v0.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Rct567/DomQuery.git",
+                "reference": "6362bdab22b37b67e76d311437712d868f9a4e3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Rct567/DomQuery/zipball/6362bdab22b37b67e76d311437712d868f9a4e3b",
+                "reference": "6362bdab22b37b67e76d311437712d868f9a4e3b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rct567\\": "src/Rct567"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rct567",
+                    "email": "rct999@gmail.com"
+                }
+            ],
+            "description": "DomQuery is a PHP library that allows easy 'jQuery like' DOM traversing and manipulation",
+            "keywords": [
+                "dom",
+                "html",
+                "jquery",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/Rct567/DomQuery/issues",
+                "source": "https://github.com/Rct567/DomQuery/tree/master"
+            },
+            "time": "2017-10-10T06:28:09+00:00"
+        },
+        {
             "name": "symfony/console",
             "version": "v6.0.9",
             "source": {
@@ -5747,6 +5790,87 @@
                 }
             ],
             "time": "2022-03-08T17:03:00+00:00"
+        },
+        {
+            "name": "voku/simple_html_dom",
+            "version": "4.8.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/voku/simple_html_dom.git",
+                "reference": "1df7e9844eddbe190450c87f281e87bbd8d7f645"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/voku/simple_html_dom/zipball/1df7e9844eddbe190450c87f281e87bbd8d7f645",
+                "reference": "1df7e9844eddbe190450c87f281e87bbd8d7f645",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "php": ">=7.0.0",
+                "symfony/css-selector": "~3.0 || ~4.0 || ~5.0 || ~6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
+            },
+            "suggest": {
+                "voku/portable-utf8": "If you need e.g. UTF-8 fixed output."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "voku\\helper\\": "src/voku/helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dimabdc",
+                    "email": "support@titor.ru",
+                    "homepage": "http://github.com/dimabdc",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Lars Moelleken",
+                    "homepage": "http://www.moelleken.org/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple HTML DOM package.",
+            "homepage": "http://simplehtmldom.sourceforge.net/",
+            "keywords": [
+                "HTML Parser",
+                "dom",
+                "php dom"
+            ],
+            "support": {
+                "issues": "https://github.com/voku/simple_html_dom/issues",
+                "source": "https://github.com/voku/simple_html_dom/tree/4.8.6"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/moelleken",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/voku",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/voku",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/voku/simple_html_dom",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-06-09T05:48:45+00:00"
         },
         {
             "name": "webmozart/assert",

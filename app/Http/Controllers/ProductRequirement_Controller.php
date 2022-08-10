@@ -7,6 +7,8 @@ use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Gate;
 use App\Models\ProductRequirement_Model;
 use DOMDocument;
+use Rct567\DomQuery\DomQuery;
+use voku\helper\HtmlDomParser;
 use Rap2hpoutre\FastExcel\FastExcel;
 // use Rap2hpoutre\FastExcel\Facades\FastExcel;
 
@@ -72,37 +74,12 @@ class ProductRequirement_Controller extends Controller
     $import_sheet = (new FastExcel)->sheet(2)->import( $file_url );
 
     $excel_data = [];
-    foreach( $import_sheet as $index => $row ){
-      if( $index == 0 ){
-        foreach( $row as $key => $cell ){
-          if( $key == 'Html-Body' ){
+    foreach( $import_sheet as $row_index => $excel_row ){
+      if( $row_index == 0 ){
+        foreach( $excel_row as $column => $excel_cell ){
+          if( $column == 'Html-Body' ){
 
-            $html_body = $cell;
-
-            $dom = new \DomDocument();
-            $dom->preserveWhiteSpace = false;
-            $dom->formatOutput = true;
-            @$dom->loadXml( $html_body );
-            // @$dom->loadHtml( $html_body );
-            // @$dom->loadHtml( $html_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
-            $domTables = $dom->getElementsByTagName("table");
-            
-            /* $innerHTML = "";
-            foreach( $domTables as $index => $table ){
-              // echo $dom->saveHtml( $node ), PHP_EOL;
-
-              $children = $table->childNodes;
-
-              foreach( $children as $child ){
-                $innerHTML .= $table->ownerDocument->saveHTML($child);
-                //$innerHTML .= $child->nodeValue;
-              }
-              //$innerHTML .= " - " . $x;
-
-              //return $innerHTML;
-            } */
-            
-            dd( $dom );
+            $html_body = $excel_cell;
 
           }
         }
