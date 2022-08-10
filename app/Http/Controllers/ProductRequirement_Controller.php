@@ -69,21 +69,42 @@ class ProductRequirement_Controller extends Controller
     // $file_name = "CWNDC-Delivery Status - AUG-22.xlsx";
     // $sheets = (new FastExcel)->importSheets( $file_url . $file_name );
     
-    $import_excel = (new FastExcel)->sheet(2)->import( $file_url );
+    $import_sheet = (new FastExcel)->sheet(2)->import( $file_url );
 
-    foreach( $import_excel as $row ){
-      foreach( $row as $key => $cell ){
-        //if( array_key_exists('Html-Body', $row) ){
-        if( $key == 'Html-Body' ){
+    $excel_data = [];
+    foreach( $import_sheet as $index => $row ){
+      if( $index == 0 ){
+        foreach( $row as $key => $cell ){
+          if( $key == 'Html-Body' ){
 
-          $html_body = $row['Html-Body'];
+            $html_body = $cell;
 
-          $dom = new \DomDocument();
-          //@$dom->loadHtml( $html_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
-          @$dom->loadHtml( $html_body );
+            $dom = new \DomDocument();
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = true;
+            @$dom->loadXml( $html_body );
+            // @$dom->loadHtml( $html_body );
+            // @$dom->loadHtml( $html_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+            $domTables = $dom->getElementsByTagName("table");
+            
+            /* $innerHTML = "";
+            foreach( $domTables as $index => $table ){
+              // echo $dom->saveHtml( $node ), PHP_EOL;
 
-          dd( $dom );
+              $children = $table->childNodes;
 
+              foreach( $children as $child ){
+                $innerHTML .= $table->ownerDocument->saveHTML($child);
+                //$innerHTML .= $child->nodeValue;
+              }
+              //$innerHTML .= " - " . $x;
+
+              //return $innerHTML;
+            } */
+            
+            dd( $dom );
+
+          }
         }
       }
     }
@@ -93,6 +114,7 @@ class ProductRequirement_Controller extends Controller
 
     return view('modules.distribution.requirement.index')->with([
       'search_by' => $search_by,
+      'excel_data' => $excel_data,
       /* 'status'   => $status,
       'paginate' => $paginate,
       'requirement_all' => $requirement_all, */
