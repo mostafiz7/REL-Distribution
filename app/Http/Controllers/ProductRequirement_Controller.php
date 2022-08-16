@@ -11,6 +11,8 @@ use Rct567\DomQuery\DomQuery;
 use voku\helper\HtmlDomParser;
 use Rap2hpoutre\FastExcel\FastExcel;
 // use Rap2hpoutre\FastExcel\Facades\FastExcel;
+use Goutte\Client;
+use Symfony\Component\HttpClient\HttpClient;
 
 
 class ProductRequirement_Controller extends Controller
@@ -74,7 +76,7 @@ class ProductRequirement_Controller extends Controller
     $import_sheet = (new FastExcel)->sheet(2)->import( $file_url );
 
     $excel_data = [];
-    foreach( $import_sheet as $row_index => $excel_row ){
+    /* foreach( $import_sheet as $row_index => $excel_row ){
       if( $row_index == 0 ){
         foreach( $excel_row as $column => $excel_cell ){
           if( $column == 'Html-Body' ){
@@ -84,10 +86,36 @@ class ProductRequirement_Controller extends Controller
           }
         }
       }
-    }
+    } */
+
 
     // $collection = fastexcel()->import('file.xlsx');
     // fastexcel($collection)->export('file.xlsx');
+
+
+    $client = new Client();
+    // use own HTTP settings, create and pass an HttpClient instance to Goutte. add a 60 second request timeout:
+    // $client = new Client(HttpClient::create(['timeout' => 60]));
+    $startUrl = 'https://stackoverflow.com/questions/tagged/laravel';
+    $itemSelector = '#questions .s-post-summary.js-post-summary';
+    $linkSelector = 'h3.s-post-summary--content-title > a';
+    $questionsAll = [];
+
+    $crawler = $client->request('GET', $startUrl);
+
+    // $itemsAll = $crawler->filter( $itemSelector );
+
+    $crawler->filter( $itemSelector )->each( function($node) {
+      $questionsAll[] = $node->text();
+    });
+
+    /* foreach( $itemsAll as $item ){
+      $questionsAll[] = $item->children( $linkSelector )->text();
+    } */
+    
+
+    dd( $questionsAll );
+
 
     return view('modules.distribution.requirement.index')->with([
       'search_by' => $search_by,
