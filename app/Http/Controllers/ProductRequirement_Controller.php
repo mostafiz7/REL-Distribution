@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Flasher\Laravel\Facade\Flasher;
-use Illuminate\Support\Facades\Gate;
-use App\Models\ProductRequirement_Model;
 use DOMDocument;
+use Goutte\Client;
+use Illuminate\Http\Request;
 use Rct567\DomQuery\DomQuery;
 use voku\helper\HtmlDomParser;
+use Flasher\Laravel\Facade\Flasher;
+use Illuminate\Support\Facades\Gate;
 use Rap2hpoutre\FastExcel\FastExcel;
 // use Rap2hpoutre\FastExcel\Facades\FastExcel;
-use Goutte\Client;
+use App\Models\ProductRequirement_Model;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 
 
@@ -96,25 +97,98 @@ class ProductRequirement_Controller extends Controller
     $client = new Client();
     // use own HTTP settings, create and pass an HttpClient instance to Goutte. add a 60 second request timeout:
     // $client = new Client(HttpClient::create(['timeout' => 60]));
-    $startUrl = 'https://stackoverflow.com/questions/tagged/laravel';
-    $itemSelector = '#questions .s-post-summary.js-post-summary';
-    $linkSelector = 'h3.s-post-summary--content-title > a';
-    $questionsAll = [];
+    // $startUrl = 'https://stackoverflow.com/questions/tagged/laravel';
+    $tag = 'laravel';
+    $tab = 'newest';
+    $page_no = 10;
+    $pagesize = 50;
+    $startUrl = "https://stackoverflow.com/questions/tagged/$tag?tab=$tab&page=$page_no&pagesize=$pagesize";
+    $crawler = $client->request( 'GET', $startUrl );
+    // $itemSelector = '#questions .s-post-summary';
 
-    $crawler = $client->request('GET', $startUrl);
 
-    // $itemsAll = $crawler->filter( $itemSelector );
-
-    $crawler->filter( $itemSelector )->each( function($node) {
-      $questionsAll[] = $node->text();
+    $titleSelector = '#questions .s-post-summary h3 > a';
+    $titleNodeAll = $crawler->filter( $titleSelector );
+    $title_all = $titleNodeAll->each( function( $node ){
+      return [
+        'title' => $node->text(),
+        'url'   => $node->link()->getUri()
+      ];
     });
-
-    /* foreach( $itemsAll as $item ){
-      $questionsAll[] = $item->children( $linkSelector )->text();
-    } */
     
 
-    dd( $questionsAll );
+    $tagSelector = '#questions .s-post-summary .s-post-summary--meta-tags';
+    $tagNodeAll = $crawler->filter( $tagSelector );
+    $tag_all = $tagNodeAll->each( function( $node ){
+      return $node->text();
+    });
+    
+
+    $userSelector = '#questions .s-post-summary .s-user-card .s-user-card--link > a';
+    $userNodeAll = $crawler->filter( $userSelector );
+    $user_all = $userNodeAll->each( function( $node ){
+      return [
+        'title' => $node->text(),
+        'url'   => $node->link()->getUri()
+      ];
+    });
+
+    
+    $userReputationSelector = '#questions .s-post-summary .s-user-card .s-user-card--awards li > span';
+    $userReputationNodeAll = $crawler->filter( $userReputationSelector );
+    $user_reputation_score_all = $userReputationNodeAll->each( function( $node ){
+      return $node->text();
+    });
+
+    
+    $postTimeSelector = '#questions .s-post-summary .s-user-card .s-user-card--time > span';
+    $postTimeNodeAll = $crawler->filter( $postTimeSelector );
+    $post_time_all = $postTimeNodeAll->each( function( $node ){
+      return [
+        'timetext' => $node->text(),
+        'datetime' => $node->attr('title')
+      ];
+    });
+
+    
+    $voteSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(1) .s-post-summary--stats-item-number';
+    $voteNodeAll = $crawler->filter( $voteSelector );
+    $vote_all = $voteNodeAll->each( function( $node ){
+      return $node->text();
+    });
+
+    
+    $answerSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(2)';
+    $answerNodeAll = $crawler->filter( $answerSelector );
+    $answer_all = $answerNodeAll->each( function( $node ){
+      // $class_name = 's-post-summary--stats-item has-answers has-accepted-answer';
+      $accepted = '';
+      $answers = $node->children('.s-post-summary--stats-item-number')->text();
+
+      // if( $node->attr('class') == $class_name ){
+      // if( $node->children()->first()->attr('class') == $class_name ){
+      if( $node->children()->first()->nodeName() == 'svg' ){
+        $accepted = 'YES';
+      } else{
+        $accepted = 'NO';
+      }
+      
+      return [
+        'accepted'  => $accepted,
+        'answers'   => $answers,
+      ];
+    });
+
+    
+    $viewSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(3) .s-post-summary--stats-item-number';
+    $viewNodeAll = $crawler->filter( $viewSelector );
+    $view_all = $viewNodeAll->each( function( $node ){
+      return $node->text();
+    });
+    
+    
+    dd( $answer_all );
+
 
 
     return view('modules.distribution.requirement.index')->with([

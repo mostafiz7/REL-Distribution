@@ -50,7 +50,7 @@
             {{-- Overlay-Scrollbar --}}
             <div class="all-product-requirement-display-block full-height-prev-auto overlay-scrollbar bt-1">
               
-              {!! $excel_data !!}
+              {{-- {!! $excel_data !!} --}}
 
             </div>
           </div> {{-- ./page-area --}}
