@@ -97,22 +97,51 @@ class ProductRequirement_Controller extends Controller
     $client = new Client();
     // use own HTTP settings, create and pass an HttpClient instance to Goutte. add a 60 second request timeout:
     // $client = new Client(HttpClient::create(['timeout' => 60]));
-    // $startUrl = 'https://stackoverflow.com/questions/tagged/laravel';
-    $tag = 'laravel';
+    
+    
+    // Get all pagination
     $tab = 'newest';
-    $page_no = 10;
-    $pagesize = 50;
-    $startUrl = "https://stackoverflow.com/questions/tagged/$tag?tab=$tab&page=$page_no&pagesize=$pagesize";
-    $crawler = $client->request( 'GET', $startUrl );
+    $tag = 'laravel';
+    $current_page = 1;
+    $per_page = 50;
+    $total_page = 0;
+
+    if( $total_page == 0 ){
+      // $startUrl = 'https://stackoverflow.com/questions/tagged/laravel';
+      $startUrl = "https://stackoverflow.com/questions/tagged/$tag?tab=$tab&page=$current_page&pagesize=$per_page";
+      $paginationCrawler = $client->request( 'GET', $startUrl );
+
+      // $paginationSelector = '#mainbar .s-pagination.pager';
+      $paginationSelector = '#mainbar .s-pagination.pager .s-pagination--item';
+      $paginationNodeAll = $paginationCrawler->filter( $paginationSelector );
+
+      // $index = count($paginationNodeAll) - 1;
+      // $total_page = $paginationNodeAll->children()->last()->previousAll()->text();
+      // $total_page = $paginationNodeAll->eq( $index )->previousAll()->text();
+      $total_page = (int)$paginationNodeAll->last()->previousAll()->text();
+    }
+
+
+    $page_all_url = [];
+    for( $x = 1; $x <= $total_page; $x++ ){
+      $crawlUrl = "https://stackoverflow.com/questions/tagged/$tag?tab=$tab&page=$x&pagesize=$per_page";
+      $page_all_url[] = $crawlUrl;
+    }
+    
+    dd( $page_all_url );
+
+
+
+    $crawlUrl = "https://stackoverflow.com/questions/tagged/$tag?tab=$tab&page=$current_page&pagesize=$per_page";
+    $crawler = $client->request( 'GET', $crawlUrl );
+
     // $itemSelector = '#questions .s-post-summary';
-
-
     $titleSelector = '#questions .s-post-summary h3 > a';
     $titleNodeAll = $crawler->filter( $titleSelector );
     $title_all = $titleNodeAll->each( function( $node ){
       return [
         'title' => $node->text(),
-        'url'   => $node->link()->getUri()
+        'url'   => $node->link()->getUri(),
       ];
     });
     
@@ -124,43 +153,43 @@ class ProductRequirement_Controller extends Controller
     });
     
 
-    $userSelector = '#questions .s-post-summary .s-user-card .s-user-card--link > a';
-    $userNodeAll = $crawler->filter( $userSelector );
-    $user_all = $userNodeAll->each( function( $node ){
+    $userMetaSelector = '#questions .s-post-summary .s-user-card .s-user-card--link > a';
+    $userMetaNodeAll = $crawler->filter( $userMetaSelector );
+    $user_meta_all = $userMetaNodeAll->each( function( $node ){
       return [
-        'title' => $node->text(),
-        'url'   => $node->link()->getUri()
+        'user'    => $node->text(),
+        'profile' => $node->link()->getUri(),
       ];
     });
 
     
-    $userReputationSelector = '#questions .s-post-summary .s-user-card .s-user-card--awards li > span';
-    $userReputationNodeAll = $crawler->filter( $userReputationSelector );
-    $user_reputation_score_all = $userReputationNodeAll->each( function( $node ){
+    $reputationMetaSelector = '#questions .s-post-summary .s-user-card .s-user-card--awards li > span';
+    $reputationMetaNodeAll = $crawler->filter( $reputationMetaSelector );
+    $reputation_meta_all = $reputationMetaNodeAll->each( function( $node ){
       return $node->text();
     });
 
     
-    $postTimeSelector = '#questions .s-post-summary .s-user-card .s-user-card--time > span';
-    $postTimeNodeAll = $crawler->filter( $postTimeSelector );
-    $post_time_all = $postTimeNodeAll->each( function( $node ){
+    $timeMetaSelector = '#questions .s-post-summary .s-user-card .s-user-card--time > span';
+    $timeMetaNodeAll = $crawler->filter( $timeMetaSelector );
+    $time_meta_all = $timeMetaNodeAll->each( function( $node ){
       return [
         'timetext' => $node->text(),
-        'datetime' => $node->attr('title')
+        'datetime' => $node->attr('title'),
       ];
     });
 
     
-    $voteSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(1) .s-post-summary--stats-item-number';
-    $voteNodeAll = $crawler->filter( $voteSelector );
-    $vote_all = $voteNodeAll->each( function( $node ){
+    $voteMetaSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(1) .s-post-summary--stats-item-number';
+    $voteMetaNodeAll = $crawler->filter( $voteMetaSelector );
+    $vote_meta_all = $voteMetaNodeAll->each( function( $node ){
       return $node->text();
     });
 
     
-    $answerSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(2)';
-    $answerNodeAll = $crawler->filter( $answerSelector );
-    $answer_all = $answerNodeAll->each( function( $node ){
+    $answerMetaSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(2)';
+    $answerMetaNodeAll = $crawler->filter( $answerMetaSelector );
+    $answer_meta_all = $answerMetaNodeAll->each( function( $node ){
       // $class_name = 's-post-summary--stats-item has-answers has-accepted-answer';
       $accepted = '';
       $answers = $node->children('.s-post-summary--stats-item-number')->text();
@@ -180,14 +209,14 @@ class ProductRequirement_Controller extends Controller
     });
 
     
-    $viewSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(3) .s-post-summary--stats-item-number';
-    $viewNodeAll = $crawler->filter( $viewSelector );
-    $view_all = $viewNodeAll->each( function( $node ){
+    $viewMetaSelector = '#questions .s-post-summary .s-post-summary--stats > .s-post-summary--stats-item:nth-child(3) .s-post-summary--stats-item-number';
+    $viewMetaNodeAll = $crawler->filter( $viewMetaSelector );
+    $view_meta_all = $viewMetaNodeAll->each( function( $node ){
       return $node->text();
     });
     
     
-    dd( $answer_all );
+    dd( $answer_meta_all );
 
 
 
