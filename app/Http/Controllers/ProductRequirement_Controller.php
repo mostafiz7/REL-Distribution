@@ -96,13 +96,13 @@ class ProductRequirement_Controller extends Controller
     }
 
 
-    $page_all_url = [];
+    $page_url_all = [];
     $scraped_data_all = [];
     // for( $x = 1; $x <= $total_page; $x++ ){
     for( $x = 1; $x <= 10; $x++ ){
       
       $crawlUrl = "https://stackoverflow.com/questions/tagged/$tag?tab=$tab&page=$x&pagesize=$per_page";
-      $page_all_url[] = $crawlUrl;
+      $page_url_all[] = $crawlUrl;
 
       $crawler = $client->request( 'GET', $crawlUrl );
 
