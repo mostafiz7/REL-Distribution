@@ -94,10 +94,6 @@ class ProductRequirement_Controller extends Controller
       // $total_page = $paginationNodeAll->eq( $index )->previousAll()->text();
       $total_page = (int)$paginationNodeAll->children()->last()->previousAll()->text();
     }
-    
-
-    /* $crawlUrl = "https://stackoverflow.com/questions/tagged/$tag?tab=$tab&page=$current_page&pagesize=$per_page";
-    $crawler = $client->request( 'GET', $crawlUrl ); */
 
 
     $page_all_url = [];
@@ -106,6 +102,8 @@ class ProductRequirement_Controller extends Controller
     for( $x = 1; $x <= 10; $x++ ){
       
       $crawlUrl = "https://stackoverflow.com/questions/tagged/$tag?tab=$tab&page=$x&pagesize=$per_page";
+      $page_all_url[] = $crawlUrl;
+
       $crawler = $client->request( 'GET', $crawlUrl );
 
 
